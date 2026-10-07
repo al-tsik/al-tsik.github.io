@@ -21,7 +21,7 @@ function PartLabel({ part, position }: PartLabelProps) {
   }`
 
   return (
-    // zIndexRange keeps labels below the sticky site header.
+    // zIndexRange keeps labels below overlays such as the mobile Contents menu.
     <Html position={position} center zIndexRange={[10, 0]}>
       {onPartClick ? (
         <button

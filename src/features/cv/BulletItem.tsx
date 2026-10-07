@@ -57,7 +57,7 @@ export function BulletItem({
 
   return (
     // Ids let figure markers scroll to a bullet (see followLink in App).
-    <li id={`bullet-${bulletKey}`} className="scroll-mt-32">
+    <li id={`bullet-${bulletKey}`} className="scroll-mt-8">
       <div className="flex gap-2">
         <span aria-hidden="true" className={isActive ? 'text-accent' : 'text-ink-faint'}>
           •
@@ -90,7 +90,7 @@ export function BulletItem({
             const isSubFocused = focusedKey === key
 
             return (
-              <li key={key} id={`bullet-${key}`} className="scroll-mt-32 py-0.5 text-[0.95em]">
+              <li key={key} id={`bullet-${key}`} className="scroll-mt-8 py-0.5 text-[0.95em]">
                 <div className="flex gap-2">
                   <span
                     aria-hidden="true"

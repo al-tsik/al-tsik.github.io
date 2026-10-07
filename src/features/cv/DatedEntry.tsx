@@ -22,7 +22,7 @@ export function DatedEntry({
   children,
 }: DatedEntryProps) {
   return (
-    <li id={id} className="scroll-mt-20 pb-8">
+    <li id={id} className="scroll-mt-8 pb-8">
       <div className="flex items-baseline justify-between gap-4">
         {heading}
         <p

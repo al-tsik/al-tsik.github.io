@@ -30,10 +30,7 @@ export function PaperLayout({ figures, outline, children }: PaperLayoutProps) {
 
       <div className="px-4 lg:px-0">{children}</div>
 
-      <aside
-        aria-label="Outline"
-        className="hidden lg:sticky lg:top-14 lg:block lg:h-[calc(100dvh-3.5rem)] lg:py-10"
-      >
+      <aside aria-label="Outline" className="hidden lg:sticky lg:top-0 lg:block lg:h-dvh lg:py-10">
         {outline}
       </aside>
     </div>

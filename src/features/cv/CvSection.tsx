@@ -15,7 +15,7 @@ export function CvSection({ id, children }: CvSectionProps) {
   const title = cvSections.find((section) => section.id === id)?.title
 
   return (
-    <section id={id} aria-labelledby={headingId} className="scroll-mt-20 py-8">
+    <section id={id} aria-labelledby={headingId} className="scroll-mt-8 py-8">
       <h2 id={headingId} className="flex items-baseline gap-3 font-serif text-lg font-bold">
         <span className="text-sm text-ink-muted">{sectionNumber(id)}</span>
         {title}

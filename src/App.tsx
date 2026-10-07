@@ -1,6 +1,5 @@
 import { SiteFooter } from './components/layout/SiteFooter'
 import { PaperLayout } from './components/layout/PaperLayout'
-import { SiteHeader } from './components/layout/SiteHeader'
 import { building, cv, profile } from './content'
 import {
   bulletIndex,
@@ -99,7 +98,6 @@ function App() {
 
   return (
     <div id="top">
-      <SiteHeader name={profile.name} role={profile.role} />
       <PaperLayout figures={columnFigures} outline={<Outline experience={cv.experience} />}>
         <OutlineMenu experience={cv.experience} />
         <main id="cv" className="py-10">
