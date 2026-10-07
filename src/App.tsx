@@ -99,7 +99,7 @@ function App() {
   const columnFigures = isDesktop
     ? renderFigures(displayedLines)
     : focusedMainKey === null
-      ? renderFigures(displayedLines.slice(0, 1))
+      ? renderFigures(displayedLines.slice(0, 1), true)
       : undefined
   // Mobile has no hover: only the pinned line's figure, right under that line.
   const focusedEntry = focusedKey ? bulletIndex.get(focusedKey) : undefined
