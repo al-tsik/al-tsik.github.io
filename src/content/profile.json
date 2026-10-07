@@ -4,11 +4,27 @@
   "role": "Software Developer",
   "summary": "Software developer with 3 years' professional experience building web platforms, automation tools and AI integrations in C#/.NET, Python and JavaScript on Azure. Sole developer of a client-facing Blazor platform, owning architecture, API design, testing, CI/CD, containerised deployment and documentation. Background in architecture and BIM, with a track record of turning client requirements into software that cuts months of manual work down to weeks.",
   "contact": [
-    { "label": "[Email]" },
-    { "label": "[Phone]" },
-    { "label": "[City], UK" },
-    { "label": "[LinkedIn URL]" },
-    { "label": "[Portfolio URL]" }
+    {
+      "label": "[Email]"
+    },
+    {
+      "label": "[Phone]"
+    },
+    {
+      "label": "[City], UK"
+    },
+    {
+      "label": "[LinkedIn URL]"
+    },
+    {
+      "label": "[Portfolio URL]"
+    }
   ],
-  "cvPdf": "/cv.pdf"
+  "cvPdf": "/cv.pdf",
+  "views": {
+    "architect": {
+      "role": "Architectural Designer · BIM & Computational Design",
+      "summary": "Architectural designer with Part 1 and Part 2/3 experience at Falconer Chester Hall Architects and an M.Arch from the Computational Architecture atelier at Manchester School of Architecture. Assisted with, and at times managed, a 700-unit residential project, and provided BIM support and tooling to the whole office. Builds Dynamo scripts, Revit add-ins and real-time visualisations that make design and documentation workflows faster."
+    }
+  }
 }
