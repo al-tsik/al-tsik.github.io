@@ -24,6 +24,11 @@ type BuildingViewerProps = {
   showLabels?: boolean
   /** Pixels covered on the right while parts are highlighted (e.g. by a panel). */
   selectionInsetPx?: number
+  /**
+   * Let visitors orbit and zoom (default true). Thumbnails turn this off so
+   * the mouse wheel scrolls the page instead of zooming the model.
+   */
+  interactive?: boolean
 }
 
 /** Hooks that use the R3F context must render inside <Canvas>. */
@@ -45,6 +50,7 @@ export function BuildingViewer({
   onBackgroundClick,
   showLabels = true,
   selectionInsetPx,
+  interactive = true,
 }: BuildingViewerProps) {
   const reducedMotion = usePrefersReducedMotion()
   // Created once with the initial props, so the first framing already uses the view.
@@ -69,6 +75,8 @@ export function BuildingViewer({
         <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
         <CameraControls
           makeDefault
+          // Disables user input only; views and idle orbit still move the camera.
+          enabled={interactive}
           minPolarAngle={viewerConfig.minPolarAngle}
           maxPolarAngle={viewerConfig.maxPolarAngle}
           minZoom={viewerConfig.minZoom}

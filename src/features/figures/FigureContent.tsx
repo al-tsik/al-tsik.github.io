@@ -13,23 +13,36 @@ type FigureContentProps = {
   figure: Figure
   view: ResolvedView | undefined
   building: Building
+  /** Compact in the figure column; full size and fully interactive in the pop-out. */
+  variant?: 'column' | 'overlay'
   /** Makes drawing callouts clickable. */
   onCalloutClick?: (target: Callout['target']) => void
 }
 
 /** Renders a figure's media according to its type and current view. */
-export function FigureContent({ figure, view, building, onCalloutClick }: FigureContentProps) {
+export function FigureContent({
+  figure,
+  view,
+  building,
+  variant = 'column',
+  onCalloutClick,
+}: FigureContentProps) {
   switch (figure.type) {
-    case 'model':
+    case 'model': {
+      const isOverlay = variant === 'overlay'
+      // The column shows a compact turntable; the pop-out is fully interactive.
       return (
-        <div className="aspect-[4/3]">
+        <div className={isOverlay ? 'h-[80dvh]' : 'aspect-[4/3]'}>
           <BuildingViewer
             modelSrc={building.model.src}
             parts={building.parts}
             view={toModelView(view)}
+            showLabels={isOverlay}
+            interactive={isOverlay}
           />
         </div>
       )
+    }
     case 'image':
       return <ImageFigure src={figure.src} alt={figure.alt} region={view?.region} />
     case 'drawing':
