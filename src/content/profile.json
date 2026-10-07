@@ -2,12 +2,23 @@
   "$schema": "./schemas/profile.schema.json",
   "name": "Aleks Placeholder",
   "role": "Architectural Designer · Computational BIM",
-  "location": "City, Country",
   "summary": "Architectural designer working at the intersection of design and computation. I build Dynamo and Python tools that automate documentation and help teams explore design options faster.",
-  "email": "aleks@example.com",
-  "links": [
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
-    { "label": "GitHub", "url": "https://github.com/al-tsik" }
+  "contact": [
+    {
+      "label": "aleks@example.com",
+      "href": "mailto:aleks@example.com"
+    },
+    {
+      "label": "City, Country"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/your-handle"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/al-tsik"
+    }
   ],
   "cvPdf": "/cv.pdf"
 }

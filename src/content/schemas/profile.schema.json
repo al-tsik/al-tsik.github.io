@@ -8,36 +8,30 @@
     "role": {
       "type": "string"
     },
-    "location": {
-      "type": "string"
-    },
     "summary": {
       "type": "string",
       "description": "Two or three sentences shown at the top of the CV."
     },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-    },
-    "links": {
+    "contact": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
           "label": {
-            "type": "string"
-          },
-          "url": {
             "type": "string",
-            "format": "uri"
+            "description": "What is shown, e.g. \"name@example.com\" or \"[Phone]\"."
+          },
+          "href": {
+            "description": "Makes the item a link. Leave out for plain text, such as a city.",
+            "type": "string",
+            "pattern": "^(mailto:|tel:|https?:\\/\\/)"
           }
         },
         "required": [
-          "label",
-          "url"
+          "label"
         ]
-      }
+      },
+      "description": "The contact line under the name, in order."
     },
     "cvPdf": {
       "description": "Downloadable PDF version of the CV.",
@@ -49,9 +43,7 @@
   "required": [
     "name",
     "role",
-    "location",
     "summary",
-    "email",
-    "links"
+    "contact"
   ]
 }

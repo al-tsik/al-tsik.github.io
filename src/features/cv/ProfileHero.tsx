@@ -12,30 +12,34 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
     <header className="pb-10">
       <div className="text-center">
         <h1 className="text-3xl leading-tight font-bold tracking-tight">{profile.name}</h1>
-        <p className="mt-3 text-body text-ink-muted italic">
-          {profile.role} — {profile.location}
-        </p>
+        <p className="mt-3 text-body text-ink-muted italic">{profile.role}</p>
 
-        <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs">
-          <li>
-            <a href={`mailto:${profile.email}`} className={linkClass}>
-              {profile.email}
-            </a>
-          </li>
-          {profile.links.map((link) => (
-            <li key={link.url}>
-              <a href={link.url} target="_blank" rel="noreferrer" className={linkClass}>
-                {link.label} ↗
-              </a>
+        <ul className="mt-4 flex flex-wrap justify-center gap-y-1 text-xs">
+          {[
+            ...profile.contact,
+            ...(profile.cvPdf ? [{ label: 'PDF ↓', href: profile.cvPdf }] : []),
+          ].map((item, i) => (
+            <li key={item.label} className="flex">
+              {/* Separators between items, like a printed CV. */}
+              {i > 0 && (
+                <span aria-hidden="true" className="px-2 text-ink-faint">
+                  •
+                </span>
+              )}
+              {item.href ? (
+                <a
+                  href={item.href}
+                  {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  {...(item.href === profile.cvPdf ? { download: true } : {})}
+                  className={linkClass}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <span>{item.label}</span>
+              )}
             </li>
           ))}
-          {profile.cvPdf && (
-            <li>
-              <a href={profile.cvPdf} download className={linkClass}>
-                PDF ↓
-              </a>
-            </li>
-          )}
         </ul>
       </div>
 

@@ -32,18 +32,21 @@ const PublicPath = z
 
 // ─── Profile ────────────────────────────────────────────────────────────────
 
-export const LinkSchema = z.object({
-  label: z.string(),
-  url: z.url(),
+/** One item in the contact line, e.g. an email, phone, city or profile link. */
+export const ContactSchema = z.object({
+  label: z.string().describe('What is shown, e.g. "name@example.com" or "[Phone]".'),
+  href: z
+    .string()
+    .regex(/^(mailto:|tel:|https?:\/\/)/, 'Use a mailto:, tel: or http(s):// link')
+    .optional()
+    .describe('Makes the item a link. Leave out for plain text, such as a city.'),
 })
 
 export const ProfileSchema = z.object({
   name: z.string(),
   role: z.string(),
-  location: z.string(),
   summary: z.string().describe('Two or three sentences shown at the top of the CV.'),
-  email: z.email(),
-  links: z.array(LinkSchema),
+  contact: z.array(ContactSchema).describe('The contact line under the name, in order.'),
   cvPdf: PublicPath.optional().describe('Downloadable PDF version of the CV.'),
 })
 
@@ -282,6 +285,7 @@ export const FiguresSchema = z.object({
 // ─── Inferred types ─────────────────────────────────────────────────────────
 
 export type Profile = z.infer<typeof ProfileSchema>
+export type Contact = z.infer<typeof ContactSchema>
 export type Cv = z.infer<typeof CvSchema>
 export type Experience = z.infer<typeof ExperienceSchema>
 export type Bullet = z.infer<typeof BulletSchema>
