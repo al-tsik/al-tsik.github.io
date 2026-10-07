@@ -88,6 +88,14 @@
           "caption": "Foundation edge"
         }
       ]
+    },
+    {
+      "id": "facade-sequence",
+      "type": "video",
+      "src": "/videos/facade-sequence.mp4",
+      "poster": "/videos/facade-sequence-poster.jpg",
+      "caption": "Facade fins placed bay by bay by the panel script (placeholder clip).",
+      "alt": "Animation of facade fins appearing one by one across an elevation"
     }
   ]
 }

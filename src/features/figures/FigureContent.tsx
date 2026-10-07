@@ -6,6 +6,7 @@ import { DrawingFigure } from './DrawingFigure'
 import { DynamoFigure } from './DynamoFigure'
 import { GalleryFigure } from './GalleryFigure'
 import { ImageFigure } from './ImageFigure'
+import { VideoFigure } from './VideoFigure'
 
 type FigureContentProps = {
   figure: Figure
@@ -52,6 +53,17 @@ export function FigureContent({ figure, view, building, onCalloutClick }: Figure
     case 'gallery':
       return (
         <GalleryFigure images={figure.images} intervalMs={figure.intervalMs} image={view?.image} />
+      )
+    case 'video':
+      return (
+        <VideoFigure
+          alt={figure.alt}
+          src={figure.src}
+          poster={figure.poster}
+          embed={figure.embed}
+          time={view?.time}
+          until={view?.until}
+        />
       )
     default:
       // Placeholder until each figure type gets its renderer.

@@ -53,7 +53,7 @@
           "id": "facade-scripts",
           "text": "Wrote Dynamo scripts that place and number facade panels, cutting a week of manual work per issue.",
           "partIds": ["facade"],
-          "figures": ["facade-panel-numbering"],
+          "figures": ["facade-panel-numbering", "facade-sequence"],
           "children": [
             {
               "id": "panel-numbering",
@@ -62,6 +62,11 @@
                 {
                   "figure": "facade-panel-numbering",
                   "lines": [43, 46]
+                },
+                {
+                  "figure": "facade-sequence",
+                  "time": 1.5,
+                  "until": 4.75
                 }
               ]
             },
@@ -72,6 +77,10 @@
                 {
                   "figure": "facade-panel-numbering",
                   "region": [50, 20, 50, 60]
+                },
+                {
+                  "figure": "facade-sequence",
+                  "time": 4.75
                 }
               ]
             }
