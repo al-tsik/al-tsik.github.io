@@ -7,7 +7,7 @@ type SkillsListProps = {
 /** One line per group, set like the printed CV: "Label: a, b, c (note)". */
 export function SkillsList({ skills }: SkillsListProps) {
   return (
-    <ul className="space-y-1.5 text-body">
+    <ul className="space-y-1.5 text-body text-justify hyphens-auto">
       {skills.map((group) => (
         <li key={group.group}>
           <span className="font-bold">{group.group}:</span> {group.items.join(', ')}

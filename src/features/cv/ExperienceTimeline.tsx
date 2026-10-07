@@ -55,7 +55,7 @@ export function ExperienceTimeline({
             }
           >
             {job.descriptor && (
-              <p className="mt-2 text-body">
+              <p className="mt-2 text-body text-justify hyphens-auto">
                 <FigureRefText
                   text={job.descriptor}
                   numbers={figureNumbers}
@@ -64,7 +64,7 @@ export function ExperienceTimeline({
               </p>
             )}
 
-            <ul className="mt-3 space-y-2 text-body text-ink-muted">
+            <ul className="mt-3 space-y-2 text-body text-justify hyphens-auto text-ink-muted">
               {job.bullets.map((bullet, i) => (
                 <BulletItem
                   key={keys[i]}

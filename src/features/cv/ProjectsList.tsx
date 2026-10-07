@@ -7,7 +7,7 @@ type ProjectsListProps = {
 /** Personal projects, set like the printed CV: "• Title: text". */
 export function ProjectsList({ projects }: ProjectsListProps) {
   return (
-    <ul className="space-y-1.5 text-body">
+    <ul className="space-y-1.5 text-body text-justify hyphens-auto">
       {projects.map((project) => (
         <li key={project.title} id={project.id} className="flex gap-2">
           <span aria-hidden="true" className="text-ink-faint">

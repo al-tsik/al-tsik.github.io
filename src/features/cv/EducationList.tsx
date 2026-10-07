@@ -24,7 +24,9 @@ export function EducationList({ education }: EducationListProps) {
               </h3>
             }
           >
-            {entry.notes && <p className="mt-1 text-body italic">{entry.notes}</p>}
+            {entry.notes && (
+              <p className="mt-1 text-body text-justify italic hyphens-auto">{entry.notes}</p>
+            )}
           </DatedEntry>
         )
       })}

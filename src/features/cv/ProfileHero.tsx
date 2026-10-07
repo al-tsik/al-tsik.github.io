@@ -48,8 +48,8 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
         <h2 id="profile-heading" className="text-lg font-bold">
           Profile
         </h2>
-        {/* Left-aligned: justified text leaves rivers at this measure on screen. */}
-        <p className="mt-5 text-body text-pretty">{profile.summary}</p>
+        {/* Justified like the printed CV; hyphenation keeps the word gaps even. */}
+        <p className="mt-5 text-body text-justify hyphens-auto">{profile.summary}</p>
       </section>
     </header>
   )

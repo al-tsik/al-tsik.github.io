@@ -33,7 +33,7 @@ function previewHandlers(key: string) {
 }
 
 const textButton =
-  'cursor-pointer text-left underline decoration-transparent decoration-1 underline-offset-4 transition-colors hover:decoration-accent'
+  'cursor-pointer text-justify hyphens-auto underline decoration-transparent decoration-1 underline-offset-4 transition-colors hover:decoration-accent'
 
 /**
  * One CV bullet with its sub-bullets. Lines that have a figure are buttons:
