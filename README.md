@@ -30,7 +30,7 @@ animations.
 | 3D      | three.js via React Three Fiber + drei (lazy)     |
 | State   | zustand                                          |
 | Content | JSON validated by zod (+ generated JSON Schemas) |
-| Styling | Tailwind CSS (Libron, Inter, JetBrains Mono)     |
+| Styling | Tailwind CSS (Libron; JetBrains Mono for code)   |
 | Media   | prism-react-renderer, lottie-web (lazy)          |
 | Quality | oxlint, Prettier, Vitest                         |
 | Hosting | GitHub Pages via GitHub Actions                  |
