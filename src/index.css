@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
-@import '@fontsource-variable/eb-garamond';
-@import '@fontsource-variable/eb-garamond/wght-italic.css';
 
 /* Libron (OFL), a reading face tuned for screens: src/assets/fonts/libron. */
 @font-face {

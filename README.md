@@ -23,17 +23,17 @@ animations.
 
 ## Stack
 
-| Concern | Choice                                            |
-| ------- | ------------------------------------------------- |
-| UI      | React 19 + TypeScript                             |
-| Build   | Vite                                              |
-| 3D      | three.js via React Three Fiber + drei (lazy)      |
-| State   | zustand                                           |
-| Content | JSON validated by zod (+ generated JSON Schemas)  |
-| Styling | Tailwind CSS (EB Garamond, Inter, JetBrains Mono) |
-| Media   | prism-react-renderer, lottie-web (lazy)           |
-| Quality | oxlint, Prettier, Vitest                          |
-| Hosting | GitHub Pages via GitHub Actions                   |
+| Concern | Choice                                           |
+| ------- | ------------------------------------------------ |
+| UI      | React 19 + TypeScript                            |
+| Build   | Vite                                             |
+| 3D      | three.js via React Three Fiber + drei (lazy)     |
+| State   | zustand                                          |
+| Content | JSON validated by zod (+ generated JSON Schemas) |
+| Styling | Tailwind CSS (Libron, Inter, JetBrains Mono)     |
+| Media   | prism-react-renderer, lottie-web (lazy)          |
+| Quality | oxlint, Prettier, Vitest                         |
+| Hosting | GitHub Pages via GitHub Actions                  |
 
 ## Getting started
 
