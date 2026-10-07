@@ -78,9 +78,7 @@ export function FigureContent({
         .flatMap((part) => part.dynamoScripts)
         .find((candidate) => candidate.id === figure.scriptId)
       // Content tests guarantee the script exists; render nothing if it doesn't.
-      return script ? (
-        <DynamoFigure script={script} region={view?.region} lines={view?.lines} />
-      ) : null
+      return script ? <DynamoFigure script={script} region={view?.region} /> : null
     }
     case 'gallery':
       return (

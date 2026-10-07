@@ -55,7 +55,7 @@ const Percent = z.number().min(0).max(100)
  * type apply (checked by the content tests):
  * model: part, drawing, azimuth, elevation, zoom · gallery: image ·
  * video: time, until · animation: marker · drawing/image: region ·
- * dynamo: region, lines · code: lines.
+ * dynamo: region · code: lines.
  */
 export const FigureViewSchema = z.object({
   figure: Id.describe('Id of the figure in figures.json.'),
@@ -168,7 +168,6 @@ export const DynamoScriptSchema = z.object({
   title: z.string(),
   description: z.string(),
   graphImage: ImageSchema.describe('Screenshot of the node graph, exported from Dynamo.'),
-  pythonFile: PublicPath.optional().describe('Python node source (.py) shown as a code preview.'),
 })
 
 export const DrawingPlacementSchema = z.object({

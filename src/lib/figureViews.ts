@@ -10,7 +10,7 @@ export const viewFieldsByType: Record<FigureType, readonly ViewField[]> = {
   animation: ['marker'],
   drawing: ['region'],
   image: ['region'],
-  dynamo: ['region', 'lines'],
+  dynamo: ['region'],
   code: ['lines'],
 }
 

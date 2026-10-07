@@ -6,6 +6,7 @@ describe('unsupportedViewFields', () => {
     expect(unsupportedViewFields({ figure: 'm', part: 'roof', azimuth: 30 }, 'model')).toEqual([])
     expect(unsupportedViewFields({ figure: 'v', time: 12, until: 20 }, 'video')).toEqual([])
     expect(unsupportedViewFields({ figure: 'd', region: [0, 0, 50, 50] }, 'dynamo')).toEqual([])
+    expect(unsupportedViewFields({ figure: 'd', lines: [1, 2] }, 'dynamo')).toEqual(['lines'])
   })
 
   it('reports fields meant for another type', () => {

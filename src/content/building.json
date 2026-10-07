@@ -89,8 +89,7 @@
           "graphImage": {
             "src": "/images/dynamo/facade-panel-numbering.svg",
             "alt": "Dynamo graph: panels are collected by category and passed to a Python node that assigns marks"
-          },
-          "pythonFile": "/files/dynamo/facade-panel-numbering.py"
+          }
         }
       ],
       "drawings": [

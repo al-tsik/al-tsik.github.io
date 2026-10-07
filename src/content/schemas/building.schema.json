@@ -130,12 +130,6 @@
                     "alt"
                   ],
                   "description": "Screenshot of the node graph, exported from Dynamo."
-                },
-                "pythonFile": {
-                  "description": "Python node source (.py) shown as a code preview.",
-                  "type": "string",
-                  "format": "starts_with",
-                  "pattern": "^\\/.*"
                 }
               },
               "required": [

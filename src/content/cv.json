@@ -60,7 +60,7 @@
               "text": "Panel numbering by elevation, written back to the model.",
               "views": [
                 {
-                  "figure": "facade-panel-numbering",
+                  "figure": "panel-numbering-code",
                   "lines": [43, 46]
                 },
                 {

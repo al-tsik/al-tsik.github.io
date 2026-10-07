@@ -177,7 +177,7 @@ describe('referenced files', () => {
       building.model.src,
       ...building.parts.flatMap((part) => [
         ...part.drawings.map((drawing) => drawing.src),
-        ...part.dynamoScripts.flatMap((script) => [script.graphImage.src, script.pythonFile]),
+        ...part.dynamoScripts.map((script) => script.graphImage.src),
       ]),
       ...figures.flatMap(figureFiles),
     ].filter((path): path is string => path !== undefined)
