@@ -159,8 +159,11 @@ describe('displayedLineKeys', () => {
     expect(displayedLineKeys(null, 'roof', random)).toEqual(['roof'])
   })
 
-  it('lets a hovered line replace whatever is shown', () => {
-    expect(displayedLineKeys('detail', 'roof', random)).toEqual(['detail'])
+  it('lets a hovered line replace the random lines', () => {
     expect(displayedLineKeys('detail', null, random)).toEqual(['detail'])
+  })
+
+  it('keeps the pinned figure while other lines are hovered', () => {
+    expect(displayedLineKeys('detail', 'roof', random)).toEqual(['roof'])
   })
 })
