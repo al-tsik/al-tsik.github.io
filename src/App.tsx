@@ -31,7 +31,6 @@ import {
   type LineFigure,
   type LinkTarget,
 } from './lib/figureVisibility'
-import { suppressPreviewsWhileScrolling } from './state/hoverIntent'
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the functions are stable across renders.
@@ -54,7 +53,6 @@ function App() {
   const onBulletFocus = (key: string) => {
     const next = nextFocus(focusedKey, key, bulletIndex)
     focusBullet(next)
-    suppressPreviewsWhileScrolling()
     // Next frame: pinning can change the layout above the line (e.g. the
     // mobile hero figure goes away), so measure after React has re-rendered.
     if (next) requestAnimationFrame(() => scrollToLine(next))
@@ -69,7 +67,6 @@ function App() {
 
     openFigure(null)
     focusBullet(link.key)
-    suppressPreviewsWhileScrolling()
     // After the overlay has closed: closing a <dialog> returns focus to the
     // button that opened it, and that focus scroll would cancel ours.
     requestAnimationFrame(() => scrollToLine(link.key))

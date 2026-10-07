@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { scrollToLine } from '../features/cv/scrollToLine'
 import { readUrlState, writeUrlState } from '../lib/urlState'
-import { suppressPreviewsWhileScrolling } from '../state/hoverIntent'
 import { useSelectionStore } from '../state/selectionStore'
 
 /**
@@ -23,7 +22,6 @@ export function useUrlStateSync(
     const { bullet, figure } = readUrlState(window.location.search, isBullet, isFigure)
     if (bullet) {
       focusBullet(bullet)
-      suppressPreviewsWhileScrolling()
       requestAnimationFrame(() => scrollToLine(bullet))
     }
     if (figure) openFigure(figure)
