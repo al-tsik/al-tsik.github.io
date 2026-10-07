@@ -8,6 +8,7 @@ type PartsLegendProps = {
 /**
  * The drawing key: a numbered list of parts overlaid on the viewer. It is
  * also the keyboard and screen-reader alternative to clicking the model.
+ * z-[11] keeps it above drei <Html> labels, which use z-index 0-10.
  */
 export function PartsLegend({ parts }: PartsLegendProps) {
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
@@ -18,7 +19,7 @@ export function PartsLegend({ parts }: PartsLegendProps) {
   return (
     <nav
       aria-label="Building parts"
-      className="absolute bottom-4 left-4 border border-line bg-paper/90 p-3 backdrop-blur"
+      className="absolute bottom-4 left-4 z-[11] border border-line bg-paper/90 p-3 backdrop-blur"
     >
       <p className="mb-2 font-mono text-[10px] tracking-widest text-ink-muted uppercase">Key</p>
       <ol className="space-y-0.5">

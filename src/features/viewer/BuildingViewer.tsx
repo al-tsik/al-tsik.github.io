@@ -14,6 +14,8 @@ type BuildingViewerProps = {
   /** Path to the .glb model in public/. */
   modelSrc: string
   parts: BuildingPart[]
+  /** Pixels covered on the right while a part is selected (details panel). */
+  selectionInsetPx?: number
 }
 
 /** Hooks that use the R3F context must render inside <Canvas>. */
@@ -23,7 +25,7 @@ function AutoOrbit({ enabled }: { enabled: boolean }) {
 }
 
 /** Interactive 3D view of the building, shown in the left pane. */
-export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
+export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingViewerProps) {
   const reducedMotion = usePrefersReducedMotion()
   const select = useSelectionStore((state) => state.select)
   const hasSelection = useSelectionStore((state) => state.selectedPartId !== null)
@@ -55,7 +57,7 @@ export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
         <directionalLight position={[12, 4, -6]} intensity={0.3} />
 
         <Suspense fallback={<ModelLoader />}>
-          <BuildingModel src={modelSrc} parts={parts} />
+          <BuildingModel src={modelSrc} parts={parts} selectionInsetPx={selectionInsetPx} />
         </Suspense>
       </Canvas>
       <PartsLegend parts={parts} />

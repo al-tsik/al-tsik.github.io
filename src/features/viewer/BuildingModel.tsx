@@ -52,18 +52,20 @@ function useModelMeshes(src: string, index: MeshPartIndex): ModelMesh[] {
 type BuildingModelProps = {
   src: string
   parts: BuildingPart[]
+  /** Pixels covered on the right while a part is selected (details panel). */
+  selectionInsetPx?: number
 }
 
 /**
  * Renders the building model as a white card model with black edges,
  * ignoring the file's own materials so any export gets the same look.
  */
-export function BuildingModel({ src, parts }: BuildingModelProps) {
+export function BuildingModel({ src, parts, selectionInsetPx = 0 }: BuildingModelProps) {
   const index = useMemo(() => createMeshPartIndex(parts), [parts])
   const meshes = useModelMeshes(src, index)
   const bounds = useMemo(() => computeModelBounds(meshes), [meshes])
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
-  useCameraFraming(bounds, selectedPartId)
+  useCameraFraming(bounds, selectedPartId, selectionInsetPx)
 
   return (
     <group>

@@ -8,6 +8,7 @@ import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
+import { PANEL_INSET_PX, PartDetailsPanel } from './features/panel/PartDetailsPanel'
 import { BuildingViewer } from './features/viewer/BuildingViewer'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
 import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
@@ -24,7 +25,18 @@ function App() {
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <SplitLayout aside={<BuildingViewer modelSrc={building.model.src} parts={building.parts} />}>
+      <SplitLayout
+        aside={
+          <div className="relative h-full">
+            <BuildingViewer
+              modelSrc={building.model.src}
+              parts={building.parts}
+              selectionInsetPx={PANEL_INSET_PX}
+            />
+            <PartDetailsPanel parts={building.parts} />
+          </div>
+        }
+      >
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} highlightPartId={selectedPartId} />
