@@ -372,6 +372,10 @@
               "type": "string"
             },
             "description": "Software or skills, e.g. [\"Revit\", \"Dynamo\"]."
+          },
+          "note": {
+            "description": "Shown in brackets after the items, e.g. \"also C++, Lua\".",
+            "type": "string"
           }
         },
         "required": [

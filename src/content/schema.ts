@@ -128,6 +128,7 @@ export const EducationSchema = z.object({
 export const SkillGroupSchema = z.object({
   group: z.string().describe('E.g. "BIM", "Computational", "Visualisation".'),
   items: z.array(z.string()).describe('Software or skills, e.g. ["Revit", "Dynamo"].'),
+  note: z.string().optional().describe('Shown in brackets after the items, e.g. "also C++, Lua".'),
 })
 
 export const CertificationSchema = z.object({

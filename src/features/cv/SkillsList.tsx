@@ -12,7 +12,10 @@ export function SkillsList({ skills }: SkillsListProps) {
         {skills.map((group) => (
           <div key={group.group} className="grid gap-x-6 sm:grid-cols-[11rem_1fr]">
             <dt className="text-ink-muted italic">{group.group}</dt>
-            <dd>{group.items.join(' · ')}</dd>
+            <dd>
+              {group.items.join(' · ')}
+              {group.note && <span className="text-ink-muted"> ({group.note})</span>}
+            </dd>
           </div>
         ))}
       </dl>
