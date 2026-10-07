@@ -136,22 +136,9 @@
           "items": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "level": {
-                  "description": "Proficiency from 1 to 5.",
-                  "type": "integer",
-                  "minimum": 1,
-                  "maximum": 5
-                }
-              },
-              "required": [
-                "name"
-              ]
-            }
+              "type": "string"
+            },
+            "description": "Software or skills, e.g. [\"Revit\", \"Dynamo\"]."
           }
         },
         "required": [

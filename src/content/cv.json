@@ -68,35 +68,32 @@
   "skills": [
     {
       "group": "BIM",
-      "items": [
-        { "name": "Revit", "level": 5 },
-        { "name": "Navisworks", "level": 3 },
-        { "name": "IFC workflows", "level": 3 }
-      ]
+      "items": ["Revit", "Navisworks", "IFC workflows"]
     },
     {
       "group": "Computational",
-      "items": [
-        { "name": "Dynamo", "level": 5 },
-        { "name": "Python", "level": 4 },
-        { "name": "Grasshopper", "level": 3 }
-      ]
+      "items": ["Dynamo", "Python", "Grasshopper"]
     },
     {
       "group": "Design & Visualisation",
-      "items": [
-        { "name": "AutoCAD", "level": 4 },
-        { "name": "Rhino", "level": 3 },
-        { "name": "Enscape", "level": 4 },
-        { "name": "Adobe Creative Suite", "level": 4 }
-      ]
+      "items": ["AutoCAD", "Rhino", "Enscape", "Adobe Creative Suite"]
     }
   ],
   "certifications": [
-    { "name": "Autodesk Certified Professional: Revit", "issuer": "Autodesk", "year": 2024 }
+    {
+      "name": "Autodesk Certified Professional: Revit",
+      "issuer": "Autodesk",
+      "year": 2024
+    }
   ],
   "languages": [
-    { "name": "English", "level": "Fluent" },
-    { "name": "Second Language", "level": "Native" }
+    {
+      "name": "English",
+      "level": "Fluent"
+    },
+    {
+      "name": "Second Language",
+      "level": "Native"
+    }
   ]
 }
