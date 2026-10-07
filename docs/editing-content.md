@@ -50,6 +50,37 @@ In `cv.json`:
 - A section with no entries (e.g. `"certifications": []`) is left out, and
   the others are renumbered.
 
+## Developer, architect or both
+
+The toggle under the contact line shows the CV as a developer's, an
+architect's, or both (the default). Tag what belongs to one side with `for`.
+Anything untagged shows in every view:
+
+```jsonc
+{
+  "id": "fch-part-1",
+  "role": "Architectural Assistant (Part 1)",
+  "for": ["architect"], // the whole role
+  "bullets": [
+    { "text": "Built a PDF review tool…", "for": ["developer"] }, // one bullet
+    { "text": "Provided BIM support…" }, // both views
+  ],
+}
+```
+
+- `for` works on roles, bullets, skill groups and projects.
+- A role whose bullets are all hidden is hidden too. A bullet tagged for a
+  view its role never shows in fails `npm run check`.
+- Figure numbers run 1, 2, 3… in each view.
+- In `profile.json`, `views` gives a view its own `role` and `summary`.
+  Whatever a view leaves out uses the top-level values:
+
+```jsonc
+"views": {
+  "architect": { "role": "Architectural Designer", "summary": "…" },
+}
+```
+
 ## CV lines and figures
 
 Every bullet and sub-bullet is a **line**, and a line can have **one** figure,
@@ -178,7 +209,8 @@ so they line up with the model. Show them through a sub-bullet view:
 
 The address bar mirrors the state, so any view can be shared:
 `/?b=<bullet id>` focuses a bullet or sub-bullet, and `&fig=<figure id>` opens
-a figure in the overlay.
+a figure in the overlay. `?cv=developer` or `?cv=architect` opens that view,
+e.g. to send a developer-only CV with an application.
 
 ## Publishing
 
