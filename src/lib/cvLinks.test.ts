@@ -11,8 +11,8 @@ const job: Experience = {
   end: 'present',
   descriptor: '',
   bullets: [
-    { text: 'Roof and facade details', partIds: ['roof', 'facade'], children: [] },
-    { text: 'Coordination meetings', partIds: [], children: [] },
+    { text: 'Roof and facade details', partIds: ['roof', 'facade'], figures: [], children: [] },
+    { text: 'Coordination meetings', partIds: [], figures: [], children: [] },
   ],
 }
 

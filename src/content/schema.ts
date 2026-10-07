@@ -37,9 +37,49 @@ export const ProfileSchema = z.object({
 
 // ─── CV ─────────────────────────────────────────────────────────────────────
 
+/** A percentage (0–100) of a figure's width or height. */
+const Percent = z.number().min(0).max(100)
+
+/**
+ * How a sub-bullet sets up one figure. Only the fields that suit the figure's
+ * type apply (checked by the content tests):
+ * model: part, drawing, azimuth, elevation, zoom · gallery: image ·
+ * video: time, until · animation: marker · drawing/image: region ·
+ * dynamo: region, lines.
+ */
+export const FigureViewSchema = z.object({
+  figure: Id.describe('Id of the figure in figures.json.'),
+  part: Id.optional().describe('Model: building part to highlight.'),
+  drawing: Id.optional().describe('Model: drawing (from building.json) to show on the model.'),
+  azimuth: z.number().optional().describe('Model: camera angle around the building, in degrees.'),
+  elevation: z
+    .number()
+    .min(15)
+    .max(60)
+    .optional()
+    .describe('Model: camera angle above the horizon, in degrees (15–60).'),
+  zoom: z.number().positive().optional().describe('Model: zoom multiplier, e.g. 1.5.'),
+  image: z.number().int().min(0).optional().describe('Gallery: index of the image to show.'),
+  time: z.number().min(0).optional().describe('Video: start time in seconds.'),
+  until: z.number().min(0).optional().describe('Video: pause at this time, in seconds.'),
+  marker: z.string().optional().describe('Animation: Lottie marker name to play.'),
+  region: z
+    .tuple([Percent, Percent, Percent, Percent])
+    .optional()
+    .describe('Drawing/image/dynamo: zoom to [x, y, width, height] in % of the figure.'),
+  lines: z
+    .tuple([z.number().int().positive(), z.number().int().positive()])
+    .optional()
+    .describe('Dynamo: highlight Python lines [from, to].'),
+})
+
 export const SubBulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this sub-bullet.'),
   text: z.string(),
+  views: z
+    .array(FigureViewSchema)
+    .default([])
+    .describe('How selecting this sub-bullet changes the figures, e.g. rotate the model.'),
 })
 
 export const BulletSchema = z.object({
@@ -49,6 +89,10 @@ export const BulletSchema = z.object({
     .array(Id)
     .default([])
     .describe('Building part ids this bullet relates to. Selecting a part highlights it.'),
+  figures: z
+    .array(Id)
+    .default([])
+    .describe('Figures shown when this bullet is selected (ids from figures.json).'),
   children: z
     .array(SubBulletSchema)
     .default([])
@@ -173,9 +217,6 @@ export const BuildingSchema = z.object({
 
 // ─── Figures ────────────────────────────────────────────────────────────────
 
-/** A percentage (0–100) of a figure's width or height. */
-const Percent = z.number().min(0).max(100)
-
 export const CalloutSchema = z
   .object({
     number: z.number().int().positive().describe('The number printed in the marker.'),
@@ -252,3 +293,5 @@ export type DrawingPlacement = z.infer<typeof DrawingPlacementSchema>
 export type Figure = z.infer<typeof FigureSchema>
 export type FigureType = Figure['type']
 export type Callout = z.infer<typeof CalloutSchema>
+export type FigureView = z.infer<typeof FigureViewSchema>
+export type SubBullet = z.infer<typeof SubBulletSchema>

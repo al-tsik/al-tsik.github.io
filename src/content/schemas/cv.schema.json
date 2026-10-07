@@ -62,6 +62,15 @@
                     "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
                   }
                 },
+                "figures": {
+                  "default": [],
+                  "description": "Figures shown when this bullet is selected (ids from figures.json).",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                  }
+                },
                 "children": {
                   "default": [],
                   "description": "Sub-bullets: finer points under this bullet, shown indented.",
@@ -76,6 +85,117 @@
                       },
                       "text": {
                         "type": "string"
+                      },
+                      "views": {
+                        "default": [],
+                        "description": "How selecting this sub-bullet changes the figures, e.g. rotate the model.",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "figure": {
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                              "description": "Id of the figure in figures.json."
+                            },
+                            "part": {
+                              "description": "Model: building part to highlight.",
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                            },
+                            "drawing": {
+                              "description": "Model: drawing (from building.json) to show on the model.",
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                            },
+                            "azimuth": {
+                              "description": "Model: camera angle around the building, in degrees.",
+                              "type": "number"
+                            },
+                            "elevation": {
+                              "description": "Model: camera angle above the horizon, in degrees (15–60).",
+                              "type": "number",
+                              "minimum": 15,
+                              "maximum": 60
+                            },
+                            "zoom": {
+                              "description": "Model: zoom multiplier, e.g. 1.5.",
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "image": {
+                              "description": "Gallery: index of the image to show.",
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "time": {
+                              "description": "Video: start time in seconds.",
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "until": {
+                              "description": "Video: pause at this time, in seconds.",
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "marker": {
+                              "description": "Animation: Lottie marker name to play.",
+                              "type": "string"
+                            },
+                            "region": {
+                              "description": "Drawing/image/dynamo: zoom to [x, y, width, height] in % of the figure.",
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 4,
+                              "maxItems": 4
+                            },
+                            "lines": {
+                              "description": "Dynamo: highlight Python lines [from, to].",
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            }
+                          },
+                          "required": [
+                            "figure"
+                          ]
+                        }
                       }
                     },
                     "required": [

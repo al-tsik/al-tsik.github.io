@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
+import { unsupportedViewFields } from '../lib/figureViews'
 import { building, cv, figures, profile } from './index'
 import { BuildingSchema, CvSchema, FiguresSchema, ProfileSchema, type Figure } from './schema'
 
@@ -110,6 +111,51 @@ describe('figures', () => {
         expect(duplicates(figure.callouts.map((callout) => callout.number))).toEqual([])
       }
     }
+  })
+})
+
+describe('bullet figure links', () => {
+  const figureById = new Map(figures.map((figure) => [figure.id, figure]))
+  const bullets = cv.experience.flatMap((job) => job.bullets)
+  const views = bullets.flatMap((bullet) => bullet.children.flatMap((child) => child.views))
+
+  it('bullets list figures that exist', () => {
+    const unknown = bullets.flatMap((b) => b.figures).filter((id) => !figureById.has(id))
+    expect(unknown).toEqual([])
+  })
+
+  it('sub-bullet views target figures that exist', () => {
+    const unknown = views.map((view) => view.figure).filter((id) => !figureById.has(id))
+    expect(unknown).toEqual([])
+  })
+
+  it('sub-bullet views only use fields that suit the figure type', () => {
+    const misplaced = views.flatMap((view) => {
+      const figure = figureById.get(view.figure)
+      return figure
+        ? unsupportedViewFields(view, figure.type).map((field) => `${view.figure}.${field}`)
+        : []
+    })
+    expect(misplaced).toEqual([])
+  })
+
+  it('model views reference parts and drawings that exist', () => {
+    const drawingIds = building.parts.flatMap((part) => part.drawings.map((d) => d.id))
+    const broken = views.flatMap((view) => [
+      ...(view.part && !building.parts.some((part) => part.id === view.part) ? [view.part] : []),
+      ...(view.drawing && !drawingIds.includes(view.drawing) ? [view.drawing] : []),
+    ])
+    expect(broken).toEqual([])
+  })
+
+  it('gallery views pick an image that exists', () => {
+    const outOfRange = views.filter((view) => {
+      const figure = figureById.get(view.figure)
+      return (
+        figure?.type === 'gallery' && view.image !== undefined && view.image >= figure.images.length
+      )
+    })
+    expect(outOfRange).toEqual([])
   })
 })
 
