@@ -13,8 +13,8 @@ export function SiteHeader({ name, role }: SiteHeaderProps) {
       <nav aria-label="Primary">
         <ul className="flex gap-4 font-mono text-xs uppercase">
           <li>
-            <a href="#building" className="hover:text-accent">
-              Building
+            <a href="#figures" className="hover:text-accent">
+              Figures
             </a>
           </li>
           <li>

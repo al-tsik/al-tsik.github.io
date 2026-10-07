@@ -8,6 +8,8 @@ import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
+import { Outline } from './features/outline/Outline'
+import { OutlineMenu } from './features/outline/OutlineMenu'
 import { PartDetailsPanel } from './features/panel/PartDetailsPanel'
 import { BuildingViewer } from './features/viewer/BuildingViewer'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
@@ -34,7 +36,9 @@ function App() {
             <PartDetailsPanel parts={building.parts} />
           </>
         }
+        outline={<Outline experience={cv.experience} />}
       >
+        <OutlineMenu experience={cv.experience} />
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} highlightPartId={selectedPartId} />

@@ -31,7 +31,7 @@ export function DatedEntry({
   return (
     <li
       id={id}
-      className={`grid grid-cols-[5.5rem_1fr] gap-x-6 transition-opacity duration-300 ${
+      className={`grid scroll-mt-20 grid-cols-[5.5rem_1fr] gap-x-6 transition-opacity duration-300 ${
         isDimmed ? 'opacity-40' : ''
       }`}
     >
