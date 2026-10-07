@@ -35,6 +35,16 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
           </li>
         ))}
       </ul>
+
+      {profile.cvPdf && (
+        <a
+          href={profile.cvPdf}
+          download
+          className="mt-6 inline-flex items-center gap-2 border border-ink px-4 py-2 font-mono text-xs uppercase transition-colors hover:bg-ink hover:text-paper"
+        >
+          Download CV (PDF) ↓
+        </a>
+      )}
     </header>
   )
 }

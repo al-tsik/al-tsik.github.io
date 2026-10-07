@@ -8,5 +8,6 @@
   "links": [
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
     { "label": "GitHub", "url": "https://github.com/your-username" }
-  ]
+  ],
+  "cvPdf": "/cv.pdf"
 }
