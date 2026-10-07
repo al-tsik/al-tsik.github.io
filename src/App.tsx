@@ -8,18 +8,13 @@ import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
+import { BuildingViewer } from './features/viewer/BuildingViewer'
 
 function App() {
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <SplitLayout
-        aside={
-          <div className="grid h-full place-items-center font-mono text-xs text-ink-faint uppercase">
-            3D viewer placeholder
-          </div>
-        }
-      >
+      <SplitLayout aside={<BuildingViewer />}>
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} />
