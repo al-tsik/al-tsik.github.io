@@ -1,6 +1,6 @@
 import { SiteFooter } from './components/layout/SiteFooter'
+import { PaperLayout } from './components/layout/PaperLayout'
 import { SiteHeader } from './components/layout/SiteHeader'
-import { SplitLayout } from './components/layout/SplitLayout'
 import { building, cv, profile } from './content'
 import { CertificationsList } from './features/cv/CertificationsList'
 import { EducationList } from './features/cv/EducationList'
@@ -8,7 +8,7 @@ import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
-import { PANEL_INSET_PX, PartDetailsPanel } from './features/panel/PartDetailsPanel'
+import { PartDetailsPanel } from './features/panel/PartDetailsPanel'
 import { BuildingViewer } from './features/viewer/BuildingViewer'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
 import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
@@ -25,16 +25,14 @@ function App() {
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <SplitLayout
-        aside={
-          <div className="relative h-full">
-            <BuildingViewer
-              modelSrc={building.model.src}
-              parts={building.parts}
-              selectionInsetPx={PANEL_INSET_PX}
-            />
+      <PaperLayout
+        figures={
+          <>
+            <div className="relative h-[60dvh] lg:h-[60%]">
+              <BuildingViewer modelSrc={building.model.src} parts={building.parts} />
+            </div>
             <PartDetailsPanel parts={building.parts} />
-          </div>
+          </>
         }
       >
         <main id="cv" className="py-10">
@@ -46,7 +44,7 @@ function App() {
           <LanguagesList languages={cv.languages} />
         </main>
         <SiteFooter name={profile.name} />
-      </SplitLayout>
+      </PaperLayout>
     </div>
   )
 }

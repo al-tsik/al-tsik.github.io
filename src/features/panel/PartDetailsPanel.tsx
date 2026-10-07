@@ -5,18 +5,11 @@ import { DrawingList } from './DrawingList'
 import { DynamoScriptCard } from './DynamoScriptCard'
 import { ImageGallery } from './ImageGallery'
 
-/**
- * Screen space the panel covers on the right of the viewer: its width (w-80)
- * plus its right margin and a matching gap. The viewer frames the selected
- * part in the remaining space.
- */
-export const PANEL_INSET_PX = 320 + 16 + 16
-
 type PartDetailsPanelProps = {
   parts: BuildingPart[]
 }
 
-/** Details for the selected building part, shown over the 3D viewer. */
+/** Details for the selected building part, shown below the 3D viewer. */
 export function PartDetailsPanel({ parts }: PartDetailsPanelProps) {
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
   const select = useSelectionStore((state) => state.select)
@@ -31,8 +24,7 @@ export function PartDetailsPanel({ parts }: PartDetailsPanelProps) {
       // Re-mount per part so the entrance animation replays on each selection.
       key={part.id}
       aria-labelledby={headingId}
-      // z-[11] keeps it above drei <Html> labels, which use z-index 0-10.
-      className="absolute top-4 right-4 bottom-4 z-[11] flex w-80 flex-col overflow-hidden border border-line bg-paper/95 backdrop-blur motion-safe:animate-panel-in"
+      className="m-4 flex flex-col border border-line bg-paper motion-safe:animate-panel-in lg:mx-0"
     >
       <header className="flex items-start gap-3 border-b border-line p-4">
         <span
@@ -59,7 +51,7 @@ export function PartDetailsPanel({ parts }: PartDetailsPanelProps) {
         </button>
       </header>
 
-      <div className="flex-1 space-y-6 overflow-y-auto p-4">
+      <div className="space-y-6 p-4">
         <p className="text-sm leading-relaxed">{part.summary}</p>
 
         {part.drawings.length > 0 && (
