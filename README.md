@@ -1,32 +1,56 @@
-# React + TypeScript + Vite
+# Architecture Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interactive CV and portfolio. Its centrepiece is an explorable 3D model of a building I worked on.
+Click any part of the building to see the Dynamo scripts, detail drawings and design work behind it.
+Section and plan drawings are overlaid directly on the model.
 
-Currently, two official plugins are available:
+> Status: template. All content is placeholder data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features (planned)
 
-## React Compiler
+- **CV**: profile, experience timeline, skills/software, education, PDF download
+- **3D building explorer**: isometric view that orbits when idle; hover and click parts to inspect them
+- **Part details**: Dynamo scripts (with Python preview), detail drawings and image gallery
+- **Drawings on the model**: 2D sections placed in model space, with the model clipped at the cut
+- **Deep links**: `?part=roof` opens the site with a part selected
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the Oxlint configuration
+| Concern | Choice                                |
+| ------- | ------------------------------------- |
+| UI      | React 19 + TypeScript                 |
+| Build   | Vite                                  |
+| 3D      | three.js via React Three Fiber + drei |
+| Styling | Tailwind CSS                          |
+| Quality | oxlint, Prettier, Vitest              |
+| Hosting | GitHub Pages (via GitHub Actions)     |
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Getting started
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+Requires Node 22 (see `.nvmrc`).
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Scripts
+
+| Script                 | What it does                         |
+| ---------------------- | ------------------------------------ |
+| `npm run dev`          | Start the dev server with hot reload |
+| `npm run build`        | Type-check and build to `dist/`      |
+| `npm run preview`      | Serve the production build locally   |
+| `npm run lint`         | Lint with oxlint                     |
+| `npm run typecheck`    | Run the TypeScript compiler          |
+| `npm run format`       | Format all files with Prettier       |
+| `npm run format:check` | Check formatting (used in CI)        |
+
+## Editing content
+
+All portfolio content lives in `src/content/` (typed data) and `public/` (models, drawings, files).
+You should not need to touch component code to update the portfolio.
+
+## License
+
+Source code: [MIT](LICENSE). Portfolio content (drawings, models, images, CV): all rights reserved.
