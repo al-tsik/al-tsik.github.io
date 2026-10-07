@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { Experience } from '../../content/schema'
 import { isBulletLinked, isExperienceLinked } from '../../lib/cvLinks'
+import { BulletItem } from './BulletItem'
 import { CvSection } from './CvSection'
 import { DatedEntry } from './DatedEntry'
 
@@ -62,25 +63,13 @@ export function ExperienceTimeline({
               </p>
 
               <ul className="mt-3 space-y-2 font-serif text-body text-ink-muted">
-                {job.bullets.map((bullet) => {
-                  const linked = isBulletLinked(bullet, highlightPartId)
-
-                  return (
-                    <li key={bullet.text} data-linked={linked} className="flex gap-3">
-                      <span
-                        aria-hidden="true"
-                        className={linked ? 'text-accent' : 'text-ink-faint'}
-                      >
-                        —
-                      </span>
-                      {linked ? (
-                        <mark className="bg-accent-soft text-ink">{bullet.text}</mark>
-                      ) : (
-                        <span>{bullet.text}</span>
-                      )}
-                    </li>
-                  )
-                })}
+                {job.bullets.map((bullet) => (
+                  <BulletItem
+                    key={bullet.id ?? bullet.text}
+                    bullet={bullet}
+                    isLinked={isBulletLinked(bullet, highlightPartId)}
+                  />
+                ))}
               </ul>
             </DatedEntry>
           )

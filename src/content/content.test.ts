@@ -27,6 +27,13 @@ describe('content integrity', () => {
     expect(duplicates(building.parts.flatMap((p) => p.drawings.map((d) => d.id)))).toEqual([])
   })
 
+  it('has unique bullet and sub-bullet ids', () => {
+    const ids = cv.experience.flatMap((job) =>
+      job.bullets.flatMap((bullet) => [bullet.id, ...bullet.children.map((child) => child.id)]),
+    )
+    expect(duplicates(ids.filter((id) => id !== undefined))).toEqual([])
+  })
+
   it('has unique part label numbers', () => {
     expect(duplicates(building.parts.map((part) => part.number))).toEqual([])
   })

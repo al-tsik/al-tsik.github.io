@@ -45,6 +45,11 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "description": "Needed only when something links to this bullet.",
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                },
                 "text": {
                   "type": "string"
                 },
@@ -55,6 +60,27 @@
                   "items": {
                     "type": "string",
                     "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                  }
+                },
+                "children": {
+                  "default": [],
+                  "description": "Sub-bullets: finer points under this bullet, shown indented.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "description": "Needed only when something links to this sub-bullet.",
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "text"
+                    ]
                   }
                 }
               },

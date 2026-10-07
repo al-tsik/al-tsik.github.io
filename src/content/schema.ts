@@ -37,12 +37,22 @@ export const ProfileSchema = z.object({
 
 // ─── CV ─────────────────────────────────────────────────────────────────────
 
+export const SubBulletSchema = z.object({
+  id: Id.optional().describe('Needed only when something links to this sub-bullet.'),
+  text: z.string(),
+})
+
 export const BulletSchema = z.object({
+  id: Id.optional().describe('Needed only when something links to this bullet.'),
   text: z.string(),
   partIds: z
     .array(Id)
     .default([])
     .describe('Building part ids this bullet relates to. Selecting a part highlights it.'),
+  children: z
+    .array(SubBulletSchema)
+    .default([])
+    .describe('Sub-bullets: finer points under this bullet, shown indented.'),
 })
 
 export const ExperienceSchema = z.object({

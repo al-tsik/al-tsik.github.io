@@ -11,16 +11,49 @@
       "descriptor": "Design and delivery of a 4-storey mixed-use building from concept to construction documents.",
       "bullets": [
         {
+          "id": "roof-facade-details",
           "text": "Developed the roof and facade details, coordinating drainage and parapet build-ups with consultants.",
-          "partIds": ["roof", "facade"]
+          "partIds": ["roof", "facade"],
+          "children": [
+            {
+              "id": "roof-parapet",
+              "text": "Roof parapet and drainage build-up."
+            },
+            {
+              "id": "panel-joints",
+              "text": "Rainscreen panel joints and fixings."
+            }
+          ]
         },
         {
+          "id": "facade-scripts",
           "text": "Wrote Dynamo scripts that place and number facade panels, cutting a week of manual work per issue.",
-          "partIds": ["facade"]
+          "partIds": ["facade"],
+          "children": [
+            {
+              "id": "panel-numbering",
+              "text": "Panel numbering by elevation, written back to the model."
+            },
+            {
+              "id": "schedule-export",
+              "text": "Automatic panel schedule export for the fabricator."
+            }
+          ]
         },
         {
+          "id": "structure-model",
           "text": "Modelled the structural grid and slab edges, keeping the Revit model in sync with the engineer's analysis model.",
-          "partIds": ["floors", "core"]
+          "partIds": ["floors", "core"],
+          "children": [
+            {
+              "id": "core-section",
+              "text": "Section through the core and slabs."
+            },
+            {
+              "id": "level-02-plan",
+              "text": "Level 02 plan coordination."
+            }
+          ]
         },
         {
           "text": "Led weekly BIM coordination meetings and clash detection reviews."
