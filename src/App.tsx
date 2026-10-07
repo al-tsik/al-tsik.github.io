@@ -24,7 +24,13 @@ import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToOverview } from './hooks/useEscapeToOverview'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import { useUrlStateSync } from './hooks/useUrlStateSync'
-import { nextFocus, resolveLink, type LineFigure, type LinkTarget } from './lib/figureVisibility'
+import {
+  figureForLine,
+  nextFocus,
+  resolveLink,
+  type LineFigure,
+  type LinkTarget,
+} from './lib/figureVisibility'
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the functions are stable across renders.
@@ -47,7 +53,9 @@ function App() {
   const onBulletFocus = (key: string) => {
     const next = nextFocus(focusedKey, key, bulletIndex)
     focusBullet(next)
-    if (next) scrollToLine(next)
+    // Next frame: pinning can change the layout above the line (e.g. the
+    // mobile hero figure goes away), so measure after React has re-rendered.
+    if (next) requestAnimationFrame(() => scrollToLine(next))
   }
 
   // A numbered marker on a figure leads to a bullet (focus it and bring it
@@ -74,15 +82,18 @@ function App() {
     />
   )
 
-  // Desktop: everything in the side column. Mobile: the model as a hero until
-  // a bullet is focused, then that bullet's figures inline under it. Only one
-  // copy is ever mounted (no hidden duplicate canvases or videos).
+  // Desktop: figures in the margin beside their lines. Mobile: one figure as a
+  // hero until a line is pinned, then that line's figure inline under it. Only
+  // one copy is ever mounted (no hidden duplicate canvases or videos).
   const columnFigures = isDesktop
     ? renderFigures(displayedLines)
     : focusedMainKey === null
       ? renderFigures(displayedLines.slice(0, 1))
       : undefined
-  const inlineFigures = isDesktop ? undefined : renderFigures(displayedLines, true)
+  // Mobile has no hover: only the pinned line's figure, right under that line.
+  const focusedEntry = focusedKey ? bulletIndex.get(focusedKey) : undefined
+  const pinnedLine = focusedEntry ? figureForLine(focusedEntry) : null
+  const inlineFigures = isDesktop || !pinnedLine ? undefined : renderFigures([pinnedLine], true)
 
   return (
     <div id="top">

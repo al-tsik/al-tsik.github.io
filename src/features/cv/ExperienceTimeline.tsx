@@ -19,7 +19,7 @@ type ExperienceTimelineProps = {
   /** The main bullet of the focus (the parent when a sub-bullet is focused). */
   focusedMainKey: string | null
   onBulletFocus: (key: string) => void
-  /** Figures rendered under the focused bullet (mobile layout). */
+  /** The pinned line's figure, rendered under that line (mobile layout). */
   inlineFigures?: ReactNode
 }
 

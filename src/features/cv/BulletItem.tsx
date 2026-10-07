@@ -14,7 +14,7 @@ type BulletItemProps = {
   /** Fig. numbers by figure id, for cross-references in the text. */
   numbers: ReadonlyMap<string, number>
   onFocus: (key: string) => void
-  /** Figures shown inline under this bullet (mobile, when it holds the focus). */
+  /** The pinned line's figure, shown right under that line (mobile layout). */
   inlineFigures?: ReactNode
 }
 
@@ -81,6 +81,7 @@ export function BulletItem({
           </span>
         )}
       </div>
+      {isFocused && inlineFigures}
 
       {bullet.children.length > 0 && (
         <ul className="mt-0.5 ml-4">
@@ -89,37 +90,34 @@ export function BulletItem({
             const isSubFocused = focusedKey === key
 
             return (
-              <li
-                key={key}
-                id={`bullet-${key}`}
-                className="flex scroll-mt-32 gap-2 py-0.5 text-[0.95em]"
-              >
-                <span
-                  aria-hidden="true"
-                  className={isSubFocused ? 'text-accent' : 'text-ink-faint'}
-                >
-                  ◦
-                </span>
-                {interactive || lineNumbers.has(key) ? (
-                  <button
-                    type="button"
-                    aria-pressed={isSubFocused}
-                    onClick={() => onFocus(key)}
-                    {...previewHandlers(key)}
-                    className={`${textButton} ${isSubFocused ? 'text-accent' : ''}`}
+              <li key={key} id={`bullet-${key}`} className="scroll-mt-32 py-0.5 text-[0.95em]">
+                <div className="flex gap-2">
+                  <span
+                    aria-hidden="true"
+                    className={isSubFocused ? 'text-accent' : 'text-ink-faint'}
                   >
+                    ◦
+                  </span>
+                  {interactive || lineNumbers.has(key) ? (
+                    <button
+                      type="button"
+                      aria-pressed={isSubFocused}
+                      onClick={() => onFocus(key)}
+                      {...previewHandlers(key)}
+                      className={`${textButton} ${isSubFocused ? 'text-accent' : ''}`}
+                    >
+                      <FigureRefText text={child.text} numbers={numbers} />
+                    </button>
+                  ) : (
                     <FigureRefText text={child.text} numbers={numbers} />
-                  </button>
-                ) : (
-                  <FigureRefText text={child.text} numbers={numbers} />
-                )}
+                  )}
+                </div>
+                {isSubFocused && inlineFigures}
               </li>
             )
           })}
         </ul>
       )}
-
-      {inlineFigures}
     </li>
   )
 }
