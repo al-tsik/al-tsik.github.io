@@ -1,7 +1,7 @@
 import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
 import { SplitLayout } from './components/layout/SplitLayout'
-import { cv, profile } from './content'
+import { building, cv, profile } from './content'
 import { CertificationsList } from './features/cv/CertificationsList'
 import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
@@ -14,7 +14,7 @@ function App() {
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <SplitLayout aside={<BuildingViewer />}>
+      <SplitLayout aside={<BuildingViewer modelSrc={building.model.src} />}>
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} />
