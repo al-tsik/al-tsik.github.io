@@ -1,6 +1,6 @@
-import { CvSection } from '../../components/CvSection'
 import type { Education } from '../../content/schema'
 import { formatDateRange } from '../../lib/dates'
+import { CvSection } from './CvSection'
 
 type EducationListProps = {
   education: Education[]
@@ -8,7 +8,7 @@ type EducationListProps = {
 
 export function EducationList({ education }: EducationListProps) {
   return (
-    <CvSection id="education" title="Education">
+    <CvSection id="education">
       <ul className="space-y-6">
         {education.map((entry) => (
           <li key={entry.id}>

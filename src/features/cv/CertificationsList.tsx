@@ -1,5 +1,5 @@
-import { CvSection } from '../../components/CvSection'
 import type { Certification } from '../../content/schema'
+import { CvSection } from './CvSection'
 
 type CertificationsListProps = {
   certifications: Certification[]
@@ -7,7 +7,7 @@ type CertificationsListProps = {
 
 export function CertificationsList({ certifications }: CertificationsListProps) {
   return (
-    <CvSection id="certifications" title="Certifications">
+    <CvSection id="certifications">
       <ul className="space-y-3 text-sm">
         {certifications.map((cert) => (
           <li key={cert.name} className="flex items-baseline justify-between gap-4">

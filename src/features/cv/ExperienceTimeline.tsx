@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { CvSection } from '../../components/CvSection'
 import type { Experience } from '../../content/schema'
 import { isBulletLinked, isExperienceLinked } from '../../lib/cvLinks'
 import { formatDateRange, formatDuration } from '../../lib/dates'
+import { CvSection } from './CvSection'
 
 /** Matches the `lg` breakpoint where the viewer and CV sit side by side. */
 const SPLIT_LAYOUT_QUERY = '(min-width: 1024px)'
@@ -33,7 +33,7 @@ export function ExperienceTimeline({
   const hasHighlight = highlightPartId !== null
 
   return (
-    <CvSection id="experience" title="Experience">
+    <CvSection id="experience">
       <ol ref={listRef} className="space-y-8 border-l border-line">
         {experience.map((job) => {
           const jobLinked = isExperienceLinked(job, highlightPartId)

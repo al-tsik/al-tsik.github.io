@@ -1,5 +1,5 @@
-import { CvSection } from '../../components/CvSection'
 import type { SkillGroup } from '../../content/schema'
+import { CvSection } from './CvSection'
 
 type SkillsListProps = {
   skills: SkillGroup[]
@@ -7,7 +7,7 @@ type SkillsListProps = {
 
 export function SkillsList({ skills }: SkillsListProps) {
   return (
-    <CvSection id="skills" title="Software & Skills">
+    <CvSection id="skills">
       <dl className="space-y-4">
         {skills.map((group) => (
           <div key={group.group} className="grid gap-2 sm:grid-cols-[9rem_1fr]">
