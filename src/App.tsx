@@ -1,7 +1,8 @@
 import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
 import { SplitLayout } from './components/layout/SplitLayout'
-import { profile } from './content'
+import { cv, profile } from './content'
+import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { ProfileHero } from './features/cv/ProfileHero'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       >
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
+          <ExperienceTimeline experience={cv.experience} />
         </main>
         <SiteFooter name={profile.name} />
       </SplitLayout>
