@@ -1,1 +1,37 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+/*
+ * Design tokens. Tailwind v4 turns each variable into utilities,
+ * e.g. --color-ink → text-ink / bg-ink / border-ink, --font-mono → font-mono.
+ * Monochrome "paper and linework" palette with a single accent used
+ * for hover/selection in both the 3D viewer and the CV.
+ */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --color-paper: #fafaf8;
+  --color-surface: #ffffff;
+  --color-ink: #141414;
+  --color-ink-muted: #6b6b6b;
+  --color-ink-faint: #a3a3a3;
+  --color-line: #e2e2de;
+  --color-accent: #ff5a1f;
+  --color-accent-soft: #fff1ea;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+}
