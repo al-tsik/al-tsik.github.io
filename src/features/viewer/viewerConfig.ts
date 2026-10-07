@@ -18,4 +18,9 @@ export const viewerConfig = {
   /** Orthographic zoom limits (pixels per world unit). */
   minZoom: 4,
   maxZoom: 120,
+
+  /** Idle rotation: one full turn per this many seconds. */
+  autoOrbitSecondsPerTurn: 60,
+  /** How long after the user lets go before idle rotation resumes. */
+  autoOrbitResumeDelayMs: 3000,
 }
