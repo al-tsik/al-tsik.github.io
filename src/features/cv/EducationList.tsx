@@ -16,11 +16,16 @@ export function EducationList({ education }: EducationListProps) {
             id={`education-${entry.id}`}
             start={entry.start}
             end={entry.end}
+            heading={
+              <h3 className="font-serif text-base leading-snug">
+                <span className="font-bold">{entry.degree}</span>
+                <span className="text-ink-muted">
+                  {' | '}
+                  {entry.school}, {entry.location}
+                </span>
+              </h3>
+            }
           >
-            <h3 className="font-serif text-xl leading-snug font-medium">{entry.degree}</h3>
-            <p className="font-serif text-ink-muted italic">
-              {entry.school}, {entry.location}
-            </p>
             {entry.notes && <p className="mt-2 font-serif text-body">{entry.notes}</p>}
           </DatedEntry>
         ))}

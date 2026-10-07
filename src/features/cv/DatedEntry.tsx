@@ -5,7 +5,9 @@ type DatedEntryProps = {
   id: string
   start: string
   end: string
-  /** Show the computed duration under the dates (e.g. for jobs). */
+  /** The entry's title line (e.g. "Role | Company"); dates sit to its right. */
+  heading: ReactNode
+  /** Show the computed duration as a tooltip on the dates (e.g. for jobs). */
   showDuration?: boolean
   /** Accent the timeline node (e.g. when related to the current selection). */
   isActive?: boolean
@@ -13,33 +15,27 @@ type DatedEntryProps = {
 }
 
 /**
- * One entry on a paper-style timeline: dates in a mono gutter on the left,
- * a hairline connector with a square node, and the content on the right.
+ * One entry on a paper-style timeline: a hairline connector with a square
+ * node, then a title line with the dates right-aligned, then the content.
  * Render inside an <ol> so the connector runs between consecutive entries.
  */
 export function DatedEntry({
   id,
   start,
   end,
+  heading,
   showDuration = false,
   isActive = false,
   children,
 }: DatedEntryProps) {
   return (
     // minmax(0, 1fr): let wide content (figures, long words) shrink instead of
-    // pushing the page sideways. Dates stack above the entry on small screens.
+    // pushing the page sideways.
     <li
       id={id}
       className="grid scroll-mt-20 grid-cols-[minmax(0,1fr)] sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-x-6"
     >
-      <p className="pb-1 font-mono text-[11px] leading-snug text-ink-muted sm:pt-1.5 sm:pb-0 sm:text-right">
-        {formatYearMonth(start)} —
-        <br />
-        {formatYearMonth(end)}
-        {showDuration && (
-          <span className="mt-1 block text-ink-faint">{formatDuration(start, end)}</span>
-        )}
-      </p>
+      <span aria-hidden="true" />
 
       {/* Connector line with a square node, then the entry content. */}
       <div className="relative border-l border-line pb-10 pl-6">
@@ -49,6 +45,15 @@ export function DatedEntry({
             isActive ? 'border-accent bg-accent' : 'border-ink bg-paper'
           }`}
         />
+        <div className="flex items-baseline justify-between gap-4">
+          {heading}
+          <p
+            title={showDuration ? formatDuration(start, end) : undefined}
+            className="shrink-0 font-mono text-[11px] text-ink-muted"
+          >
+            {formatYearMonth(start)} – {formatYearMonth(end)}
+          </p>
+        </div>
         {children}
       </div>
     </li>

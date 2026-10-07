@@ -49,12 +49,16 @@ export function ExperienceTimeline({
               end={job.end}
               showDuration
               isActive={isActive}
+              heading={
+                <h3 className="font-serif text-base leading-snug">
+                  <span className="font-bold">{job.role}</span>
+                  <span className="text-ink-muted">
+                    {' | '}
+                    {job.company}, {job.location}
+                  </span>
+                </h3>
+              }
             >
-              <h3 className="font-serif text-xl leading-snug">
-                <span className="font-medium">{job.role}</span>
-                <span className="text-ink-muted">, {job.company}</span>
-              </h3>
-              <p className="font-serif text-ink-muted italic">{job.location}</p>
               <p
                 className={`mt-3 border-l-2 pl-3 font-serif text-body transition-colors ${
                   isActive ? 'border-accent' : 'border-transparent'
