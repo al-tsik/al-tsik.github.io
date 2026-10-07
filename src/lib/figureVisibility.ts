@@ -58,8 +58,8 @@ export function nextFocus(
 
 // ─── Line figures ───────────────────────────────────────────────────────────
 
-/** A figure view resolved for display: models may highlight several parts. */
-export type ResolvedView = Omit<FigureView, 'part'> & { parts?: string[] }
+/** A line's figure view, as passed to the figure renderers. */
+export type ResolvedView = FigureView
 
 /** The one figure a line shows, anchored to that line. */
 export type LineFigure = {
@@ -69,17 +69,13 @@ export type LineFigure = {
   view: ResolvedView
 }
 
-function resolveView({ part, parts, ...rest }: FigureView): ResolvedView {
-  return { ...rest, parts: parts ?? (part ? [part] : undefined) }
-}
-
 /**
  * The figure a line shows. A sub-bullet without its own figure falls back to
  * its parent's, still anchored to the sub-bullet.
  */
 export function figureForLine(entry: BulletEntry): LineFigure | null {
   const view = entry.sub ? (entry.sub.figure ?? entry.bullet.figure) : entry.bullet.figure
-  return view ? { key: entry.key, figureId: view.figure, view: resolveView(view) } : null
+  return view ? { key: entry.key, figureId: view.figure, view } : null
 }
 
 /**

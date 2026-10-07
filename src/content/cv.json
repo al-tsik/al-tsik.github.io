@@ -17,27 +17,13 @@
             "figure": "building-model",
             "parts": ["roof", "facade"]
           },
-          "partIds": ["roof", "facade"],
-          "figures": ["roof-parapet-detail", "construction-details"],
           "children": [
             {
               "id": "roof-parapet",
               "text": "Roof parapet and drainage build-up.",
               "figure": {
                 "figure": "roof-parapet-detail"
-              },
-              "views": [
-                {
-                  "figure": "building-model",
-                  "part": "roof",
-                  "azimuth": 20,
-                  "elevation": 40
-                },
-                {
-                  "figure": "construction-details",
-                  "image": 0
-                }
-              ]
+              }
             },
             {
               "id": "panel-joints",
@@ -45,18 +31,7 @@
               "figure": {
                 "figure": "construction-details",
                 "image": 1
-              },
-              "views": [
-                {
-                  "figure": "building-model",
-                  "part": "facade",
-                  "azimuth": -30
-                },
-                {
-                  "figure": "construction-details",
-                  "image": 1
-                }
-              ]
+              }
             }
           ]
         },
@@ -66,8 +41,6 @@
           "figure": {
             "figure": "facade-panel-numbering"
           },
-          "partIds": ["facade"],
-          "figures": ["facade-panel-numbering", "facade-sequence", "panel-morph"],
           "children": [
             {
               "id": "panel-numbering",
@@ -75,22 +48,7 @@
               "figure": {
                 "figure": "panel-numbering-code",
                 "lines": [43, 46]
-              },
-              "views": [
-                {
-                  "figure": "panel-numbering-code",
-                  "lines": [43, 46]
-                },
-                {
-                  "figure": "facade-sequence",
-                  "time": 1.5,
-                  "until": 4.75
-                },
-                {
-                  "figure": "panel-morph",
-                  "marker": "numbering"
-                }
-              ]
+              }
             },
             {
               "id": "schedule-export",
@@ -98,21 +56,7 @@
               "figure": {
                 "figure": "panel-morph",
                 "marker": "schedule"
-              },
-              "views": [
-                {
-                  "figure": "facade-panel-numbering",
-                  "region": [50, 20, 50, 60]
-                },
-                {
-                  "figure": "facade-sequence",
-                  "time": 4.75
-                },
-                {
-                  "figure": "panel-morph",
-                  "marker": "schedule"
-                }
-              ]
+              }
             },
             {
               "id": "bay-preview",
@@ -121,8 +65,7 @@
                 "figure": "facade-sequence",
                 "time": 1.5,
                 "until": 4.75
-              },
-              "views": []
+              }
             }
           ]
         },
@@ -133,8 +76,6 @@
             "figure": "building-model",
             "parts": ["floors", "core"]
           },
-          "partIds": ["floors", "core"],
-          "figures": ["section-a-a", "level-slab-sync"],
           "children": [
             {
               "id": "core-section",
@@ -143,35 +84,14 @@
                 "figure": "building-model",
                 "parts": ["floors"],
                 "drawing": "section-a-a"
-              },
-              "views": [
-                {
-                  "figure": "building-model",
-                  "part": "floors",
-                  "drawing": "section-a-a"
-                },
-                {
-                  "figure": "section-a-a",
-                  "region": [35, 0, 30, 100]
-                }
-              ]
+              }
             },
             {
               "id": "level-02-plan",
               "text": "Level 02 plan coordination.",
               "figure": {
                 "figure": "plan-level-02"
-              },
-              "views": [
-                {
-                  "figure": "building-model",
-                  "part": "floors",
-                  "drawing": "plan-level-02"
-                },
-                {
-                  "figure": "plan-level-02"
-                }
-              ]
+              }
             }
           ]
         },
@@ -197,8 +117,7 @@
           "figure": {
             "figure": "building-model",
             "parts": ["foundation"]
-          },
-          "partIds": ["foundation"]
+          }
         },
         {
           "text": "Built a Dynamo graph that generates room data sheets from the model.",

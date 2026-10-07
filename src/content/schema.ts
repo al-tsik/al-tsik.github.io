@@ -53,13 +53,12 @@ const Percent = z.number().min(0).max(100)
 /**
  * How a sub-bullet sets up one figure. Only the fields that suit the figure's
  * type apply (checked by the content tests):
- * model: part, drawing, azimuth, elevation, zoom · gallery: image ·
+ * model: parts, drawing, azimuth, elevation, zoom · gallery: image ·
  * video: time, until · animation: marker · drawing/image: region ·
  * dynamo: region · code: lines.
  */
 export const FigureViewSchema = z.object({
   figure: Id.describe('Id of the figure in figures.json.'),
-  part: Id.optional().describe('Model: building part to highlight.'),
   parts: z.array(Id).optional().describe('Model: building parts to highlight.'),
   drawing: Id.optional().describe('Model: drawing (from building.json) to show on the model.'),
   azimuth: z.number().optional().describe('Model: camera angle around the building, in degrees.'),
@@ -88,24 +87,12 @@ export const SubBulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this sub-bullet.'),
   text: z.string(),
   figure: FigureViewSchema.optional().describe('The figure shown beside this line, and how.'),
-  views: z
-    .array(FigureViewSchema)
-    .default([])
-    .describe('How selecting this sub-bullet changes the figures, e.g. rotate the model.'),
 })
 
 export const BulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this bullet.'),
   text: z.string(),
   figure: FigureViewSchema.optional().describe('The figure shown beside this line, and how.'),
-  partIds: z
-    .array(Id)
-    .default([])
-    .describe('Building part ids this bullet relates to. Selecting a part highlights it.'),
-  figures: z
-    .array(Id)
-    .default([])
-    .describe('Figures shown when this bullet is selected (ids from figures.json).'),
   children: z
     .array(SubBulletSchema)
     .default([])

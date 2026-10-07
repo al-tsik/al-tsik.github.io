@@ -61,14 +61,6 @@ describe('content integrity', () => {
   it('assigns each model mesh to at most one part', () => {
     expect(duplicates(building.parts.flatMap((part) => part.meshNames))).toEqual([])
   })
-
-  it('only links CV bullets to building parts that exist', () => {
-    const unknown = cv.experience
-      .flatMap((job) => job.bullets.flatMap((bullet) => bullet.partIds))
-      .filter((id) => !partIds.includes(id))
-
-    expect(unknown).toEqual([])
-  })
 })
 
 describe('figures', () => {
@@ -148,6 +140,15 @@ describe('line figures', () => {
     expect(broken).toEqual([])
   })
 
+  it('{fig:id} references in CV text point at figures that exist', () => {
+    const texts = cv.experience.flatMap((job) => [
+      job.descriptor,
+      ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
+    ])
+    const unknown = texts.flatMap(figureRefIds).filter((id) => !figureById.has(id))
+    expect(unknown).toEqual([])
+  })
+
   it('leave no figure unreachable (from a line or a {fig:} reference)', () => {
     const texts = cv.experience.flatMap((job) => [
       job.descriptor,
@@ -158,60 +159,6 @@ describe('line figures', () => {
       ...texts.flatMap(figureRefIds),
     ])
     expect(figures.map((figure) => figure.id).filter((id) => !reachable.has(id))).toEqual([])
-  })
-})
-
-describe('bullet figure links', () => {
-  const figureById = new Map(figures.map((figure) => [figure.id, figure]))
-  const bullets = cv.experience.flatMap((job) => job.bullets)
-  const views = bullets.flatMap((bullet) => bullet.children.flatMap((child) => child.views))
-
-  it('bullets list figures that exist', () => {
-    const unknown = bullets.flatMap((b) => b.figures).filter((id) => !figureById.has(id))
-    expect(unknown).toEqual([])
-  })
-
-  it('{fig:id} references in CV text point at figures that exist', () => {
-    const texts = cv.experience.flatMap((job) => [
-      job.descriptor,
-      ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
-    ])
-    const unknown = texts.flatMap(figureRefIds).filter((id) => !figureById.has(id))
-    expect(unknown).toEqual([])
-  })
-
-  it('sub-bullet views target figures that exist', () => {
-    const unknown = views.map((view) => view.figure).filter((id) => !figureById.has(id))
-    expect(unknown).toEqual([])
-  })
-
-  it('sub-bullet views only use fields that suit the figure type', () => {
-    const misplaced = views.flatMap((view) => {
-      const figure = figureById.get(view.figure)
-      return figure
-        ? unsupportedViewFields(view, figure.type).map((field) => `${view.figure}.${field}`)
-        : []
-    })
-    expect(misplaced).toEqual([])
-  })
-
-  it('model views reference parts and drawings that exist', () => {
-    const drawingIds = building.parts.flatMap((part) => part.drawings.map((d) => d.id))
-    const broken = views.flatMap((view) => [
-      ...(view.part && !building.parts.some((part) => part.id === view.part) ? [view.part] : []),
-      ...(view.drawing && !drawingIds.includes(view.drawing) ? [view.drawing] : []),
-    ])
-    expect(broken).toEqual([])
-  })
-
-  it('gallery views pick an image that exists', () => {
-    const outOfRange = views.filter((view) => {
-      const figure = figureById.get(view.figure)
-      return (
-        figure?.type === 'gallery' && view.image !== undefined && view.image >= figure.images.length
-      )
-    })
-    expect(outOfRange).toEqual([])
   })
 })
 
