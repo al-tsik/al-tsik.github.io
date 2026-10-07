@@ -103,11 +103,8 @@ export const DynamoScriptSchema = z.object({
   id: Id,
   title: z.string(),
   description: z.string(),
-  inputs: z.array(z.string()).default([]),
-  outputs: z.array(z.string()).default([]),
-  dynFile: PublicPath.describe('The .dyn graph, offered as a download.'),
-  pythonFile: PublicPath.optional().describe('Python node source shown as a code preview.'),
-  dynamoVersion: z.string().optional(),
+  graphImage: ImageSchema.describe('Screenshot of the node graph, exported from Dynamo.'),
+  pythonFile: PublicPath.optional().describe('Python node source (.py) shown as a code preview.'),
 })
 
 export const BuildingPartSchema = z.object({

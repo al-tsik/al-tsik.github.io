@@ -109,41 +109,40 @@
                 "description": {
                   "type": "string"
                 },
-                "inputs": {
-                  "default": [],
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "outputs": {
-                  "default": [],
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "dynFile": {
-                  "type": "string",
-                  "format": "starts_with",
-                  "pattern": "^\\/.*",
-                  "description": "The .dyn graph, offered as a download."
+                "graphImage": {
+                  "type": "object",
+                  "properties": {
+                    "src": {
+                      "type": "string",
+                      "format": "starts_with",
+                      "pattern": "^\\/.*"
+                    },
+                    "alt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "src",
+                    "alt"
+                  ],
+                  "description": "Screenshot of the node graph, exported from Dynamo."
                 },
                 "pythonFile": {
-                  "description": "Python node source shown as a code preview.",
+                  "description": "Python node source (.py) shown as a code preview.",
                   "type": "string",
                   "format": "starts_with",
                   "pattern": "^\\/.*"
-                },
-                "dynamoVersion": {
-                  "type": "string"
                 }
               },
               "required": [
                 "id",
                 "title",
                 "description",
-                "dynFile"
+                "graphImage"
               ]
             }
           },

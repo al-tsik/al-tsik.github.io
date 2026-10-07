@@ -50,7 +50,7 @@ describe('referenced files', () => {
       building.model.src,
       ...building.parts.flatMap((part) => [
         ...part.images.map((image) => image.src),
-        ...part.dynamoScripts.flatMap((script) => [script.dynFile, script.pythonFile]),
+        ...part.dynamoScripts.flatMap((script) => [script.graphImage.src, script.pythonFile]),
       ]),
     ].filter((path): path is string => path !== undefined)
 
