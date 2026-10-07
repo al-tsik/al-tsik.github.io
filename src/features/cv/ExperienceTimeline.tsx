@@ -3,11 +3,16 @@ import { bulletKey } from '../../lib/figureVisibility'
 import { BulletItem } from './BulletItem'
 import { CvSection } from './CvSection'
 import { DatedEntry } from './DatedEntry'
+import { FigureRefText } from './FigureRefText'
 
 type ExperienceTimelineProps = {
   experience: Experience[]
   /** Fig. numbers each main bullet shows, by bullet key. */
   bulletFigureNumbers: ReadonlyMap<string, number[]>
+  /** Fig. numbers by figure id, for cross-references in the text. */
+  figureNumbers: ReadonlyMap<string, number>
+  /** Opens a figure from a cross-reference in a role descriptor. */
+  onFigureOpen: (figureId: string) => void
   /** The focused bullet or sub-bullet key, if any. */
   focusedKey: string | null
   /** The main bullet of the focus (the parent when a sub-bullet is focused). */
@@ -18,6 +23,8 @@ type ExperienceTimelineProps = {
 export function ExperienceTimeline({
   experience,
   bulletFigureNumbers,
+  figureNumbers,
+  onFigureOpen,
   focusedKey,
   focusedMainKey,
   onBulletFocus,
@@ -49,7 +56,11 @@ export function ExperienceTimeline({
                   isActive ? 'border-accent' : 'border-transparent'
                 }`}
               >
-                {job.descriptor}
+                <FigureRefText
+                  text={job.descriptor}
+                  numbers={figureNumbers}
+                  onFigureClick={onFigureOpen}
+                />
               </p>
 
               <ul className="mt-3 space-y-2 font-serif text-body text-ink-muted">
@@ -60,6 +71,7 @@ export function ExperienceTimeline({
                     bulletKey={keys[i]}
                     focusedKey={focusedKey}
                     figureNumbers={bulletFigureNumbers.get(keys[i]) ?? []}
+                    numbers={figureNumbers}
                     onFocus={onBulletFocus}
                   />
                 ))}

@@ -103,7 +103,13 @@ export function focusForBullet(entry: BulletEntry, modelFigureId: string | null)
     views[modelFigureId] = { figure: modelFigureId, parts: bullet.partIds }
   }
 
-  const figureIds = [...(showModel ? [modelFigureId] : []), ...bullet.figures]
+  // Listed figures, then figures the text cross-references ({fig:id}).
+  const figureIds = [
+    ...(showModel ? [modelFigureId] : []),
+    ...bullet.figures,
+    ...figureRefIds(bullet.text),
+    ...(sub ? figureRefIds(sub.text) : []),
+  ]
 
   for (const view of sub?.views ?? []) {
     const { part, ...rest } = view

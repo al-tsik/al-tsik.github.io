@@ -39,7 +39,7 @@ const experience: Experience[] = [
               { figure: 'img-a', region: [0, 0, 50, 50] },
             ],
           },
-          { text: 'Drainage', views: [{ figure: 'model', azimuth: 90 }] },
+          { text: 'Drainage, see {fig:img-c}', views: [{ figure: 'model', azimuth: 90 }] },
         ],
       },
       { text: 'Meetings', partIds: [], figures: [], children: [] },
@@ -110,6 +110,14 @@ describe('focusForBullet', () => {
     expect(focus.figureIds).toEqual(['model', 'img-b', 'img-a'])
     expect(focus.views.model).toEqual({ figure: 'model', parts: ['roof'], azimuth: 30 })
     expect(focus.views['img-a']).toEqual({ figure: 'img-a', region: [0, 0, 50, 50] })
+  })
+
+  it('includes figures referenced in the text', () => {
+    expect(focusForBullet(index.get('roof-2')!, 'model').figureIds).toEqual([
+      'model',
+      'img-b',
+      'img-c',
+    ])
   })
 
   it("keeps the parent's parts when a sub-bullet view sets none", () => {

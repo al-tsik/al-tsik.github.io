@@ -59,6 +59,8 @@ function App() {
           <ExperienceTimeline
             experience={cv.experience}
             bulletFigureNumbers={bulletFigureNumbers}
+            figureNumbers={figureNumbers}
+            onFigureOpen={openFigure}
             focusedKey={focusedKey}
             focusedMainKey={focusedMainKey}
             onBulletFocus={onBulletFocus}

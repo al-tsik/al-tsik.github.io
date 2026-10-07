@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
+import { figureRefIds } from '../lib/figureRefs'
 import { unsupportedViewFields } from '../lib/figureViews'
 import { building, cv, figures, profile } from './index'
 import { BuildingSchema, CvSchema, FiguresSchema, ProfileSchema, type Figure } from './schema'
@@ -121,6 +122,15 @@ describe('bullet figure links', () => {
 
   it('bullets list figures that exist', () => {
     const unknown = bullets.flatMap((b) => b.figures).filter((id) => !figureById.has(id))
+    expect(unknown).toEqual([])
+  })
+
+  it('{fig:id} references in CV text point at figures that exist', () => {
+    const texts = cv.experience.flatMap((job) => [
+      job.descriptor,
+      ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
+    ])
+    const unknown = texts.flatMap(figureRefIds).filter((id) => !figureById.has(id))
     expect(unknown).toEqual([])
   })
 

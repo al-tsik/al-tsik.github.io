@@ -143,10 +143,10 @@
       "location": "City, Country",
       "start": "2021-06",
       "end": "2023-02",
-      "descriptor": "Residential and small commercial projects, with a focus on technical documentation.",
+      "descriptor": "Residential and small commercial projects, with a focus on technical documentation (see {fig:construction-details}).",
       "bullets": [
         {
-          "text": "Produced foundation and ground-floor setting-out drawings for planning and tender packages.",
+          "text": "Produced foundation and ground-floor setting-out drawings for planning and tender packages, including the core section ({fig:section-a-a}).",
           "partIds": ["foundation"]
         },
         {

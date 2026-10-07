@@ -1,5 +1,6 @@
 import type { Bullet } from '../../content/schema'
 import { subBulletKey } from '../../lib/figureVisibility'
+import { FigureRefText } from './FigureRefText'
 
 type BulletItemProps = {
   bullet: Bullet
@@ -8,6 +9,8 @@ type BulletItemProps = {
   focusedKey: string | null
   /** Fig. numbers this bullet shows; empty = nothing to show, not clickable. */
   figureNumbers: number[]
+  /** Fig. numbers by figure id, for cross-references in the text. */
+  numbers: ReadonlyMap<string, number>
   onFocus: (key: string) => void
 }
 
@@ -24,6 +27,7 @@ export function BulletItem({
   bulletKey,
   focusedKey,
   figureNumbers,
+  numbers,
   onFocus,
 }: BulletItemProps) {
   const isFocused = focusedKey === bulletKey
@@ -45,13 +49,15 @@ export function BulletItem({
             onClick={() => onFocus(bulletKey)}
             className={`${textButton} ${isActive ? 'bg-accent-soft text-ink' : ''}`}
           >
-            {bullet.text}
+            <FigureRefText text={bullet.text} numbers={numbers} />
             <span className="ml-2 font-mono text-[10px] whitespace-nowrap text-ink-faint">
               Fig. {figureNumbers.join(', ')}
             </span>
           </button>
         ) : (
-          <span>{bullet.text}</span>
+          <span>
+            <FigureRefText text={bullet.text} numbers={numbers} />
+          </span>
         )}
       </div>
 
@@ -76,10 +82,10 @@ export function BulletItem({
                     onClick={() => onFocus(key)}
                     className={`${textButton} ${isSubFocused ? 'text-accent' : ''}`}
                   >
-                    {child.text}
+                    <FigureRefText text={child.text} numbers={numbers} />
                   </button>
                 ) : (
-                  child.text
+                  <FigureRefText text={child.text} numbers={numbers} />
                 )}
               </li>
             )
