@@ -7,7 +7,7 @@
   "email": "aleks@example.com",
   "links": [
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
-    { "label": "GitHub", "url": "https://github.com/your-username" }
+    { "label": "GitHub", "url": "https://github.com/altsik" }
   ],
   "cvPdf": "/cv.pdf"
 }
