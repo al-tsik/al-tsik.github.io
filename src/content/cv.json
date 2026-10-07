@@ -2,128 +2,142 @@
   "$schema": "./schemas/cv.schema.json",
   "experience": [
     {
-      "id": "studio-b",
-      "role": "Architectural Designer",
-      "company": "Studio B Architects",
-      "location": "City, Country",
-      "start": "2023-03",
+      "id": "symetri",
+      "role": "AE Consultant / Tech Lead / Developer",
+      "company": "Symetri",
+      "location": "UK",
+      "start": "2024",
       "end": "present",
-      "descriptor": "Design and delivery of a 4-storey mixed-use building from concept to construction documents.",
       "bullets": [
         {
-          "id": "roof-facade-details",
-          "text": "Developed the roof and facade details, coordinating drainage and parapet build-ups with consultants.",
-          "figure": {
-            "figure": "building-model",
-            "parts": ["roof", "facade"]
-          },
-          "children": [
-            {
-              "id": "roof-parapet",
-              "text": "Roof parapet and drainage build-up.",
-              "figure": {
-                "figure": "roof-parapet-detail"
-              }
-            },
-            {
-              "id": "panel-joints",
-              "text": "Rainscreen panel joints and fixings.",
-              "figure": {
-                "figure": "construction-details",
-                "image": 1
-              }
-            }
-          ]
+          "text": "Sole developer of a universal web platform in C# and Blazor (.NET 8) that adds custom dashboards and apps on top of third-party file-management platforms; designed and built the platform's own APIs.",
+          "children": []
         },
         {
-          "id": "facade-scripts",
-          "text": "Wrote Dynamo scripts that place and number facade panels, cutting a week of manual work per issue.",
-          "figure": {
-            "figure": "facade-panel-numbering"
-          },
-          "children": [
-            {
-              "id": "panel-numbering",
-              "text": "Panel numbering by elevation, written back to the model.",
-              "figure": {
-                "figure": "panel-numbering-code",
-                "lines": [43, 46]
-              }
-            },
-            {
-              "id": "schedule-export",
-              "text": "Automatic panel schedule export for the fabricator.",
-              "figure": {
-                "figure": "panel-morph",
-                "marker": "schedule"
-              }
-            },
-            {
-              "id": "bay-preview",
-              "text": "Bay-by-bay placement preview.",
-              "figure": {
-                "figure": "facade-sequence",
-                "time": 1.5,
-                "until": 4.75
-              }
-            }
-          ]
+          "text": "Set up CI/CD with GitHub Actions and Azure Pipelines to build Docker images and deploy to Azure; provisioned and configured the Azure environments.",
+          "children": []
         },
         {
-          "id": "structure-model",
-          "text": "Modelled the structural grid and slab edges, keeping the Revit model in sync with the engineer's analysis model.",
-          "figure": {
-            "figure": "building-model",
-            "parts": ["floors", "core"]
-          },
-          "children": [
-            {
-              "id": "core-section",
-              "text": "Section through the core and slabs.",
-              "figure": {
-                "figure": "building-model",
-                "parts": ["floors"],
-                "drawing": "section-a-a"
-              }
-            },
-            {
-              "id": "level-02-plan",
-              "text": "Level 02 plan coordination.",
-              "figure": {
-                "figure": "plan-level-02"
-              }
-            }
-          ]
+          "text": "Wrote component tests with bUnit and maintained code quality through pull requests and code review.",
+          "children": []
         },
         {
-          "text": "Led weekly BIM coordination meetings and clash detection reviews.",
+          "text": "Wrote API documentation, READMEs, user guides and developer templates for extending the platform with new apps and widgets.",
+          "children": []
+        },
+        {
+          "text": "Built a Python automation tool to migrate 75 projects (5,000 files, ~500 GB, plus thousands of rows of Excel metadata) with custom attributes from AStar to Autodesk Forma, completed in about 2 weeks against an estimated 4 months of manual work.",
           "figure": {
-            "figure": "massing-diagram"
-          }
+            "figure": "panel-morph"
+          },
+          "children": []
+        },
+        {
+          "text": "Integrated Autodesk Platform Services (ACC), Forma, Asite and Knowledge Share (GraphQL) APIs for client migrations and platform features.",
+          "children": []
+        },
+        {
+          "text": "Developed a prototype Revit add-in (C#, Revit API) providing an agentic AI assistant inside Revit via Azure AI Foundry, with multi-version support that detects installed Revit versions; generated stakeholder interest for further development.",
+          "figure": {
+            "figure": "panel-numbering-code"
+          },
+          "children": []
+        },
+        {
+          "text": "Built a Godot MVP of a 4D crime-scene evidence visualiser, now used by the Metropolitan Police's Grenfell Tower investigation team.",
+          "children": []
+        },
+        {
+          "text": "Implemented AI models for client solutions with Azure AI Foundry, and built internal AI agents that match consultants to client requirements using Power Automate and Copilot.",
+          "children": []
+        },
+        {
+          "text": "Delivered a client's transition from MicroStation to Autodesk CAD, including their template files, and Power BI dashboards for reviewing MIDP.",
+          "figure": {
+            "figure": "plan-level-02"
+          },
+          "children": []
+        },
+        {
+          "text": "Ran 3 workshops and training sessions for around 30 attendees on AI capabilities, NVIDIA Omniverse and sustainability.",
+          "children": []
         }
       ]
     },
     {
-      "id": "office-a",
-      "role": "Architectural Assistant",
-      "company": "Office A",
-      "location": "City, Country",
-      "start": "2021-06",
-      "end": "2023-02",
-      "descriptor": "Residential and small commercial projects, with a focus on technical documentation (see {fig:construction-details}).",
+      "id": "fch-part-2",
+      "role": "Architectural Assistant (Part 2/3)",
+      "company": "Falconer Chester Hall Architects",
+      "location": "Liverpool",
+      "start": "2021",
+      "end": "2024",
       "bullets": [
         {
-          "text": "Produced foundation and ground-floor setting-out drawings for planning and tender packages, including the core section ({fig:section-a-a}).",
+          "text": "Built a desktop PDF review tool in JavaScript using Electron and React, and Dynamo scripts automating Revit workflows; tools used by up to 10 staff at a time.",
           "figure": {
-            "figure": "building-model",
-            "parts": ["foundation"]
-          }
+            "figure": "facade-panel-numbering"
+          },
+          "children": []
         },
         {
-          "text": "Built a Dynamo graph that generates room data sheets from the model.",
+          "text": "Provided BIM support and tooling to the whole office.",
           "figure": {
             "figure": "level-slab-sync"
-          }
+          },
+          "children": []
+        },
+        {
+          "text": "Assisted with, and at times managed, a 700-unit residential project; maintained delivery under tight deadlines after the team went from three people to one.",
+          "figure": {
+            "figure": "building-model",
+            "parts": ["floors"],
+            "drawing": "section-a-a"
+          },
+          "children": []
+        },
+        {
+          "text": "Supervised and onboarded 3 new staff members onto the project.",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "freelance",
+      "role": "Freelance Developer",
+      "company": "Game Development / Visualisation",
+      "start": "2019",
+      "end": "present",
+      "bullets": [
+        {
+          "text": "Built Unreal Engine VR visualisation software in two weeks to demonstrate a proposed Fab Lab conversion at Liverpool John Moores University; demoed successfully to the Vice-Chancellor and board of investors.",
+          "figure": {
+            "figure": "facade-sequence"
+          },
+          "children": []
+        },
+        {
+          "text": "Developed personal game projects in Unreal Engine, Unity and Godot.",
+          "figure": {
+            "figure": "massing-diagram"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "fch-part-1",
+      "role": "Architectural Assistant (Part 1)",
+      "company": "Falconer Chester Hall Architects",
+      "location": "Liverpool",
+      "start": "2018",
+      "end": "2019",
+      "bullets": [
+        {
+          "text": "Worked across a diverse project portfolio, from client liaison to concept and construction drawings and visualisations.",
+          "figure": {
+            "figure": "construction-details"
+          },
+          "children": []
         }
       ]
     }
