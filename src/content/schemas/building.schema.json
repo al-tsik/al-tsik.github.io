@@ -75,6 +75,24 @@
             },
             "description": "glTF node names that make up this part. Must match names in the model file."
           },
+          "labelPosition": {
+            "description": "Where the number label sits, in model coordinates (metres, Y up). Defaults to the centre of the part.",
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "items": false,
+            "minItems": 3,
+            "maxItems": 3
+          },
           "dynamoScripts": {
             "default": [],
             "type": "array",

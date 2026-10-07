@@ -5,6 +5,7 @@ import type { BuildingPart } from '../../content/schema'
 import { createMeshPartIndex, resolvePartId, type MeshPartIndex } from '../../lib/partLookup'
 import { useSelectionStore } from '../../state/selectionStore'
 import { computeModelBounds } from './bounds'
+import { PartLabels } from './PartLabels'
 import { PartMesh } from './PartMesh'
 import { useCameraFraming } from './useCameraFraming'
 
@@ -75,6 +76,7 @@ export function BuildingModel({ src, parts }: BuildingModelProps) {
           partId={mesh.partId}
         />
       ))}
+      <PartLabels parts={parts} bounds={bounds} />
     </group>
   )
 }

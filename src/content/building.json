@@ -16,35 +16,40 @@
       "number": 1,
       "name": "Foundation",
       "summary": "Reinforced concrete raft with a perimeter thickening below the facade line.",
-      "meshNames": ["foundation"]
+      "meshNames": ["foundation"],
+      "labelPosition": [9.5, -0.4, 6.5]
     },
     {
       "id": "floors",
       "number": 2,
       "name": "Floor Slabs",
       "summary": "Post-tensioned flat slabs on a 7.5 m grid, with edge details coordinated with the facade.",
-      "meshNames": ["level-01", "level-02", "level-03"]
+      "meshNames": ["level-01", "level-02", "level-03"],
+      "labelPosition": [-9, 7, 6]
     },
     {
       "id": "core",
       "number": 3,
       "name": "Circulation Core",
       "summary": "Stair and lift core providing lateral stability.",
-      "meshNames": ["core"]
+      "meshNames": ["core"],
+      "labelPosition": [0, 15.5, -3.5]
     },
     {
       "id": "facade",
       "number": 4,
       "name": "Facade",
       "summary": "Rainscreen facade of fibre-cement panels, set out and numbered with Dynamo.",
-      "meshNames": ["facade-n", "facade-s", "facade-e", "facade-w"]
+      "meshNames": ["facade-n", "facade-s", "facade-e", "facade-w"],
+      "labelPosition": [4.5, 11, 6.3]
     },
     {
       "id": "roof",
       "number": 5,
       "name": "Roof",
       "summary": "Inverted warm roof with a planted terrace and a perimeter parapet.",
-      "meshNames": ["roof"]
+      "meshNames": ["roof"],
+      "labelPosition": [-5, 14.5, 3]
     }
   ]
 }

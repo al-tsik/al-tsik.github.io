@@ -12,6 +12,9 @@ const Id = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Use lowercase kebab-cas
 /** "YYYY-MM", e.g. "2023-09". */
 const YearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Use YYYY-MM, e.g. "2023-09"')
 
+/** A point in model space: [x, y, z] in metres, Y up. */
+const Vec3 = z.tuple([z.number(), z.number(), z.number()])
+
 /** Path to a file served from public/, e.g. "/images/roof.jpg". */
 const PublicPath = z.string().startsWith('/', 'Paths are relative to public/ and start with "/"')
 
@@ -116,6 +119,9 @@ export const BuildingPartSchema = z.object({
     .array(z.string())
     .min(1)
     .describe('glTF node names that make up this part. Must match names in the model file.'),
+  labelPosition: Vec3.optional().describe(
+    'Where the number label sits, in model coordinates (metres, Y up). Defaults to the centre of the part.',
+  ),
   dynamoScripts: z.array(DynamoScriptSchema).default([]),
   images: z.array(ImageSchema).default([]),
 })
