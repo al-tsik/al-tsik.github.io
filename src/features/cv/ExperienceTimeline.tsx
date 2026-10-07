@@ -48,7 +48,6 @@ export function ExperienceTimeline({
               start={job.start}
               end={job.end}
               showDuration
-              isActive={isActive}
               heading={
                 <h3 className="font-serif text-base leading-snug">
                   <span className="font-bold">{job.role}</span>
