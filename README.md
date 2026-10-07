@@ -36,15 +36,19 @@ npm run dev
 
 ## Scripts
 
-| Script                 | What it does                         |
-| ---------------------- | ------------------------------------ |
-| `npm run dev`          | Start the dev server with hot reload |
-| `npm run build`        | Type-check and build to `dist/`      |
-| `npm run preview`      | Serve the production build locally   |
-| `npm run lint`         | Lint with oxlint                     |
-| `npm run typecheck`    | Run the TypeScript compiler          |
-| `npm run format`       | Format all files with Prettier       |
-| `npm run format:check` | Check formatting (used in CI)        |
+| Script                    | What it does                                      |
+| ------------------------- | ------------------------------------------------- |
+| `npm run dev`             | Start the dev server with hot reload              |
+| `npm run build`           | Type-check and build to `dist/`                   |
+| `npm run preview`         | Serve the production build locally                |
+| `npm run lint`            | Lint with oxlint                                  |
+| `npm run typecheck`       | Run the TypeScript compiler                       |
+| `npm run format`          | Format all files with Prettier                    |
+| `npm run format:check`    | Check formatting (used in CI)                     |
+| `npm test`                | Run unit and content tests once                   |
+| `npm run test:watch`      | Run tests in watch mode                           |
+| `npm run check`           | Lint, typecheck, format check and tests           |
+| `npm run content:schemas` | Regenerate JSON schemas after editing `schema.ts` |
 
 ## Editing content
 
