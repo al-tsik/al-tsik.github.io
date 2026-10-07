@@ -8,22 +8,11 @@ type SkillsListProps = {
 export function SkillsList({ skills }: SkillsListProps) {
   return (
     <CvSection id="skills">
-      <dl className="space-y-4">
+      <dl className="space-y-3 font-serif text-body">
         {skills.map((group) => (
-          <div key={group.group} className="grid gap-2 sm:grid-cols-[9rem_1fr]">
-            <dt className="text-sm font-medium">{group.group}</dt>
-            <dd>
-              <ul className="flex flex-wrap gap-1.5">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="border border-line bg-surface px-2 py-0.5 font-mono text-xs"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </dd>
+          <div key={group.group} className="grid gap-x-6 sm:grid-cols-[11rem_1fr]">
+            <dt className="text-ink-muted italic">{group.group}</dt>
+            <dd>{group.items.join(' · ')}</dd>
           </div>
         ))}
       </dl>
