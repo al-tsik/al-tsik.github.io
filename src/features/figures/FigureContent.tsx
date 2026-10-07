@@ -1,6 +1,6 @@
+import { lazy, Suspense } from 'react'
 import type { Building, Callout, Figure } from '../../content/schema'
 import type { ResolvedView } from '../../lib/figureVisibility'
-import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
 import { AnimationFigure } from './AnimationFigure'
 import { DrawingFigure } from './DrawingFigure'
@@ -8,6 +8,17 @@ import { DynamoFigure } from './DynamoFigure'
 import { GalleryFigure } from './GalleryFigure'
 import { ImageFigure } from './ImageFigure'
 import { VideoFigure } from './VideoFigure'
+
+// three.js, React Three Fiber and drei load only when a model figure renders.
+const BuildingViewer = lazy(() =>
+  import('../viewer/BuildingViewer').then((module) => ({ default: module.BuildingViewer })),
+)
+
+const modelFallback = (
+  <p className="grid h-full place-items-center font-mono text-[10px] tracking-widest text-ink-faint uppercase">
+    Loading model…
+  </p>
+)
 
 type FigureContentProps = {
   figure: Figure
@@ -36,14 +47,16 @@ export function FigureContent({
       // The column shows a compact turntable; the pop-out is fully interactive.
       return (
         <div className={isOverlay ? 'h-[80dvh]' : 'aspect-[4/3]'}>
-          <BuildingViewer
-            modelSrc={building.model.src}
-            parts={building.parts}
-            view={toModelView(view)}
-            showLabels={isOverlay}
-            interactive={isOverlay}
-            onPartClick={isOverlay ? onPartClick : undefined}
-          />
+          <Suspense fallback={modelFallback}>
+            <BuildingViewer
+              modelSrc={building.model.src}
+              parts={building.parts}
+              view={toModelView(view)}
+              showLabels={isOverlay}
+              interactive={isOverlay}
+              onPartClick={isOverlay ? onPartClick : undefined}
+            />
+          </Suspense>
         </div>
       )
     }
