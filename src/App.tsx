@@ -1,6 +1,8 @@
 import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
 import { SplitLayout } from './components/layout/SplitLayout'
+import { profile } from './content'
+import { ProfileHero } from './features/cv/ProfileHero'
 
 function App() {
   return (
@@ -14,8 +16,7 @@ function App() {
         }
       >
         <main id="cv" className="py-10">
-          <h1 className="text-3xl font-semibold tracking-tight">CV placeholder</h1>
-          <div className="mt-6 h-[150vh] rounded border border-dashed border-line" />
+          <ProfileHero profile={profile} />
         </main>
         <SiteFooter />
       </SplitLayout>
