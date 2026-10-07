@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { BuildingPart } from '../../content/schema'
 import { useSelectionStore } from '../../state/selectionStore'
+import { DrawingList } from './DrawingList'
 import { DynamoScriptCard } from './DynamoScriptCard'
 import { ImageGallery } from './ImageGallery'
 
@@ -60,6 +61,12 @@ export function PartDetailsPanel({ parts }: PartDetailsPanelProps) {
 
       <div className="flex-1 space-y-6 overflow-y-auto p-4">
         <p className="text-sm leading-relaxed">{part.summary}</p>
+
+        {part.drawings.length > 0 && (
+          <PanelSection title="Drawings">
+            <DrawingList drawings={part.drawings} />
+          </PanelSection>
+        )}
 
         {part.dynamoScripts.length > 0 && (
           <PanelSection title="Dynamo scripts">

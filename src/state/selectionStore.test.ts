@@ -44,4 +44,33 @@ describe('selectionStore', () => {
       hoveredPartId: 'facade',
     })
   })
+
+  it('toggles the active drawing', () => {
+    const { toggleDrawing } = useSelectionStore.getState()
+
+    toggleDrawing('section-a-a')
+    expect(useSelectionStore.getState().activeDrawingId).toBe('section-a-a')
+
+    toggleDrawing('plan-level-02')
+    expect(useSelectionStore.getState().activeDrawingId).toBe('plan-level-02')
+
+    toggleDrawing('plan-level-02')
+    expect(useSelectionStore.getState().activeDrawingId).toBeNull()
+  })
+
+  it('hides the drawing when the selected part changes', () => {
+    useSelectionStore.getState().select('floors')
+    useSelectionStore.getState().toggleDrawing('section-a-a')
+
+    useSelectionStore.getState().select('roof')
+    expect(useSelectionStore.getState().activeDrawingId).toBeNull()
+  })
+
+  it('keeps the drawing when the same part is selected again', () => {
+    useSelectionStore.getState().select('floors')
+    useSelectionStore.getState().toggleDrawing('section-a-a')
+
+    useSelectionStore.getState().select('floors') // e.g. restored from the URL
+    expect(useSelectionStore.getState().activeDrawingId).toBe('section-a-a')
+  })
 })
