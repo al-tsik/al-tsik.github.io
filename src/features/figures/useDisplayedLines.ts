@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import {
+  displayedLineKeys,
   figureForLine,
   pickRandomLines,
   type BulletEntry,
@@ -8,22 +9,22 @@ import {
 import { useSelectionStore } from '../../state/selectionStore'
 
 /**
- * The line figures on screen: the focused line's figure, or the figures of a
- * few random lines that are re-picked on every page load.
+ * The line figures on screen: a hovered line's preview, else the pinned
+ * (focused) line, else a few random lines re-picked on every page load.
  */
 export function useDisplayedLines(
   bulletIndex: ReadonlyMap<string, BulletEntry>,
   figureTypes: ReadonlyMap<string, string>,
 ): LineFigure[] {
   const focusedKey = useSelectionStore((state) => state.focusedBulletKey)
+  const hoveredKey = useSelectionStore((state) => state.hoveredLineKey)
   const [randomKeys] = useState(() => pickRandomLines(bulletIndex, figureTypes, Math.random))
 
   return useMemo(() => {
-    const keys = focusedKey ? [focusedKey] : randomKeys
-    return keys.flatMap((key) => {
+    return displayedLineKeys(hoveredKey, focusedKey, randomKeys).flatMap((key) => {
       const entry = bulletIndex.get(key)
       const line = entry && figureForLine(entry)
       return line ? [line] : []
     })
-  }, [focusedKey, randomKeys, bulletIndex])
+  }, [hoveredKey, focusedKey, randomKeys, bulletIndex])
 }

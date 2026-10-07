@@ -5,9 +5,12 @@ type SelectionState = {
   focusedBulletKey: string | null
   /** The figure popped out in the overlay, if any. */
   openFigureId: string | null
+  /** The line being hovered (or keyboard-focused), previewing its figure. */
+  hoveredLineKey: string | null
 
   focusBullet: (key: string | null) => void
   openFigure: (figureId: string | null) => void
+  hoverLine: (key: string | null) => void
 }
 
 /**
@@ -18,7 +21,9 @@ type SelectionState = {
 export const useSelectionStore = create<SelectionState>()((set) => ({
   focusedBulletKey: null,
   openFigureId: null,
+  hoveredLineKey: null,
 
   focusBullet: (key) => set({ focusedBulletKey: key }),
   openFigure: (figureId) => set({ openFigureId: figureId }),
+  hoverLine: (key) => set({ hoveredLineKey: key }),
 }))

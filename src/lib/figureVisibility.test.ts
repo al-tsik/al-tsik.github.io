@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Experience, Figure } from '../content/schema'
 import {
+  displayedLineKeys,
   figureForLine,
   indexBullets,
   nextFocus,
@@ -144,5 +145,22 @@ describe('resolveLink', () => {
   it('returns null when nothing matches', () => {
     expect(resolveLink({ part: 'basement' }, index)).toBeNull()
     expect(resolveLink({ bullet: 'missing' }, index)).toBeNull()
+  })
+})
+
+describe('displayedLineKeys', () => {
+  const random = ['a', 'b', 'c']
+
+  it('shows the random lines at rest', () => {
+    expect(displayedLineKeys(null, null, random)).toEqual(random)
+  })
+
+  it('shows only the pinned line', () => {
+    expect(displayedLineKeys(null, 'roof', random)).toEqual(['roof'])
+  })
+
+  it('lets a hovered line replace whatever is shown', () => {
+    expect(displayedLineKeys('detail', 'roof', random)).toEqual(['detail'])
+    expect(displayedLineKeys('detail', null, random)).toEqual(['detail'])
   })
 })

@@ -166,3 +166,20 @@ export function resolveLink(
   if (target.figure) return { kind: 'figure', id: target.figure }
   return null
 }
+
+// ─── What's on screen ───────────────────────────────────────────────────────
+
+/**
+ * The lines whose figures are on screen: a hovered line previews its figure
+ * (one figure at a time); otherwise the pinned line; otherwise the random
+ * lines picked on load.
+ */
+export function displayedLineKeys(
+  hoveredKey: string | null,
+  pinnedKey: string | null,
+  randomKeys: readonly string[],
+): string[] {
+  if (hoveredKey) return [hoveredKey]
+  if (pinnedKey) return [pinnedKey]
+  return [...randomKeys]
+}
