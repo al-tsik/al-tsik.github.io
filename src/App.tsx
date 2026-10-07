@@ -17,6 +17,7 @@ import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
 import { FigureColumn } from './features/figures/FigureColumn'
 import { FigureOverlay } from './features/figures/FigureOverlay'
+import { scrollToLine } from './features/cv/scrollToLine'
 import { useDisplayedLines } from './features/figures/useDisplayedLines'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
@@ -42,7 +43,12 @@ function App() {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
   const focusedMainKey = focusedKey ? (bulletIndex.get(focusedKey)?.parentKey ?? focusedKey) : null
-  const onBulletFocus = (key: string) => focusBullet(nextFocus(focusedKey, key, bulletIndex))
+  // Clicking a line pins its figure and brings the line to the reading position.
+  const onBulletFocus = (key: string) => {
+    const next = nextFocus(focusedKey, key, bulletIndex)
+    focusBullet(next)
+    if (next) scrollToLine(next)
+  }
 
   // A numbered marker on a figure leads to a bullet (focus it and bring it
   // into view, closing the overlay) or to another figure (open it).
@@ -53,10 +59,7 @@ function App() {
 
     openFigure(null)
     focusBullet(link.key)
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document
-      .getElementById(`bullet-${link.key}`)
-      ?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
+    scrollToLine(link.key)
   }
 
   const renderFigures = (lines: LineFigure[], inline = false) => (
