@@ -20,45 +20,52 @@ Each failure names the exact value to fix.
 
 ---
 
-## CV bullets and figures
+## CV lines and figures
+
+Every bullet and sub-bullet is a **line**, and a line can have **one** figure,
+written as the figure id plus how to show it:
 
 ```jsonc
 {
-  "id": "facade-scripts", // optional; needed to link to this bullet
-  "text": "Wrote Dynamo scripts that number facade panels (see {fig:facade-sequence}).",
-  "partIds": ["facade"], // shows the 3D model with these parts highlighted
-  "figures": ["facade-panel-numbering"], // more figures to show
+  "id": "structure-model", // optional; needed to link to this line
+  "text": "Modelled the structural grid and slab edges (see {fig:section-a-a}).",
+  "figure": { "figure": "building-model", "parts": ["floors", "core"] },
   "children": [
     {
-      "text": "Panel numbering by elevation.",
-      "views": [
-        { "figure": "facade-panel-numbering", "lines": [43, 46] },
-        { "figure": "facade-sequence", "time": 1.5, "until": 4.75 },
-      ],
+      "id": "core-section",
+      "text": "Section through the core and slabs.",
+      "figure": { "figure": "building-model", "parts": ["floors"], "drawing": "section-a-a" },
+    },
+    {
+      "text": "Python node that numbers the panels.",
+      "figure": { "figure": "panel-numbering-code", "lines": [43, 46] },
     },
   ],
 }
 ```
 
-- **Clicking a bullet** shows its figures: the model (if it has `partIds`),
-  its `figures`, and any figure referenced in its text. Bullets without
-  figures are plain text.
-- **Sub-bullets** (`children`) keep the parent's figures and change how they
-  look via `views`.
+- **Hover** a line to preview its figure in the margin, level with the line.
+- **Click** a line to pin its figure and bring the line to the reading
+  position. Click again (or press Escape) to unpin.
+- At rest, a few random lines show their figures; they reshuffle on reload.
+- A sub-bullet without its own `figure` shows its parent's.
+- The same figure on consecutive lines (e.g. the model in different views)
+  animates between views instead of reloading.
 - **`{fig:id}`** in any text renders as "Fig. N". Figures are numbered by
   their first mention in the CV, like a paper, so reordering never breaks
   them.
 
 ### View fields per figure type
 
-| Figure type   | View fields                                                                    |
-| ------------- | ------------------------------------------------------------------------------ |
-| model         | `part`, `drawing` (from building.json), `azimuth`, `elevation` (15–60), `zoom` |
-| gallery       | `image` (0-based index)                                                        |
-| video         | `time`, `until` (seconds)                                                      |
-| animation     | `marker` (Lottie marker name)                                                  |
-| drawing/image | `region`: `[x, y, width, height]` in % of the figure                           |
-| dynamo        | `region` (graph zoom), `lines`: `[from, to]` Python lines                      |
+| Figure type   | View fields                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+| model         | `parts`, `drawing` (from building.json), `azimuth`, `elevation` (15–60), `zoom` |
+| gallery       | `image` (0-based index)                                                         |
+| video         | `time`, `until` (seconds)                                                       |
+| animation     | `marker` (Lottie marker name)                                                   |
+| drawing/image | `region`: `[x, y, width, height]` in % of the figure                            |
+| dynamo        | `region` (graph zoom)                                                           |
+| code          | `lines`: `[from, to]` to highlight                                              |
 
 ## Figures (`figures.json`)
 
@@ -73,7 +80,8 @@ readers). On load the column shows the model plus two random figures.
 | `gallery`   | `images: [{ src, alt, caption }]`, `intervalMs` | Cross-fades; pauses on hover.                                                              |
 | `video`     | `src` + `poster`, or `embed`                    | Local: short, muted MP4/WebM (aim for < 5 MB). `embed`: YouTube/Vimeo URL, loads on click. |
 | `animation` | `src`                                           | Animated `.svg`, or Lottie `.json` with named markers.                                     |
-| `dynamo`    | `scriptId`                                      | A script listed under a part in `building.json`.                                           |
+| `dynamo`    | `scriptId`                                      | The graph of a script listed under a part in `building.json`.                              |
+| `code`      | `src`, `language`                               | A source file (Python, JavaScript, TypeScript, JSON) with syntax highlighting.             |
 
 Media tips:
 
@@ -96,7 +104,7 @@ Each part maps to **glTF node names** in the model file:
   "summary": "Shown as the label's tooltip.",
   "meshNames": ["facade-n", "facade-s"],
   "labelPosition": [4.5, 11, 6.3], // optional, metres, Y up
-  "dynamoScripts": [/* graph image + optional .py */],
+  "dynamoScripts": [/* title, description, graph image */],
   "drawings": [/* sheets placed on the model, see below */],
 }
 ```
