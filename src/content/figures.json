@@ -96,6 +96,20 @@
       "poster": "/videos/facade-sequence-poster.jpg",
       "caption": "Facade fins placed bay by bay by the panel script (placeholder clip).",
       "alt": "Animation of facade fins appearing one by one across an elevation"
+    },
+    {
+      "id": "panel-morph",
+      "type": "animation",
+      "src": "/animations/panel-morph.json",
+      "caption": "From numbered panels to a fabrication schedule (placeholder animation).",
+      "alt": "Three facade panels morph into schedule rows"
+    },
+    {
+      "id": "massing-diagram",
+      "type": "animation",
+      "src": "/animations/massing-diagram.svg",
+      "caption": "Massing and core, drawn in sequence.",
+      "alt": "Line diagram of the building massing with the core highlighted"
     }
   ]
 }

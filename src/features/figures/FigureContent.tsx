@@ -2,6 +2,7 @@ import type { Building, Callout, Figure } from '../../content/schema'
 import type { ResolvedView } from '../../lib/figureVisibility'
 import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
+import { AnimationFigure } from './AnimationFigure'
 import { DrawingFigure } from './DrawingFigure'
 import { DynamoFigure } from './DynamoFigure'
 import { GalleryFigure } from './GalleryFigure'
@@ -65,18 +66,13 @@ export function FigureContent({ figure, view, building, onCalloutClick }: Figure
           until={view?.until}
         />
       )
-    default:
-      // Placeholder until each figure type gets its renderer.
-      return (
-        <div
-          role="img"
-          aria-label={figure.alt}
-          className="grid aspect-[4/3] place-items-center p-6 text-center font-mono text-xs text-ink-faint"
-        >
-          {figure.type}
-          <br />
-          {figure.alt}
-        </div>
-      )
+    case 'animation':
+      return <AnimationFigure src={figure.src} alt={figure.alt} marker={view?.marker} />
+    default: {
+      // Exhaustiveness check: adding a figure type to the schema without a
+      // renderer here is a compile error.
+      const unhandled: never = figure
+      return unhandled
+    }
   }
 }

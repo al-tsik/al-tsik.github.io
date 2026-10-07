@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none" stroke="#141414" stroke-width="3">
+  <rect width="800" height="600" fill="#fff" stroke="none"/>
+  <style>
+    .draw { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 4s ease-in-out infinite; }
+    .core { stroke: #ff5a1f; animation-delay: 0.8s; }
+    @keyframes draw { 40%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1400; } }
+    @media (prefers-reduced-motion: reduce) { .draw { animation: none; stroke-dashoffset: 0; } }
+  </style>
+  <path class="draw" d="M150 450 L400 550 L650 450 L650 200 L400 100 L150 200 Z"/>
+  <path class="draw" d="M150 200 L400 300 L650 200 M400 300 L400 550"/>
+  <path class="draw core" d="M340 330 L400 355 L460 330 L460 150 L400 125 L340 150 Z"/>
+</svg>
