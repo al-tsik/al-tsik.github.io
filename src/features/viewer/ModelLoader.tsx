@@ -1,17 +1,21 @@
-import { Html, useProgress } from '@react-three/drei'
+import { useProgress } from '@react-three/drei'
 
-/** Suspense fallback shown inside the canvas while the model downloads. */
+/**
+ * Loading text over the canvas while the model or a drawing downloads.
+ * Plain DOM outside the canvas on purpose: drei's <Html> as a Suspense
+ * fallback mounts a React root of its own, and unmounting that root while a
+ * drawing texture starts loading crashed the page.
+ */
 export function ModelLoader() {
-  const { progress } = useProgress()
+  const { active, progress } = useProgress()
+  if (!active) return null
 
   return (
-    <Html center>
-      <p
-        role="status"
-        className="text-xs tracking-widest whitespace-nowrap text-ink-muted uppercase"
-      >
-        Loading model {Math.round(progress)}%
-      </p>
-    </Html>
+    <p
+      role="status"
+      className="pointer-events-none absolute inset-0 grid place-items-center text-xs tracking-widest whitespace-nowrap text-ink-muted uppercase"
+    >
+      Loading model {Math.round(progress)}%
+    </p>
   )
 }

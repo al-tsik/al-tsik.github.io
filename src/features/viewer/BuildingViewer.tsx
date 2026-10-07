@@ -61,38 +61,42 @@ export function BuildingViewer({
   }, [store, view, onPartClick, showLabels])
 
   return (
-    // `flat` disables tone mapping so white stays white, like paper.
-    <Canvas
-      flat
-      dpr={[1, 2]}
-      // Needed for per-material clipping planes (section cuts).
-      gl={{ localClippingEnabled: true }}
-      aria-label="3D model of the building"
-      onPointerMissed={onBackgroundClick}
-    >
-      <ModelViewContext value={store}>
-        {/* Wide near/far range so large or off-origin models never clip. */}
-        <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
-        <CameraControls
-          makeDefault
-          // Disables user input only; views and idle orbit still move the camera.
-          enabled={interactive}
-          minPolarAngle={viewerConfig.minPolarAngle}
-          maxPolarAngle={viewerConfig.maxPolarAngle}
-          minZoom={viewerConfig.minZoom}
-          maxZoom={viewerConfig.maxZoom}
-        />
-        <AutoOrbit enabled={!reducedMotion && isOverview(view)} />
+    <div className="relative h-full w-full">
+      {/* `flat` disables tone mapping so white stays white, like paper. */}
+      <Canvas
+        flat
+        dpr={[1, 2]}
+        // Needed for per-material clipping planes (section cuts).
+        gl={{ localClippingEnabled: true }}
+        aria-label="3D model of the building"
+        onPointerMissed={onBackgroundClick}
+      >
+        <ModelViewContext value={store}>
+          {/* Wide near/far range so large or off-origin models never clip. */}
+          <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
+          <CameraControls
+            makeDefault
+            // Disables user input only; views and idle orbit still move the camera.
+            enabled={interactive}
+            minPolarAngle={viewerConfig.minPolarAngle}
+            maxPolarAngle={viewerConfig.maxPolarAngle}
+            minZoom={viewerConfig.minZoom}
+            maxZoom={viewerConfig.maxZoom}
+          />
+          <AutoOrbit enabled={!reducedMotion && isOverview(view)} />
 
-        {/* Key light from above-left so each face reads as a different tone. */}
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[-6, 20, 10]} intensity={1.6} />
-        <directionalLight position={[12, 4, -6]} intensity={0.3} />
+          {/* Key light from above-left so each face reads as a different tone. */}
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[-6, 20, 10]} intensity={1.6} />
+          <directionalLight position={[12, 4, -6]} intensity={0.3} />
 
-        <Suspense fallback={<ModelLoader />}>
-          <BuildingModel src={modelSrc} parts={parts} selectionInsetPx={selectionInsetPx} />
-        </Suspense>
-      </ModelViewContext>
-    </Canvas>
+          {/* The loading text is the DOM overlay below, not a fallback in here. */}
+          <Suspense fallback={null}>
+            <BuildingModel src={modelSrc} parts={parts} selectionInsetPx={selectionInsetPx} />
+          </Suspense>
+        </ModelViewContext>
+      </Canvas>
+      <ModelLoader />
+    </div>
   )
 }
