@@ -105,18 +105,18 @@ export const ExperienceSchema = z.object({
   id: Id,
   role: z.string(),
   company: z.string(),
-  location: z.string(),
+  location: z.string().optional(),
   start: YearMonth,
   end: z.union([YearMonth, z.literal('present')]),
-  descriptor: z.string().describe('One-line summary of the role.'),
+  descriptor: z.string().optional().describe('One-line summary of the role.'),
   bullets: z.array(BulletSchema),
 })
 
 export const EducationSchema = z.object({
   id: Id,
   degree: z.string(),
-  school: z.string(),
-  location: z.string(),
+  school: z.string().optional(),
+  location: z.string().optional(),
   start: YearMonth,
   end: z.union([YearMonth, z.literal('present')]),
   notes: z.string().optional(),

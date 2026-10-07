@@ -142,7 +142,7 @@ describe('line figures', () => {
 
   it('{fig:id} references in CV text point at figures that exist', () => {
     const texts = cv.experience.flatMap((job) => [
-      job.descriptor,
+      job.descriptor ?? '',
       ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
     ])
     const unknown = texts.flatMap(figureRefIds).filter((id) => !figureById.has(id))
@@ -151,7 +151,7 @@ describe('line figures', () => {
 
   it('leave no figure unreachable (from a line or a {fig:} reference)', () => {
     const texts = cv.experience.flatMap((job) => [
-      job.descriptor,
+      job.descriptor ?? '',
       ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
     ])
     const reachable = new Set([

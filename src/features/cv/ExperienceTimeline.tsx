@@ -51,18 +51,20 @@ export function ExperienceTimeline({
                   <span className="font-bold">{job.role}</span>
                   <span className="text-ink-muted">
                     {' | '}
-                    {job.company}, {job.location}
+                    {[job.company, job.location].filter(Boolean).join(', ')}
                   </span>
                 </h3>
               }
             >
-              <p className="mt-2 text-body">
-                <FigureRefText
-                  text={job.descriptor}
-                  numbers={figureNumbers}
-                  onFigureClick={onFigureOpen}
-                />
-              </p>
+              {job.descriptor && (
+                <p className="mt-2 text-body">
+                  <FigureRefText
+                    text={job.descriptor}
+                    numbers={figureNumbers}
+                    onFigureClick={onFigureOpen}
+                  />
+                </p>
+              )}
 
               <ul className="mt-3 space-y-2 text-body text-ink-muted">
                 {job.bullets.map((bullet, i) => (

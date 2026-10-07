@@ -127,7 +127,7 @@ export function numberFigures(
   }
 
   for (const job of experience) {
-    figureRefIds(job.descriptor).forEach(mention)
+    figureRefIds(job.descriptor ?? '').forEach(mention)
     for (const bullet of job.bullets) {
       figureRefIds(bullet.text).forEach(mention)
       mention(bullet.figure?.figure)

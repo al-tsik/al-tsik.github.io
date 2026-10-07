@@ -37,8 +37,8 @@
             ]
           },
           "descriptor": {
-            "type": "string",
-            "description": "One-line summary of the role."
+            "description": "One-line summary of the role.",
+            "type": "string"
           },
           "bullets": {
             "type": "array",
@@ -305,10 +305,8 @@
           "id",
           "role",
           "company",
-          "location",
           "start",
           "end",
-          "descriptor",
           "bullets"
         ]
       }
@@ -354,8 +352,6 @@
         "required": [
           "id",
           "degree",
-          "school",
-          "location",
           "start",
           "end"
         ]
