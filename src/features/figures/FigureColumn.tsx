@@ -11,6 +11,8 @@ type FigureColumnProps = {
   onOpen: (figureId: string) => void
   /** Follows a numbered marker (callout) to a bullet or figure. */
   onLink: (target: LinkTarget) => void
+  /** Rendered inside the CV under a bullet (mobile) rather than as the side column. */
+  inline?: boolean
 }
 
 /** The left column: the figures for the current focus, fading in as they change. */
@@ -21,11 +23,12 @@ export function FigureColumn({
   building,
   onOpen,
   onLink,
+  inline = false,
 }: FigureColumnProps) {
   const visible = focus.figureIds.flatMap((id) => figureById.get(id) ?? [])
 
   return (
-    <div className="space-y-8 p-4 lg:p-0">
+    <div className={inline ? 'space-y-6 py-4' : 'space-y-8 p-4 lg:p-0'}>
       {visible.map((figure) => (
         // Keyed by id, so a figure that stays visible keeps its state (e.g. the
         // model's camera) while its view changes.

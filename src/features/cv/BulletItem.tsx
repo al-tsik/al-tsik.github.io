@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { Bullet } from '../../content/schema'
 import { subBulletKey } from '../../lib/figureVisibility'
 import { FigureRefText } from './FigureRefText'
@@ -12,6 +13,8 @@ type BulletItemProps = {
   /** Fig. numbers by figure id, for cross-references in the text. */
   numbers: ReadonlyMap<string, number>
   onFocus: (key: string) => void
+  /** Figures shown inline under this bullet (mobile, when it holds the focus). */
+  inlineFigures?: ReactNode
 }
 
 const textButton =
@@ -29,6 +32,7 @@ export function BulletItem({
   figureNumbers,
   numbers,
   onFocus,
+  inlineFigures,
 }: BulletItemProps) {
   const isFocused = focusedKey === bulletKey
   const subKeys = bullet.children.map((child, j) => subBulletKey(bulletKey, child, j))
@@ -94,6 +98,8 @@ export function BulletItem({
           })}
         </ul>
       )}
+
+      {inlineFigures}
     </li>
   )
 }

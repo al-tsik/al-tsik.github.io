@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { Experience } from '../../content/schema'
 import { bulletKey } from '../../lib/figureVisibility'
 import { BulletItem } from './BulletItem'
@@ -18,6 +19,8 @@ type ExperienceTimelineProps = {
   /** The main bullet of the focus (the parent when a sub-bullet is focused). */
   focusedMainKey: string | null
   onBulletFocus: (key: string) => void
+  /** Figures rendered under the focused bullet (mobile layout). */
+  inlineFigures?: ReactNode
 }
 
 export function ExperienceTimeline({
@@ -28,6 +31,7 @@ export function ExperienceTimeline({
   focusedKey,
   focusedMainKey,
   onBulletFocus,
+  inlineFigures,
 }: ExperienceTimelineProps) {
   return (
     <CvSection id="experience">
@@ -73,6 +77,7 @@ export function ExperienceTimeline({
                     figureNumbers={bulletFigureNumbers.get(keys[i]) ?? []}
                     numbers={figureNumbers}
                     onFocus={onBulletFocus}
+                    inlineFigures={keys[i] === focusedMainKey ? inlineFigures : undefined}
                   />
                 ))}
               </ul>

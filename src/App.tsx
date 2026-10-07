@@ -21,8 +21,9 @@ import { useFigureFocus } from './features/figures/useFigureFocus'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
+import { useMediaQuery } from './hooks/useMediaQuery'
 import { useUrlStateSync } from './hooks/useUrlStateSync'
-import { nextFocus, resolveLink, type LinkTarget } from './lib/figureVisibility'
+import { nextFocus, resolveLink, type FigureFocus, type LinkTarget } from './lib/figureVisibility'
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the functions are stable across renders.
@@ -37,6 +38,8 @@ function App() {
   const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
   useUrlStateSync(isBullet, isFigure)
   useEscapeToDeselect()
+  // Matches Tailwind's `lg`, where the figure column sits beside the paper.
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
 
   const focusedMainKey = focusedKey ? (bulletIndex.get(focusedKey)?.parentKey ?? focusedKey) : null
   const onBulletFocus = (key: string) => focusBullet(nextFocus(focusedKey, key, bulletIndex))
@@ -56,22 +59,32 @@ function App() {
       ?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
   }
 
+  const renderFigures = (focus: FigureFocus, inline = false) => (
+    <FigureColumn
+      focus={focus}
+      figureById={figureById}
+      numbers={figureNumbers}
+      building={building}
+      onOpen={openFigure}
+      onLink={followLink}
+      inline={inline}
+    />
+  )
+
+  // Desktop: everything in the side column. Mobile: the model as a hero until
+  // a bullet is focused, then that bullet's figures inline under it. Only one
+  // copy is ever mounted (no hidden duplicate canvases or videos).
+  const columnFigures = isDesktop
+    ? renderFigures(figureFocus)
+    : focusedMainKey === null
+      ? renderFigures({ ...figureFocus, figureIds: figureFocus.figureIds.slice(0, 1) })
+      : undefined
+  const inlineFigures = isDesktop ? undefined : renderFigures(figureFocus, true)
+
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <PaperLayout
-        figures={
-          <FigureColumn
-            focus={figureFocus}
-            figureById={figureById}
-            numbers={figureNumbers}
-            building={building}
-            onOpen={openFigure}
-            onLink={followLink}
-          />
-        }
-        outline={<Outline experience={cv.experience} />}
-      >
+      <PaperLayout figures={columnFigures} outline={<Outline experience={cv.experience} />}>
         <OutlineMenu experience={cv.experience} />
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
@@ -83,6 +96,7 @@ function App() {
             focusedKey={focusedKey}
             focusedMainKey={focusedMainKey}
             onBulletFocus={onBulletFocus}
+            inlineFigures={inlineFigures}
           />
           <SkillsList skills={cv.skills} />
           <EducationList education={cv.education} />

@@ -26,8 +26,13 @@ export function DatedEntry({
   children,
 }: DatedEntryProps) {
   return (
-    <li id={id} className="grid scroll-mt-20 grid-cols-[5.5rem_1fr] gap-x-6">
-      <p className="pt-1.5 text-right font-mono text-[11px] leading-snug text-ink-muted">
+    // minmax(0, 1fr): let wide content (figures, long words) shrink instead of
+    // pushing the page sideways. Dates stack above the entry on small screens.
+    <li
+      id={id}
+      className="grid scroll-mt-20 grid-cols-[minmax(0,1fr)] sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-x-6"
+    >
+      <p className="pb-1 font-mono text-[11px] leading-snug text-ink-muted sm:pt-1.5 sm:pb-0 sm:text-right">
         {formatYearMonth(start)} —
         <br />
         {formatYearMonth(end)}

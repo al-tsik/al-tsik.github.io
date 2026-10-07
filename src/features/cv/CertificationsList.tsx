@@ -10,7 +10,7 @@ export function CertificationsList({ certifications }: CertificationsListProps) 
     <CvSection id="certifications">
       <ul className="space-y-2 font-serif text-body">
         {certifications.map((cert) => (
-          <li key={cert.name} className="grid grid-cols-[5.5rem_1fr] gap-x-6">
+          <li key={cert.name} className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-6">
             {/* Year in the same gutter as the timeline dates. */}
             <span className="pt-1.5 text-right font-mono text-[11px] text-ink-muted">
               {cert.year}
