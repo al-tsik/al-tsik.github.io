@@ -7,6 +7,10 @@ type SelectionState = {
   hoveredPartId: string | null
   /** The drawing shown on the model, if any. Belongs to the selected part. */
   activeDrawingId: string | null
+  /** The CV bullet or sub-bullet whose figures are shown (see lib/figureVisibility). */
+  focusedBulletKey: string | null
+  /** The figure popped out in the overlay, if any. */
+  openFigureId: string | null
 
   select: (partId: string | null) => void
   /** Selects the part, or deselects it if it's already selected. */
@@ -14,6 +18,8 @@ type SelectionState = {
   hover: (partId: string | null) => void
   /** Shows the drawing on the model, or hides it if it's already shown. */
   toggleDrawing: (drawingId: string) => void
+  focusBullet: (key: string | null) => void
+  openFigure: (figureId: string | null) => void
 }
 
 /**
@@ -29,6 +35,8 @@ export const useSelectionStore = create<SelectionState>()((set) => ({
   selectedPartId: null,
   hoveredPartId: null,
   activeDrawingId: null,
+  focusedBulletKey: null,
+  openFigureId: null,
 
   select: (partId) =>
     set((state) =>
@@ -44,4 +52,6 @@ export const useSelectionStore = create<SelectionState>()((set) => ({
     set((state) => ({
       activeDrawingId: state.activeDrawingId === drawingId ? null : drawingId,
     })),
+  focusBullet: (key) => set({ focusedBulletKey: key }),
+  openFigure: (figureId) => set({ openFigureId: figureId }),
 }))

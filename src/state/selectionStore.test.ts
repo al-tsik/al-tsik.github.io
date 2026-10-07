@@ -73,4 +73,17 @@ describe('selectionStore', () => {
     useSelectionStore.getState().select('floors') // e.g. restored from the URL
     expect(useSelectionStore.getState().activeDrawingId).toBe('section-a-a')
   })
+
+  it('tracks the focused bullet and the open figure independently', () => {
+    useSelectionStore.getState().focusBullet('roof-facade-details')
+    useSelectionStore.getState().openFigure('section-a-a')
+
+    expect(useSelectionStore.getState()).toMatchObject({
+      focusedBulletKey: 'roof-facade-details',
+      openFigureId: 'section-a-a',
+    })
+
+    useSelectionStore.getState().openFigure(null)
+    expect(useSelectionStore.getState().focusedBulletKey).toBe('roof-facade-details')
+  })
 })
