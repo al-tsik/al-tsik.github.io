@@ -9,10 +9,15 @@ import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
 import { BuildingViewer } from './features/viewer/BuildingViewer'
+import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
 import { useSelectionStore } from './state/selectionStore'
+
+// Module-level so the array identity is stable across renders.
+const partIds = building.parts.map((part) => part.id)
 
 function App() {
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
+  useSelectionUrlSync(partIds)
 
   return (
     <div id="top">
