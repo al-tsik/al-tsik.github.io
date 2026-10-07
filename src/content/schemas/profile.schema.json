@@ -38,6 +38,34 @@
       "type": "string",
       "format": "starts_with",
       "pattern": "^\\/.*"
+    },
+    "views": {
+      "description": "Role and summary for one view. Anything left out uses the values above.",
+      "type": "object",
+      "properties": {
+        "developer": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            }
+          }
+        },
+        "architect": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "required": [

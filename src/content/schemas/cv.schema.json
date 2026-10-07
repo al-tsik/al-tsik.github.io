@@ -40,6 +40,18 @@
             "description": "One-line summary of the role.",
             "type": "string"
           },
+          "for": {
+            "description": "Show only in these views, e.g. [\"developer\"]. Leave out to show in every view.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "developer",
+                "architect"
+              ]
+            }
+          },
           "bullets": {
             "type": "array",
             "items": {
@@ -52,6 +64,18 @@
                 },
                 "text": {
                   "type": "string"
+                },
+                "for": {
+                  "description": "Show only in these views, e.g. [\"developer\"]. Leave out to show in every view.",
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "developer",
+                      "architect"
+                    ]
+                  }
                 },
                 "figure": {
                   "description": "The figure shown beside this line, and how.",
@@ -328,6 +352,18 @@
           },
           "text": {
             "type": "string"
+          },
+          "for": {
+            "description": "Show only in these views, e.g. [\"developer\"]. Leave out to show in every view.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "developer",
+                "architect"
+              ]
+            }
           }
         },
         "required": [
@@ -401,6 +437,18 @@
           "note": {
             "description": "Shown in brackets after the items, e.g. \"also C++, Lua\".",
             "type": "string"
+          },
+          "for": {
+            "description": "Show only in these views, e.g. [\"developer\"]. Leave out to show in every view.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "developer",
+                "architect"
+              ]
+            }
           }
         },
         "required": [

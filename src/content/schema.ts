@@ -30,6 +30,16 @@ const PublicPath = z
   .startsWith('/', 'Paths are relative to public/ and start with "/"')
   .transform(publicUrl)
 
+/** The CV can be read as a developer's or an architect's CV, or both. */
+export const AudienceSchema = z.enum(['developer', 'architect'])
+
+/** Limits an entry to some views. Left out, the entry shows in every view. */
+const For = z
+  .array(AudienceSchema)
+  .min(1)
+  .optional()
+  .describe('Show only in these views, e.g. ["developer"]. Leave out to show in every view.')
+
 // ─── Profile ────────────────────────────────────────────────────────────────
 
 /** One item in the contact line, e.g. an email, phone, city or profile link. */
@@ -42,12 +52,22 @@ export const ContactSchema = z.object({
     .describe('Makes the item a link. Leave out for plain text, such as a city.'),
 })
 
+/** What changes in the title block for one view. */
+const ProfileViewSchema = z.object({
+  role: z.string().optional(),
+  summary: z.string().optional(),
+})
+
 export const ProfileSchema = z.object({
   name: z.string(),
   role: z.string(),
   summary: z.string().describe('Two or three sentences shown at the top of the CV.'),
   contact: z.array(ContactSchema).describe('The contact line under the name, in order.'),
   cvPdf: PublicPath.optional().describe('Downloadable PDF version of the CV.'),
+  views: z
+    .object({ developer: ProfileViewSchema.optional(), architect: ProfileViewSchema.optional() })
+    .optional()
+    .describe('Role and summary for one view. Anything left out uses the values above.'),
 })
 
 // ─── CV ─────────────────────────────────────────────────────────────────────
@@ -97,6 +117,7 @@ export const SubBulletSchema = z.object({
 export const BulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this bullet.'),
   text: z.string(),
+  for: For,
   figure: FigureViewSchema.optional().describe('The figure shown beside this line, and how.'),
   children: z
     .array(SubBulletSchema)
@@ -112,6 +133,7 @@ export const ExperienceSchema = z.object({
   start: YearMonth,
   end: z.union([YearMonth, z.literal('present')]),
   descriptor: z.string().optional().describe('One-line summary of the role.'),
+  for: For,
   bullets: z.array(BulletSchema),
 })
 
@@ -129,6 +151,7 @@ export const SkillGroupSchema = z.object({
   group: z.string().describe('E.g. "BIM", "Computational", "Visualisation".'),
   items: z.array(z.string()).describe('Software or skills, e.g. ["Revit", "Dynamo"].'),
   note: z.string().optional().describe('Shown in brackets after the items, e.g. "also C++, Lua".'),
+  for: For,
 })
 
 export const CertificationSchema = z.object({
@@ -147,6 +170,7 @@ export const ProjectSchema = z.object({
   id: Id.optional(),
   title: z.string().describe('Bold lead-in, e.g. "Home lab".'),
   text: z.string(),
+  for: For,
 })
 
 export const CvSchema = z.object({
@@ -293,6 +317,7 @@ export const FiguresSchema = z.object({
 // ─── Inferred types ─────────────────────────────────────────────────────────
 
 export type Profile = z.infer<typeof ProfileSchema>
+export type Audience = z.infer<typeof AudienceSchema>
 export type Contact = z.infer<typeof ContactSchema>
 export type Cv = z.infer<typeof CvSchema>
 export type Experience = z.infer<typeof ExperienceSchema>

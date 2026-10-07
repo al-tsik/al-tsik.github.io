@@ -61,6 +61,16 @@ describe('content integrity', () => {
   it('assigns each model mesh to at most one part', () => {
     expect(duplicates(building.parts.flatMap((part) => part.meshNames))).toEqual([])
   })
+
+  it('tags bullets only for views their role shows in', () => {
+    // A bullet for "developer" under an architect-only role would never show.
+    const hidden = cv.experience.flatMap((job) =>
+      job.bullets
+        .filter((bullet) => job.for && bullet.for?.every((view) => !job.for?.includes(view)))
+        .map((bullet) => `${job.id}: ${bullet.text.slice(0, 40)}…`),
+    )
+    expect(hidden).toEqual([])
+  })
 })
 
 describe('figures', () => {
