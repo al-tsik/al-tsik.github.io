@@ -156,3 +156,29 @@ export function numberFigures(
 
   return new Map(order.map((id, i) => [id, i + 1]))
 }
+
+// ─── Links from figures back to the CV ──────────────────────────────────────
+
+export type LinkTarget = { bullet?: string; figure?: string; part?: string }
+export type ResolvedLink = { kind: 'bullet'; key: string } | { kind: 'figure'; id: string }
+
+/**
+ * Where a numbered marker (drawing callout or model label) leads: a bullet
+ * (directly, or the first bullet in the CV that mentions a part) or another
+ * figure. Null when nothing matches.
+ */
+export function resolveLink(
+  target: LinkTarget,
+  index: ReadonlyMap<string, BulletEntry>,
+): ResolvedLink | null {
+  if (target.bullet && index.has(target.bullet)) return { kind: 'bullet', key: target.bullet }
+  if (target.part) {
+    for (const entry of index.values()) {
+      if (entry.parentKey === null && entry.bullet.partIds.includes(target.part)) {
+        return { kind: 'bullet', key: entry.key }
+      }
+    }
+  }
+  if (target.figure) return { kind: 'figure', id: target.figure }
+  return null
+}

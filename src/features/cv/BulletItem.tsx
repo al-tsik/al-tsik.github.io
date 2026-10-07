@@ -37,7 +37,8 @@ export function BulletItem({
   const interactive = figureNumbers.length > 0
 
   return (
-    <li>
+    // Ids let figure markers scroll to a bullet (see followLink in App).
+    <li id={`bullet-${bulletKey}`} className="scroll-mt-32">
       <div className="flex gap-3">
         <span aria-hidden="true" className={isActive ? 'text-accent' : 'text-ink-faint'}>
           —
@@ -71,7 +72,8 @@ export function BulletItem({
             return (
               <li
                 key={key}
-                className={`relative py-0.5 pl-6 text-[0.95em] before:absolute before:top-[0.85em] before:left-0 before:w-4 before:border-t ${
+                id={`bullet-${key}`}
+                className={`relative scroll-mt-32 py-0.5 pl-6 text-[0.95em] before:absolute before:top-[0.85em] before:left-0 before:w-4 before:border-t ${
                   isSubFocused ? 'before:border-accent' : 'before:border-line'
                 }`}
               >

@@ -15,6 +15,8 @@ type FigureContentProps = {
   building: Building
   /** Compact in the figure column; full size and fully interactive in the pop-out. */
   variant?: 'column' | 'overlay'
+  /** Makes model part labels clickable (overlay only). */
+  onPartClick?: (partId: string) => void
   /** Makes drawing callouts clickable. */
   onCalloutClick?: (target: Callout['target']) => void
 }
@@ -25,6 +27,7 @@ export function FigureContent({
   view,
   building,
   variant = 'column',
+  onPartClick,
   onCalloutClick,
 }: FigureContentProps) {
   switch (figure.type) {
@@ -39,6 +42,7 @@ export function FigureContent({
             view={toModelView(view)}
             showLabels={isOverlay}
             interactive={isOverlay}
+            onPartClick={isOverlay ? onPartClick : undefined}
           />
         </div>
       )

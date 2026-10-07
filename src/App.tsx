@@ -22,7 +22,7 @@ import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
 import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
-import { nextFocus } from './lib/figureVisibility'
+import { nextFocus, resolveLink, type LinkTarget } from './lib/figureVisibility'
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the array identity is stable across renders.
@@ -40,6 +40,21 @@ function App() {
   const focusedMainKey = focusedKey ? (bulletIndex.get(focusedKey)?.parentKey ?? focusedKey) : null
   const onBulletFocus = (key: string) => focusBullet(nextFocus(focusedKey, key, bulletIndex))
 
+  // A numbered marker on a figure leads to a bullet (focus it and bring it
+  // into view, closing the overlay) or to another figure (open it).
+  const followLink = (target: LinkTarget) => {
+    const link = resolveLink(target, bulletIndex)
+    if (link?.kind === 'figure') return openFigure(link.id)
+    if (link?.kind !== 'bullet') return
+
+    openFigure(null)
+    focusBullet(link.key)
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document
+      .getElementById(`bullet-${link.key}`)
+      ?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
+  }
+
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
@@ -51,6 +66,7 @@ function App() {
             numbers={figureNumbers}
             building={building}
             onOpen={openFigure}
+            onLink={followLink}
           />
         }
         outline={<Outline experience={cv.experience} />}
@@ -80,6 +96,7 @@ function App() {
         focus={figureFocus}
         building={building}
         onClose={() => openFigure(null)}
+        onLink={followLink}
       />
     </div>
   )

@@ -1,5 +1,5 @@
 import type { Building, Figure } from '../../content/schema'
-import type { FigureFocus } from '../../lib/figureVisibility'
+import type { FigureFocus, LinkTarget } from '../../lib/figureVisibility'
 import { FigureContent } from './FigureContent'
 import { FigureFrame } from './FigureFrame'
 
@@ -9,10 +9,19 @@ type FigureColumnProps = {
   numbers: ReadonlyMap<string, number>
   building: Building
   onOpen: (figureId: string) => void
+  /** Follows a numbered marker (callout) to a bullet or figure. */
+  onLink: (target: LinkTarget) => void
 }
 
 /** The left column: the figures for the current focus, fading in as they change. */
-export function FigureColumn({ focus, figureById, numbers, building, onOpen }: FigureColumnProps) {
+export function FigureColumn({
+  focus,
+  figureById,
+  numbers,
+  building,
+  onOpen,
+  onLink,
+}: FigureColumnProps) {
   const visible = focus.figureIds.flatMap((id) => figureById.get(id) ?? [])
 
   return (
@@ -26,7 +35,12 @@ export function FigureColumn({ focus, figureById, numbers, building, onOpen }: F
             caption={figure.caption}
             onOpen={() => onOpen(figure.id)}
           >
-            <FigureContent figure={figure} view={focus.views[figure.id]} building={building} />
+            <FigureContent
+              figure={figure}
+              view={focus.views[figure.id]}
+              building={building}
+              onCalloutClick={onLink}
+            />
           </FigureFrame>
         </div>
       ))}

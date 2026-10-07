@@ -6,6 +6,7 @@ import {
   nextFocus,
   numberFigures,
   pickInitialFigures,
+  resolveLink,
 } from './figureVisibility'
 
 const figure = (id: string, type: 'model' | 'image' = 'image'): Figure =>
@@ -134,5 +135,26 @@ describe('numberFigures', () => {
   it('numbers figures by first mention, then the rest in file order', () => {
     const numbers = numberFigures(figures, experience)
     expect(Object.fromEntries(numbers)).toEqual({ 'img-c': 1, model: 2, 'img-b': 3, 'img-a': 4 })
+  })
+})
+
+describe('resolveLink', () => {
+  const index = indexBullets(experience)
+
+  it('links to a bullet or sub-bullet by id', () => {
+    expect(resolveLink({ bullet: 'parapet' }, index)).toEqual({ kind: 'bullet', key: 'parapet' })
+  })
+
+  it('links a part to the first main bullet that mentions it', () => {
+    expect(resolveLink({ part: 'facade' }, index)).toEqual({ kind: 'bullet', key: 'roof' })
+  })
+
+  it('links to another figure', () => {
+    expect(resolveLink({ figure: 'img-a' }, index)).toEqual({ kind: 'figure', id: 'img-a' })
+  })
+
+  it('returns null when nothing matches', () => {
+    expect(resolveLink({ part: 'basement' }, index)).toBeNull()
+    expect(resolveLink({ bullet: 'missing' }, index)).toBeNull()
   })
 })
