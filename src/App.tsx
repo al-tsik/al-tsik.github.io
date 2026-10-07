@@ -2,6 +2,7 @@ import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
 import { SplitLayout } from './components/layout/SplitLayout'
 import { cv, profile } from './content'
+import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
@@ -21,6 +22,7 @@ function App() {
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} />
           <SkillsList skills={cv.skills} />
+          <EducationList education={cv.education} />
         </main>
         <SiteFooter name={profile.name} />
       </SplitLayout>
