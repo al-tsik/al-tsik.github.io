@@ -1,20 +1,18 @@
-import { useMemo } from 'react'
 import { SiteFooter } from './components/layout/SiteFooter'
 import { PaperLayout } from './components/layout/PaperLayout'
 import { SiteHeader } from './components/layout/SiteHeader'
-import { building, cv, profile } from './content'
+import { building, cv, figures, profile } from './content'
+import { bulletIndex, figureById, figureNumbers, modelFigureId } from './content/derived'
 import { CertificationsList } from './features/cv/CertificationsList'
 import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
+import { FigureColumn } from './features/figures/FigureColumn'
+import { useFigureFocus } from './features/figures/useFigureFocus'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
-import { PartDetailsPanel } from './features/panel/PartDetailsPanel'
-import { BuildingViewer } from './features/viewer/BuildingViewer'
-import type { ModelView } from './features/viewer/modelView'
-import { PartsLegend } from './features/viewer/PartsLegend'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
 import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
 import { useSelectionStore } from './state/selectionStore'
@@ -24,16 +22,8 @@ const partIds = building.parts.map((part) => part.id)
 
 function App() {
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
-  const activeDrawingId = useSelectionStore((state) => state.activeDrawingId)
-  const select = useSelectionStore((state) => state.select)
-  const toggle = useSelectionStore((state) => state.toggle)
-
-  // Transitional: derive the model view from the old part selection until
-  // figures and bullet focus take over.
-  const modelView = useMemo<ModelView>(
-    () => ({ parts: selectedPartId ? [selectedPartId] : [], drawingId: activeDrawingId }),
-    [selectedPartId, activeDrawingId],
-  )
+  const openFigure = useSelectionStore((state) => state.openFigure)
+  const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
   useSelectionUrlSync(partIds)
   useEscapeToDeselect()
 
@@ -42,19 +32,13 @@ function App() {
       <SiteHeader name={profile.name} role={profile.role} />
       <PaperLayout
         figures={
-          <>
-            <div className="relative h-[60dvh] lg:h-[60%]">
-              <BuildingViewer
-                modelSrc={building.model.src}
-                parts={building.parts}
-                view={modelView}
-                onPartClick={toggle}
-                onBackgroundClick={() => select(null)}
-              />
-              <PartsLegend parts={building.parts} />
-            </div>
-            <PartDetailsPanel parts={building.parts} />
-          </>
+          <FigureColumn
+            focus={figureFocus}
+            figureById={figureById}
+            numbers={figureNumbers}
+            building={building}
+            onOpen={openFigure}
+          />
         }
         outline={<Outline experience={cv.experience} />}
       >
