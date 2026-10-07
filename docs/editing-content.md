@@ -90,7 +90,7 @@ Media tips:
 - **Video**: compress, e.g.
   `ffmpeg -i in.mov -vf scale=1280:-2 -c:v libx264 -crf 28 -an -movflags +faststart out.mp4`.
 - **Lottie**: add markers in After Effects (layer markers with a comment) and
-  reference them by name in sub-bullet views.
+  reference them by name in a line's `figure` (`"marker": "…"`).
 
 ## The 3D model (`building.json`)
 
