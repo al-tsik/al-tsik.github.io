@@ -149,16 +149,78 @@
   ],
   "skills": [
     {
-      "group": "BIM",
-      "items": ["Revit", "Navisworks", "IFC workflows"]
+      "group": "Languages",
+      "items": ["C#", "Python", "JavaScript", "TypeScript", "Java", "SQL", "HTML", "CSS"],
+      "note": "also C++, Lua"
     },
     {
-      "group": "Computational",
-      "items": ["Dynamo", "Python", "Grasshopper"]
+      "group": "Frameworks",
+      "items": [".NET 8", ".NET Framework 4", "Blazor", "React", "Node.js", "Electron", "Flask"]
     },
     {
-      "group": "Design & Visualisation",
-      "items": ["AutoCAD", "Rhino", "Enscape", "Adobe Creative Suite"]
+      "group": "APIs & Integration",
+      "items": [
+        "GraphQL and REST",
+        "custom API design",
+        "Autodesk Platform Services (ACC)",
+        "Autodesk Forma",
+        "Asite",
+        "Knowledge Share"
+      ]
+    },
+    {
+      "group": "DevOps & Cloud",
+      "items": [
+        "Git (GitHub, Azure DevOps, Gitea)",
+        "GitHub Actions",
+        "Gitea Actions",
+        "Azure Pipelines",
+        "Docker",
+        "Azure environment provisioning"
+      ]
+    },
+    {
+      "group": "Testing & Quality",
+      "items": [
+        "bUnit component testing",
+        "pull requests and code review",
+        "technical documentation"
+      ]
+    },
+    {
+      "group": "Data",
+      "items": ["SQL Server", "Power BI"]
+    },
+    {
+      "group": "AI / ML",
+      "items": [
+        "Azure AI Foundry",
+        "PyTorch",
+        "Hugging Face",
+        "CLIP",
+        "embeddings",
+        "n8n",
+        "Power Automate",
+        "Microsoft Copilot"
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": ["Visual Studio", "VS Code", "Cursor", "ClickUp"]
+    },
+    {
+      "group": "AEC & 3D",
+      "items": [
+        "Revit API",
+        "Dynamo",
+        "Grasshopper",
+        "AutoCAD",
+        "Rhino",
+        "Unreal Engine",
+        "Unity",
+        "Godot",
+        "Blender"
+      ]
     }
   ],
   "certifications": [

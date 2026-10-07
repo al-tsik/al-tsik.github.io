@@ -1,24 +1,14 @@
 {
   "$schema": "./schemas/profile.schema.json",
-  "name": "Aleks Placeholder",
-  "role": "Architectural Designer · Computational BIM",
-  "summary": "Architectural designer working at the intersection of design and computation. I build Dynamo and Python tools that automate documentation and help teams explore design options faster.",
+  "name": "John Doe",
+  "role": "Software Developer",
+  "summary": "Software developer with 3 years' professional experience building web platforms, automation tools and AI integrations in C#/.NET, Python and JavaScript on Azure. Sole developer of a client-facing Blazor platform, owning architecture, API design, testing, CI/CD, containerised deployment and documentation. Background in architecture and BIM, with a track record of turning client requirements into software that cuts months of manual work down to weeks.",
   "contact": [
-    {
-      "label": "aleks@example.com",
-      "href": "mailto:aleks@example.com"
-    },
-    {
-      "label": "City, Country"
-    },
-    {
-      "label": "LinkedIn",
-      "href": "https://www.linkedin.com/in/your-handle"
-    },
-    {
-      "label": "GitHub",
-      "href": "https://github.com/al-tsik"
-    }
+    { "label": "[Email]" },
+    { "label": "[Phone]" },
+    { "label": "[City], UK" },
+    { "label": "[LinkedIn URL]" },
+    { "label": "[Portfolio URL]" }
   ],
   "cvPdf": "/cv.pdf"
 }
