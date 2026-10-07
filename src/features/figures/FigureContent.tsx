@@ -16,7 +16,7 @@ const BuildingViewer = lazy(() =>
 )
 
 const modelFallback = (
-  <p className="grid h-full place-items-center font-mono text-[10px] tracking-widest text-ink-faint uppercase">
+  <p className="grid h-full place-items-center text-[10px] tracking-widest text-ink-faint uppercase">
     Loading model…
   </p>
 )

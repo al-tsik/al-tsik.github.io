@@ -27,7 +27,7 @@ export function DatedEntry({
         {heading}
         <p
           title={showDuration ? formatDuration(start, end) : undefined}
-          className="shrink-0 font-mono text-[11px] text-ink-muted"
+          className="shrink-0 text-[11px] text-ink-muted"
         >
           {formatYearMonth(start)} – {formatYearMonth(end)}
         </p>

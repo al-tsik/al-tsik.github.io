@@ -16,7 +16,7 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
           {profile.role} — {profile.location}
         </p>
 
-        <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 font-mono text-xs">
+        <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs">
           <li>
             <a href={`mailto:${profile.email}`} className={linkClass}>
               {profile.email}

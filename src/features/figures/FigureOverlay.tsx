@@ -40,13 +40,13 @@ export function FigureOverlay({
           </div>
           <figcaption className="flex items-baseline justify-between gap-4 border-t border-line px-4 py-3">
             <span>
-              <span className="font-mono text-xs text-ink-muted">Fig. {number} — </span>
+              <span className="text-xs text-ink-muted">Fig. {number} — </span>
               <span className="font-serif text-ink-muted italic">{figure.caption}</span>
             </span>
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 cursor-pointer font-mono text-xs text-ink-muted uppercase hover:text-accent"
+              className="shrink-0 cursor-pointer text-xs text-ink-muted uppercase hover:text-accent"
             >
               Close ×
             </button>

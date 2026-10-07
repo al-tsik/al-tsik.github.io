@@ -16,9 +16,7 @@ export function Outline({ experience }: OutlineProps) {
 
   return (
     <nav aria-label="Contents" className="font-sans text-sm">
-      <p className="mb-3 font-mono text-[10px] tracking-widest text-ink-muted uppercase">
-        Contents
-      </p>
+      <p className="mb-3 text-[10px] tracking-widest text-ink-muted uppercase">Contents</p>
       <ol className="space-y-1.5">
         {cvSections.map((section, index) => {
           const isActive = section.id === activeId
@@ -35,7 +33,7 @@ export function Outline({ experience }: OutlineProps) {
                 <span aria-hidden="true" className={isActive ? 'text-accent' : ''}>
                   {isActive ? '▸' : ' '}
                 </span>
-                <span className="font-mono text-xs">{index + 1}</span>
+                <span className="text-xs">{index + 1}</span>
                 {section.title}
               </a>
 

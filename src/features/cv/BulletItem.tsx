@@ -71,7 +71,7 @@ export function BulletItem({
             className={`${textButton} ${isActive ? 'bg-accent-soft text-ink' : ''}`}
           >
             <FigureRefText text={bullet.text} numbers={numbers} />
-            <span className="ml-2 font-mono text-[10px] whitespace-nowrap text-ink-faint">
+            <span className="ml-2 text-[10px] whitespace-nowrap text-ink-faint">
               Fig. {ownNumber}
             </span>
           </button>

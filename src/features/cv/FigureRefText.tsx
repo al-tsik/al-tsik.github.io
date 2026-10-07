@@ -12,7 +12,7 @@ type FigureRefTextProps = {
   onFigureClick?: (figureId: string) => void
 }
 
-const refClass = 'font-mono text-[0.8em] text-ink-muted'
+const refClass = 'text-ink-muted'
 
 /** Text with `{fig:id}` cross-references rendered as "Fig. N", like a paper. */
 export function FigureRefText({ text, numbers, onFigureClick }: FigureRefTextProps) {

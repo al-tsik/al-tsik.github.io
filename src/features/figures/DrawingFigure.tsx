@@ -12,7 +12,7 @@ type DrawingFigureProps = {
 }
 
 const markerClass =
-  'absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-ink bg-paper font-mono text-[11px]'
+  'absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-ink bg-paper text-[11px]'
 
 /** A vector drawing with numbered callouts, optionally zoomed to a region. */
 export function DrawingFigure({ src, alt, callouts, region, onCalloutClick }: DrawingFigureProps) {

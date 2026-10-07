@@ -16,7 +16,7 @@ function PartLabel({ part, position }: PartLabelProps) {
   const isHovered = useModelView((state) => state.hoveredPartId === part.id)
   const isActive = isSelected || isHovered
 
-  const className = `grid size-6 place-items-center rounded-full border font-mono text-[11px] transition-colors ${
+  const className = `grid size-6 place-items-center rounded-full border text-[11px] transition-colors ${
     isActive ? 'border-accent bg-accent text-white' : 'border-ink bg-paper text-ink'
   }`
 

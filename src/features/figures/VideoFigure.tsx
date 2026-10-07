@@ -94,10 +94,10 @@ function EmbeddedVideo({ embed, poster, alt, time }: VideoFigureProps & { embed:
       {poster && (
         <img src={poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
       )}
-      <span className="relative inline-flex items-center gap-2 border border-ink bg-paper px-3 py-1.5 font-mono text-xs group-hover:border-accent group-hover:text-accent">
+      <span className="relative inline-flex items-center gap-2 border border-ink bg-paper px-3 py-1.5 text-xs group-hover:border-accent group-hover:text-accent">
         ▶ Play video
       </span>
-      <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] text-ink-muted">
+      <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-ink-muted">
         Loads from {new URL(embed).hostname.replace(/^www\./, '')}
       </span>
     </button>

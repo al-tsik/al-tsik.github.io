@@ -17,7 +17,7 @@ export function CvSection({ id, children }: CvSectionProps) {
   return (
     <section id={id} aria-labelledby={headingId} className="scroll-mt-20 py-8">
       <h2 id={headingId} className="flex items-baseline gap-3 font-serif text-lg font-bold">
-        <span className="font-mono text-sm text-ink-muted">{sectionNumber(id)}</span>
+        <span className="text-sm text-ink-muted">{sectionNumber(id)}</span>
         {title}
       </h2>
       <div className="mt-5">{children}</div>

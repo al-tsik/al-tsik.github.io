@@ -27,7 +27,7 @@ export function CertificationsList({ certifications }: CertificationsListProps) 
               <span className="text-ink-muted italic">, {cert.issuer}</span>
             </span>
             {/* Right-aligned, like the dates on the role lines. */}
-            <span className="shrink-0 font-mono text-[11px] text-ink-muted">{cert.year}</span>
+            <span className="shrink-0 text-[11px] text-ink-muted">{cert.year}</span>
           </li>
         ))}
       </ul>

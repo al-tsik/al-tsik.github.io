@@ -50,7 +50,7 @@ export function GalleryFigure({ images, intervalMs, image }: GalleryFigureProps)
       </div>
 
       <div className="flex items-center justify-between gap-3 border-t border-line px-3 py-2">
-        <span aria-live="polite" className="truncate font-mono text-[10px] text-ink-muted">
+        <span aria-live="polite" className="truncate text-[10px] text-ink-muted">
           {images[index]?.caption ?? images[index]?.alt}
         </span>
         <div className="flex shrink-0 gap-1.5">
