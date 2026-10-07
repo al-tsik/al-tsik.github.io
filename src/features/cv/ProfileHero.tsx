@@ -4,47 +4,51 @@ type ProfileHeroProps = {
   profile: Profile
 }
 
+const linkClass = 'underline decoration-line underline-offset-4 hover:text-accent'
+
+/** The paper's title block: name as title, role as affiliation, summary as abstract. */
 export function ProfileHero({ profile }: ProfileHeroProps) {
   return (
-    <header className="border-b border-line pb-8">
-      <p className="font-mono text-xs tracking-widest text-ink-muted uppercase">
-        {profile.role} · {profile.location}
-      </p>
-      <h1 className="mt-2 text-4xl font-semibold tracking-tight">{profile.name}</h1>
-      <p className="mt-4 max-w-prose leading-relaxed text-ink-muted">{profile.summary}</p>
+    <header className="pb-10 font-serif">
+      <div className="text-center">
+        <h1 className="text-5xl leading-tight font-medium tracking-tight">{profile.name}</h1>
+        <p className="mt-3 text-body text-ink-muted italic">
+          {profile.role} — {profile.location}
+        </p>
 
-      <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs uppercase">
-        <li>
-          <a
-            href={`mailto:${profile.email}`}
-            className="underline-offset-4 hover:text-accent hover:underline"
-          >
-            Email
-          </a>
-        </li>
-        {profile.links.map((link) => (
-          <li key={link.url}>
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noreferrer"
-              className="underline-offset-4 hover:text-accent hover:underline"
-            >
-              {link.label} ↗
+        <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 font-mono text-xs">
+          <li>
+            <a href={`mailto:${profile.email}`} className={linkClass}>
+              {profile.email}
             </a>
           </li>
-        ))}
-      </ul>
+          {profile.links.map((link) => (
+            <li key={link.url}>
+              <a href={link.url} target="_blank" rel="noreferrer" className={linkClass}>
+                {link.label} ↗
+              </a>
+            </li>
+          ))}
+          {profile.cvPdf && (
+            <li>
+              <a href={profile.cvPdf} download className={linkClass}>
+                PDF ↓
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
 
-      {profile.cvPdf && (
-        <a
-          href={profile.cvPdf}
-          download
-          className="mt-6 inline-flex items-center gap-2 border border-ink px-4 py-2 font-mono text-xs uppercase transition-colors hover:bg-ink hover:text-paper"
+      <section aria-labelledby="abstract-heading" className="mx-auto mt-10 max-w-[34rem]">
+        <h2
+          id="abstract-heading"
+          className="text-center font-sans text-xs font-semibold tracking-[0.2em] uppercase"
         >
-          Download CV (PDF) ↓
-        </a>
-      )}
+          Abstract
+        </h2>
+        {/* Left-aligned: justified text leaves rivers at this measure on screen. */}
+        <p className="mt-3 text-body text-pretty">{profile.summary}</p>
+      </section>
     </header>
   )
 }
