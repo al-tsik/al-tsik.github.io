@@ -38,8 +38,6 @@ export function ExperienceTimeline({
       <ol>
         {experience.map((job) => {
           const keys = job.bullets.map((bullet, i) => bulletKey(job.id, bullet, i))
-          // The role is active when one of its bullets (or sub-bullets) is focused.
-          const isActive = focusedMainKey !== null && keys.includes(focusedMainKey)
 
           return (
             <DatedEntry
@@ -58,11 +56,7 @@ export function ExperienceTimeline({
                 </h3>
               }
             >
-              <p
-                className={`mt-3 border-l-2 pl-3 font-serif text-body transition-colors ${
-                  isActive ? 'border-accent' : 'border-transparent'
-                }`}
-              >
+              <p className="mt-2 font-serif text-body">
                 <FigureRefText
                   text={job.descriptor}
                   numbers={figureNumbers}
