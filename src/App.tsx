@@ -14,7 +14,7 @@ function App() {
   return (
     <div id="top">
       <SiteHeader name={profile.name} role={profile.role} />
-      <SplitLayout aside={<BuildingViewer modelSrc={building.model.src} />}>
+      <SplitLayout aside={<BuildingViewer modelSrc={building.model.src} parts={building.parts} />}>
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} />

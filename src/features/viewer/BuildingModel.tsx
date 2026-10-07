@@ -1,6 +1,9 @@
-import { Edges, useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import { useMemo, useRef } from 'react'
-import { Mesh, type BufferGeometry, type Group, type Matrix4 } from 'three'
+import { Mesh, type BufferGeometry, type Group, type Matrix4, type Object3D } from 'three'
+import type { BuildingPart } from '../../content/schema'
+import { createMeshPartIndex, resolvePartId, type MeshPartIndex } from '../../lib/partLookup'
+import { PartMesh } from './PartMesh'
 import { useFitCameraToObject } from './useFitCameraToObject'
 
 type ModelMesh = {
@@ -9,10 +12,20 @@ type ModelMesh = {
   name: string
   geometry: BufferGeometry
   matrix: Matrix4
+  partId: string | null
 }
 
-/** Flattens the glTF scene graph into meshes with their world transforms. */
-function useModelMeshes(src: string): ModelMesh[] {
+/** The object's name followed by its ancestors' names, nearest first. */
+function nameChain(object: Object3D): string[] {
+  const names: string[] = []
+  for (let current: Object3D | null = object; current; current = current.parent) {
+    names.push(current.name)
+  }
+  return names
+}
+
+/** Flattens the glTF scene graph into meshes with world transforms and part ids. */
+function useModelMeshes(src: string, index: MeshPartIndex): ModelMesh[] {
   const { scene } = useGLTF(src)
 
   return useMemo(() => {
@@ -25,39 +38,39 @@ function useModelMeshes(src: string): ModelMesh[] {
           name: object.name,
           geometry: object.geometry,
           matrix: object.matrixWorld,
+          partId: resolvePartId(nameChain(object), index),
         })
       }
     })
     return meshes
-  }, [scene])
+  }, [scene, index])
 }
 
 type BuildingModelProps = {
   src: string
+  parts: BuildingPart[]
 }
 
 /**
  * Renders the building model as a white card model with black edges,
  * ignoring the file's own materials so any export gets the same look.
  */
-export function BuildingModel({ src }: BuildingModelProps) {
-  const meshes = useModelMeshes(src)
+export function BuildingModel({ src, parts }: BuildingModelProps) {
+  const index = useMemo(() => createMeshPartIndex(parts), [parts])
+  const meshes = useModelMeshes(src, index)
   const groupRef = useRef<Group>(null)
   useFitCameraToObject(groupRef)
 
   return (
     <group ref={groupRef}>
       {meshes.map((mesh) => (
-        <mesh
+        <PartMesh
           key={mesh.id}
           name={mesh.name}
           geometry={mesh.geometry}
           matrix={mesh.matrix}
-          matrixAutoUpdate={false}
-        >
-          <meshStandardMaterial color="white" roughness={1} />
-          <Edges color="#141414" threshold={15} />
-        </mesh>
+          partId={mesh.partId}
+        />
       ))}
     </group>
   )
