@@ -7,6 +7,10 @@ describe('formatYearMonth', () => {
     expect(formatYearMonth('2019-12')).toBe('Dec 2019')
   })
 
+  it('keeps year-only dates as the year', () => {
+    expect(formatYearMonth('2024')).toBe('2024')
+  })
+
   it('formats "present"', () => {
     expect(formatYearMonth('present')).toBe('Present')
   })
@@ -26,6 +30,11 @@ describe('formatDuration', () => {
 
   it('treats a single month as one month', () => {
     expect(formatDuration('2022-05', '2022-05', now)).toBe('1 mo')
+  })
+
+  it('treats year-only ranges as whole years', () => {
+    expect(formatDuration('2021', '2024', now)).toBe('4 yr')
+    expect(formatDuration('2018', '2018-06', now)).toBe('6 mo')
   })
 
   it('resolves "present" against the given date', () => {

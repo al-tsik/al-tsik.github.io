@@ -12,8 +12,10 @@ import { publicUrl } from '../lib/publicUrl.ts'
 /** Lowercase kebab-case identifier, e.g. "roof" or "level-01". */
 const Id = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Use lowercase kebab-case, e.g. "level-01"')
 
-/** "YYYY-MM", e.g. "2023-09". */
-const YearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Use YYYY-MM, e.g. "2023-09"')
+/** "YYYY-MM", e.g. "2023-09", or just the year, e.g. "2023". */
+const YearMonth = z
+  .string()
+  .regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Use YYYY-MM or YYYY, e.g. "2023-09" or "2023"')
 
 /** A point in model space: [x, y, z] in metres, Y up. */
 const Vec3 = z.tuple([z.number(), z.number(), z.number()])
