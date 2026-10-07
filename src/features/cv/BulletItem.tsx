@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import type { PointerEvent, ReactNode } from 'react'
 import type { Bullet } from '../../content/schema'
 import { subBulletKey } from '../../lib/figureVisibility'
+import { endPreview, previewLine } from '../../state/hoverIntent'
 import { FigureRefText } from './FigureRefText'
 
 type BulletItemProps = {
@@ -17,13 +18,26 @@ type BulletItemProps = {
   inlineFigures?: ReactNode
 }
 
+/**
+ * Hovering (mouse only) or keyboard-focusing a line previews its figure; on
+ * touch there is no hover, so a tap pins instead.
+ */
+function previewHandlers(key: string) {
+  const isMouse = (event: PointerEvent) => event.pointerType === 'mouse'
+  return {
+    onPointerEnter: (event: PointerEvent) => isMouse(event) && previewLine(key),
+    onPointerLeave: (event: PointerEvent) => isMouse(event) && endPreview(),
+    onFocus: () => previewLine(key),
+    onBlur: () => endPreview(0),
+  }
+}
+
 const textButton =
   'cursor-pointer text-left underline decoration-transparent decoration-1 underline-offset-4 transition-colors hover:decoration-accent'
 
 /**
- * One CV bullet with its sub-bullets drawn as an indented tree. Bullets that
- * have figures are buttons: clicking one shows its figures; sub-bullets
- * change how those figures are shown.
+ * One CV bullet with its sub-bullets. Lines that have a figure are buttons:
+ * hovering previews the figure beside the line, clicking pins it.
  */
 export function BulletItem({
   bullet,
@@ -53,6 +67,7 @@ export function BulletItem({
             type="button"
             aria-pressed={isFocused}
             onClick={() => onFocus(bulletKey)}
+            {...previewHandlers(bulletKey)}
             className={`${textButton} ${isActive ? 'bg-accent-soft text-ink' : ''}`}
           >
             <FigureRefText text={bullet.text} numbers={numbers} />
@@ -90,6 +105,7 @@ export function BulletItem({
                     type="button"
                     aria-pressed={isSubFocused}
                     onClick={() => onFocus(key)}
+                    {...previewHandlers(key)}
                     className={`${textButton} ${isSubFocused ? 'text-accent' : ''}`}
                   >
                     <FigureRefText text={child.text} numbers={numbers} />

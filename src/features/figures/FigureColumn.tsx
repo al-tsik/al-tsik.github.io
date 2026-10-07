@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { endPreview, holdPreview } from '../../state/hoverIntent'
 import type { Building, Figure } from '../../content/schema'
 import type { LineFigure, LinkTarget } from '../../lib/figureVisibility'
 import { FigureContent } from './FigureContent'
@@ -79,6 +80,9 @@ export function FigureColumn({
             if (element) itemRefs.current.set(figure.id, element)
             else itemRefs.current.delete(figure.id)
           }}
+          // Keep a hover preview while the pointer is on the figure itself.
+          onPointerEnter={holdPreview}
+          onPointerLeave={() => endPreview()}
           className="absolute right-0 w-full max-w-[24rem] motion-safe:animate-fade-in motion-safe:transition-[top] motion-safe:duration-500"
           // Hidden until measured, so figures don't flash at the top first.
           style={{ top: layout?.tops[i] ?? 0, visibility: layout ? 'visible' : 'hidden' }}
