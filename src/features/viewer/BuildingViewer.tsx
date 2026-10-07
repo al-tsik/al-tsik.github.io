@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import type { BuildingPart } from '../../content/schema'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
+import { useSelectionStore } from '../../state/selectionStore'
 import { BuildingModel } from './BuildingModel'
 import { ModelLoader } from './ModelLoader'
 import { useAutoOrbit } from './useAutoOrbit'
@@ -23,10 +24,17 @@ function AutoOrbit({ enabled }: { enabled: boolean }) {
 /** Interactive 3D view of the building, shown in the left pane. */
 export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
   const reducedMotion = usePrefersReducedMotion()
+  const select = useSelectionStore((state) => state.select)
 
   return (
     // `flat` disables tone mapping so white stays white, like paper.
-    <Canvas flat dpr={[1, 2]} aria-label="3D model of the building">
+    // Clicking empty space (not a drag) returns to the overview.
+    <Canvas
+      flat
+      dpr={[1, 2]}
+      aria-label="3D model of the building"
+      onPointerMissed={() => select(null)}
+    >
       {/* Wide near/far range so large or off-origin models never clip. */}
       <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
       <CameraControls
