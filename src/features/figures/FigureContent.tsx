@@ -4,6 +4,7 @@ import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
 import { DrawingFigure } from './DrawingFigure'
 import { DynamoFigure } from './DynamoFigure'
+import { GalleryFigure } from './GalleryFigure'
 import { ImageFigure } from './ImageFigure'
 
 type FigureContentProps = {
@@ -48,6 +49,10 @@ export function FigureContent({ figure, view, building, onCalloutClick }: Figure
         <DynamoFigure script={script} region={view?.region} lines={view?.lines} />
       ) : null
     }
+    case 'gallery':
+      return (
+        <GalleryFigure images={figure.images} intervalMs={figure.intervalMs} image={view?.image} />
+      )
     default:
       // Placeholder until each figure type gets its renderer.
       return (
