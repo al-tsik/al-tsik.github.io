@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import type { Experience, Figure } from '../content/schema'
 import {
   figureForLine,
-  focusForLines,
   indexBullets,
   nextFocus,
   numberFigures,
@@ -99,13 +98,6 @@ describe('figureForLine', () => {
 
   it('is null for lines without a figure', () => {
     expect(figureForLine(index.get('studio-3')!)).toBeNull()
-  })
-})
-
-describe('focusForLines', () => {
-  it('shows one figure per line with its view', () => {
-    const focus = focusForLines([figureForLine(index.get('detail')!)!])
-    expect(focus).toEqual({ figureIds: ['img-b'], views: { 'img-b': { figure: 'img-b' } } })
   })
 })
 

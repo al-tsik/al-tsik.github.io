@@ -109,23 +109,6 @@ export function pickRandomLines(
   return picked.map((line) => line.key)
 }
 
-// ─── Focus ──────────────────────────────────────────────────────────────────
-
-export type FigureFocus = {
-  /** Figures to show, in display order. */
-  figureIds: string[]
-  /** View per figure id; figures without an entry use their default view. */
-  views: Record<string, ResolvedView>
-}
-
-/** Combines line figures into what the figure column shows. */
-export function focusForLines(lines: readonly LineFigure[]): FigureFocus {
-  return {
-    figureIds: lines.map((line) => line.figureId),
-    views: Object.fromEntries(lines.map((line) => [line.figureId, line.view])),
-  }
-}
-
 // ─── Numbering ──────────────────────────────────────────────────────────────
 
 /**

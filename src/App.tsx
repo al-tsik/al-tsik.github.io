@@ -17,13 +17,13 @@ import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
 import { FigureColumn } from './features/figures/FigureColumn'
 import { FigureOverlay } from './features/figures/FigureOverlay'
-import { useFigureFocus } from './features/figures/useFigureFocus'
+import { useDisplayedLines } from './features/figures/useDisplayedLines'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToOverview } from './hooks/useEscapeToOverview'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import { useUrlStateSync } from './hooks/useUrlStateSync'
-import { nextFocus, resolveLink, type FigureFocus, type LinkTarget } from './lib/figureVisibility'
+import { nextFocus, resolveLink, type LineFigure, type LinkTarget } from './lib/figureVisibility'
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the functions are stable across renders.
@@ -35,7 +35,7 @@ function App() {
   const focusBullet = useSelectionStore((state) => state.focusBullet)
   const openFigure = useSelectionStore((state) => state.openFigure)
   const openFigureId = useSelectionStore((state) => state.openFigureId)
-  const figureFocus = useFigureFocus(bulletIndex, figureTypes)
+  const displayedLines = useDisplayedLines(bulletIndex, figureTypes)
   useUrlStateSync(isBullet, isFigure)
   useEscapeToOverview()
   // Matches Tailwind's `lg`, where the figure column sits beside the paper.
@@ -59,9 +59,9 @@ function App() {
       ?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
   }
 
-  const renderFigures = (focus: FigureFocus, inline = false) => (
+  const renderFigures = (lines: LineFigure[], inline = false) => (
     <FigureColumn
-      focus={focus}
+      lines={lines}
       figureById={figureById}
       numbers={figureNumbers}
       building={building}
@@ -75,11 +75,11 @@ function App() {
   // a bullet is focused, then that bullet's figures inline under it. Only one
   // copy is ever mounted (no hidden duplicate canvases or videos).
   const columnFigures = isDesktop
-    ? renderFigures(figureFocus)
+    ? renderFigures(displayedLines)
     : focusedMainKey === null
-      ? renderFigures({ ...figureFocus, figureIds: figureFocus.figureIds.slice(0, 1) })
+      ? renderFigures(displayedLines.slice(0, 1))
       : undefined
-  const inlineFigures = isDesktop ? undefined : renderFigures(figureFocus, true)
+  const inlineFigures = isDesktop ? undefined : renderFigures(displayedLines, true)
 
   return (
     <div id="top">
@@ -108,7 +108,7 @@ function App() {
       <FigureOverlay
         figure={(openFigureId && figureById.get(openFigureId)) || null}
         number={(openFigureId && figureNumbers.get(openFigureId)) || 0}
-        focus={figureFocus}
+        view={displayedLines.find((line) => line.figureId === openFigureId)?.view}
         building={building}
         onClose={() => openFigure(null)}
         onLink={followLink}

@@ -1,14 +1,14 @@
 import { Modal } from '../../components/Modal'
 import type { Building, Figure } from '../../content/schema'
-import type { FigureFocus, LinkTarget } from '../../lib/figureVisibility'
+import type { LinkTarget, ResolvedView } from '../../lib/figureVisibility'
 import { FigureContent } from './FigureContent'
 
 type FigureOverlayProps = {
   /** The figure to pop out, or null when closed. */
   figure: Figure | null
   number: number
-  /** The current focus, so the figure opens in the view the visitor was looking at. */
-  focus: FigureFocus
+  /** The view the figure had on the page, so it opens as the visitor saw it. */
+  view: ResolvedView | undefined
   building: Building
   onClose: () => void
   /** Follows a numbered marker (callout or part label) to a bullet or figure. */
@@ -19,7 +19,7 @@ type FigureOverlayProps = {
 export function FigureOverlay({
   figure,
   number,
-  focus,
+  view,
   building,
   onClose,
   onLink,
@@ -31,7 +31,7 @@ export function FigureOverlay({
           <div className="max-h-[80dvh] overflow-auto bg-surface">
             <FigureContent
               figure={figure}
-              view={focus.views[figure.id]}
+              view={view}
               building={building}
               variant="overlay"
               onCalloutClick={onLink}
