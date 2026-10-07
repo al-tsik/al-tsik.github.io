@@ -9,7 +9,7 @@ const linkClass = 'underline decoration-line underline-offset-4 hover:text-accen
 /** The title block, set like the printed CV: name, role, contact line, then a rule. */
 export function ProfileHero({ profile }: ProfileHeroProps) {
   return (
-    <header className="pb-10">
+    <header>
       <div className="border-b border-line pb-3">
         <h1 className="text-3xl leading-tight font-bold tracking-wide uppercase">{profile.name}</h1>
         <p className="mt-1 text-body font-bold text-accent">{profile.role}</p>
@@ -43,15 +43,13 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
         </ul>
       </div>
 
-      <section aria-labelledby="abstract-heading" className="mx-auto mt-10 max-w-[34rem]">
-        <h2
-          id="abstract-heading"
-          className="text-center font-sans text-xs font-semibold tracking-[0.2em] uppercase"
-        >
-          Abstract
+      {/* The abstract: same heading style as the numbered sections, but unnumbered. */}
+      <section aria-labelledby="profile-heading" className="pt-8">
+        <h2 id="profile-heading" className="text-lg font-bold">
+          Profile
         </h2>
         {/* Left-aligned: justified text leaves rivers at this measure on screen. */}
-        <p className="mt-3 text-body text-pretty">{profile.summary}</p>
+        <p className="mt-5 text-body text-pretty">{profile.summary}</p>
       </section>
     </header>
   )
