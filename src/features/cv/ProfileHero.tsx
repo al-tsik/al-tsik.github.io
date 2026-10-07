@@ -1,13 +1,16 @@
+import type { ReactNode } from 'react'
 import type { Profile } from '../../content/schema'
 
 type ProfileHeroProps = {
   profile: Profile
+  /** Shown under the contact line, e.g. the CV view toggle. */
+  controls?: ReactNode
 }
 
 const linkClass = 'underline decoration-line underline-offset-4 hover:text-accent'
 
 /** The title block, set like the printed CV: name, role, contact line, then a rule. */
-export function ProfileHero({ profile }: ProfileHeroProps) {
+export function ProfileHero({ profile, controls }: ProfileHeroProps) {
   return (
     <header>
       <div className="border-b border-line pb-3">
@@ -42,6 +45,7 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
           ))}
         </ul>
       </div>
+      {controls && <div className="mt-3">{controls}</div>}
 
       {/* The abstract: same heading style as the numbered sections, but unnumbered. */}
       <section aria-labelledby="profile-heading" className="pt-8">

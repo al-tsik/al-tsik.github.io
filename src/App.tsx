@@ -1,17 +1,11 @@
 import type { ReactNode } from 'react'
 import { SiteFooter } from './components/layout/SiteFooter'
 import { PaperLayout } from './components/layout/PaperLayout'
-import { building, cv, profile } from './content'
-import {
-  bulletIndex,
-  figureById,
-  figureNumbers,
-  figureTypes,
-  lineFigureNumbers,
-  sections,
-} from './content/derived'
+import { building, profile } from './content'
+import { contentByView, figureById, figureTypes } from './content/derived'
 import { CertificationsList } from './features/cv/CertificationsList'
 import { CvSection } from './features/cv/CvSection'
+import { CvViewToggle } from './features/cv/CvViewToggle'
 import type { CvSectionId } from './features/cv/cvSections'
 import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
@@ -28,6 +22,7 @@ import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToOverview } from './hooks/useEscapeToOverview'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import { useUrlStateSync } from './hooks/useUrlStateSync'
+import { profileFor, type CvView } from './lib/cvView'
 import {
   figureForLine,
   nextFocus,
@@ -38,10 +33,14 @@ import {
 import { useSelectionStore } from './state/selectionStore'
 
 // Module-level so the functions are stable across renders.
-const isBullet = (key: string) => bulletIndex.has(key)
+const isBullet = (key: string, view: CvView) => contentByView[view].bulletIndex.has(key)
 const isFigure = (id: string) => figureById.has(id)
 
 function App() {
+  const cvView = useSelectionStore((state) => state.cvView)
+  const setCvView = useSelectionStore((state) => state.setCvView)
+  // The CV and its lookups as read in the current view.
+  const { cv, sections, bulletIndex, figureNumbers, lineFigureNumbers } = contentByView[cvView]
   const focusedKey = useSelectionStore((state) => state.focusedBulletKey)
   const focusBullet = useSelectionStore((state) => state.focusBullet)
   const openFigure = useSelectionStore((state) => state.openFigure)
@@ -51,6 +50,12 @@ function App() {
   useEscapeToOverview()
   // Matches Tailwind's `lg`, where the figure column sits beside the paper.
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+
+  // Switching views unpins a line the new view doesn't show.
+  const changeView = (view: CvView) => {
+    setCvView(view)
+    if (focusedKey && !contentByView[view].bulletIndex.has(focusedKey)) focusBullet(null)
+  }
 
   const focusedMainKey = focusedKey ? (bulletIndex.get(focusedKey)?.parentKey ?? focusedKey) : null
   // Clicking a line pins its figure and brings the line to the reading position.
@@ -130,7 +135,10 @@ function App() {
       >
         <OutlineMenu sections={sections} experience={cv.experience} />
         <main id="cv" className="py-10">
-          <ProfileHero profile={profile} />
+          <ProfileHero
+            profile={profileFor(profile, cvView)}
+            controls={<CvViewToggle view={cvView} onChange={changeView} />}
+          />
           {sections.map((section) => (
             <CvSection key={section.id} section={section}>
               {sectionBodies[section.id]}
