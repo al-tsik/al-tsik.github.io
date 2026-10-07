@@ -26,3 +26,7 @@ This license applies to the source code only. Portfolio content — including
 but not limited to drawings, 3D models, images, Dynamo scripts, CV text and
 documents in `public/` and `src/content/` — is Copyright (c) 2026 aleks,
 All Rights Reserved, and may not be reused without permission.
+
+The Libron typeface in `src/assets/fonts/libron/` is (c) 2026 Nico Verbruggen
+(https://github.com/nicoverbruggen/libron) and is licensed under the SIL Open
+Font License 1.1; see `src/assets/fonts/libron/OFL.txt`.
