@@ -170,6 +170,111 @@
                 "alt"
               ]
             }
+          },
+          "drawings": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "E.g. \"Section A-A\" or \"Plan Level 02\"."
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "section",
+                    "plan",
+                    "elevation",
+                    "detail"
+                  ]
+                },
+                "src": {
+                  "type": "string",
+                  "format": "starts_with",
+                  "pattern": "^\\/.*",
+                  "description": "SVG or PNG. Give SVGs width/height attributes so they rasterise sharply."
+                },
+                "placement": {
+                  "type": "object",
+                  "properties": {
+                    "position": {
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "description": "Centre of the drawing in model coordinates (metres, Y up)."
+                    },
+                    "rotation": {
+                      "default": [
+                        0,
+                        0,
+                        0
+                      ],
+                      "description": "Rotation in degrees about X, Y, Z. [0,0,0] faces +Z (a vertical sheet); [-90,0,0] lies flat facing up (a plan).",
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    "width": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "description": "Width of the drawing in metres."
+                    },
+                    "height": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "description": "Height of the drawing in metres."
+                    }
+                  },
+                  "required": [
+                    "position",
+                    "width",
+                    "height"
+                  ]
+                },
+                "clip": {
+                  "default": false,
+                  "description": "Cut away the model in front of the drawing, like a section box.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "kind",
+                "src",
+                "placement"
+              ]
+            }
           }
         },
         "required": [

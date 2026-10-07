@@ -24,6 +24,7 @@ describe('content integrity', () => {
     expect(duplicates(cv.education.map((e) => e.id))).toEqual([])
     expect(duplicates(partIds)).toEqual([])
     expect(duplicates(building.parts.flatMap((p) => p.dynamoScripts.map((s) => s.id)))).toEqual([])
+    expect(duplicates(building.parts.flatMap((p) => p.drawings.map((d) => d.id)))).toEqual([])
   })
 
   it('has unique part label numbers', () => {
@@ -50,6 +51,7 @@ describe('referenced files', () => {
       building.model.src,
       ...building.parts.flatMap((part) => [
         ...part.images.map((image) => image.src),
+        ...part.drawings.map((drawing) => drawing.src),
         ...part.dynamoScripts.flatMap((script) => [script.graphImage.src, script.pythonFile]),
       ]),
     ].filter((path): path is string => path !== undefined)

@@ -3,7 +3,16 @@ import type { BuildingPart } from '../content/schema'
 import { createMeshPartIndex, resolvePartId } from './partLookup'
 
 function part(id: string, meshNames: string[]): BuildingPart {
-  return { id, number: 1, name: id, summary: '', meshNames, dynamoScripts: [], images: [] }
+  return {
+    id,
+    number: 1,
+    name: id,
+    summary: '',
+    meshNames,
+    dynamoScripts: [],
+    images: [],
+    drawings: [],
+  }
 }
 
 const index = createMeshPartIndex([

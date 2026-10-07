@@ -107,6 +107,29 @@ export const DynamoScriptSchema = z.object({
   pythonFile: PublicPath.optional().describe('Python node source (.py) shown as a code preview.'),
 })
 
+export const DrawingPlacementSchema = z.object({
+  position: Vec3.describe('Centre of the drawing in model coordinates (metres, Y up).'),
+  rotation: Vec3.default([0, 0, 0]).describe(
+    'Rotation in degrees about X, Y, Z. [0,0,0] faces +Z (a vertical sheet); [-90,0,0] lies flat facing up (a plan).',
+  ),
+  width: z.number().positive().describe('Width of the drawing in metres.'),
+  height: z.number().positive().describe('Height of the drawing in metres.'),
+})
+
+export const DrawingSchema = z.object({
+  id: Id,
+  title: z.string().describe('E.g. "Section A-A" or "Plan Level 02".'),
+  kind: z.enum(['section', 'plan', 'elevation', 'detail']),
+  src: PublicPath.describe(
+    'SVG or PNG. Give SVGs width/height attributes so they rasterise sharply.',
+  ),
+  placement: DrawingPlacementSchema,
+  clip: z
+    .boolean()
+    .default(false)
+    .describe('Cut away the model in front of the drawing, like a section box.'),
+})
+
 export const BuildingPartSchema = z.object({
   id: Id,
   number: z.number().int().positive().describe('Label number shown on the model, like ① ② ③.'),
@@ -121,6 +144,7 @@ export const BuildingPartSchema = z.object({
   ),
   dynamoScripts: z.array(DynamoScriptSchema).default([]),
   images: z.array(ImageSchema).default([]),
+  drawings: z.array(DrawingSchema).default([]),
 })
 
 export const BuildingSchema = z.object({
@@ -151,3 +175,5 @@ export type Building = z.infer<typeof BuildingSchema>
 export type BuildingPart = z.infer<typeof BuildingPartSchema>
 export type DynamoScript = z.infer<typeof DynamoScriptSchema>
 export type Image = z.infer<typeof ImageSchema>
+export type Drawing = z.infer<typeof DrawingSchema>
+export type DrawingPlacement = z.infer<typeof DrawingPlacementSchema>

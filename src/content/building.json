@@ -50,6 +50,34 @@
           "alt": "Section detail of the post-tensioned slab edge and firestop",
           "caption": "Detail 03 — Slab edge"
         }
+      ],
+      "drawings": [
+        {
+          "id": "section-a-a",
+          "title": "Section A-A",
+          "kind": "section",
+          "src": "/drawings/section-a-a.svg",
+          "placement": {
+            "position": [0, 6.5, 0],
+            "rotation": [0, 0, 0],
+            "width": 20,
+            "height": 17
+          },
+          "clip": true
+        },
+        {
+          "id": "plan-level-02",
+          "title": "Plan Level 02",
+          "kind": "plan",
+          "src": "/drawings/plan-level-02.svg",
+          "placement": {
+            "position": [0, 8.2, 0],
+            "rotation": [-90, 0, 0],
+            "width": 20,
+            "height": 14
+          },
+          "clip": true
+        }
       ]
     },
     {
@@ -84,6 +112,21 @@
           "src": "/images/details/facade-panel-joint.svg",
           "alt": "Plan detail of the rainscreen panel open joint",
           "caption": "Detail 02 — Panel joint"
+        }
+      ],
+      "drawings": [
+        {
+          "id": "elevation-south",
+          "title": "South Elevation",
+          "kind": "elevation",
+          "src": "/drawings/elevation-south.svg",
+          "placement": {
+            "position": [0, 6.5, 6.8],
+            "rotation": [0, 0, 0],
+            "width": 20,
+            "height": 17
+          },
+          "clip": false
         }
       ]
     },
