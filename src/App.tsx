@@ -70,7 +70,9 @@ function App() {
     openFigure(null)
     focusBullet(link.key)
     suppressPreviewsWhileScrolling()
-    scrollToLine(link.key)
+    // After the overlay has closed: closing a <dialog> returns focus to the
+    // button that opened it, and that focus scroll would cancel ours.
+    requestAnimationFrame(() => scrollToLine(link.key))
   }
 
   const renderFigures = (lines: LineFigure[], inline = false) => (
