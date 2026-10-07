@@ -13,6 +13,13 @@ describe('unsupportedViewFields', () => {
     expect(unsupportedViewFields({ figure: 'i', part: 'roof' }, 'image')).toEqual(['part'])
   })
 
+  it('lets code figures highlight lines but not zoom', () => {
+    expect(unsupportedViewFields({ figure: 'c', lines: [3, 9] }, 'code')).toEqual([])
+    expect(unsupportedViewFields({ figure: 'c', region: [0, 0, 50, 50] }, 'code')).toEqual([
+      'region',
+    ])
+  })
+
   it('accepts a view with only the figure id', () => {
     expect(unsupportedViewFields({ figure: 'x' }, 'animation')).toEqual([])
   })

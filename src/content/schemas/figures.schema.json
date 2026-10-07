@@ -321,6 +321,50 @@
               "type",
               "src"
             ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "code"
+              },
+              "src": {
+                "description": "Source file, e.g. a Dynamo Python node (.py).",
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*"
+              },
+              "language": {
+                "default": "python",
+                "type": "string",
+                "enum": [
+                  "python",
+                  "javascript",
+                  "typescript",
+                  "json"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "src"
+            ]
           }
         ]
       }

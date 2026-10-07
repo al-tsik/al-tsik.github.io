@@ -3,6 +3,7 @@ import type { Building, Callout, Figure } from '../../content/schema'
 import type { ResolvedView } from '../../lib/figureVisibility'
 import { toModelView } from '../viewer/modelView'
 import { AnimationFigure } from './AnimationFigure'
+import { CodeFigure } from './CodeFigure'
 import { DrawingFigure } from './DrawingFigure'
 import { DynamoFigure } from './DynamoFigure'
 import { GalleryFigure } from './GalleryFigure'
@@ -98,6 +99,8 @@ export function FigureContent({
       )
     case 'animation':
       return <AnimationFigure src={figure.src} alt={figure.alt} marker={view?.marker} />
+    case 'code':
+      return <CodeFigure src={figure.src} language={figure.language} lines={view?.lines} />
     default: {
       // Exhaustiveness check: adding a figure type to the schema without a
       // renderer here is a compile error.

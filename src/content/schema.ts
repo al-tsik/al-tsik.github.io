@@ -55,7 +55,7 @@ const Percent = z.number().min(0).max(100)
  * type apply (checked by the content tests):
  * model: part, drawing, azimuth, elevation, zoom · gallery: image ·
  * video: time, until · animation: marker · drawing/image: region ·
- * dynamo: region, lines.
+ * dynamo: region, lines · code: lines.
  */
 export const FigureViewSchema = z.object({
   figure: Id.describe('Id of the figure in figures.json.'),
@@ -80,7 +80,7 @@ export const FigureViewSchema = z.object({
   lines: z
     .tuple([z.number().int().positive(), z.number().int().positive()])
     .optional()
-    .describe('Dynamo: highlight Python lines [from, to].'),
+    .describe('Code: highlight lines [from, to].'),
 })
 
 export const SubBulletSchema = z.object({
@@ -276,6 +276,11 @@ export const FigureSchema = z.discriminatedUnion('type', [
   FigureBase.extend({
     type: z.literal('animation'),
     src: PublicPath.describe('Animated SVG, or a Lottie .json/.lottie file.'),
+  }),
+  FigureBase.extend({
+    type: z.literal('code'),
+    src: PublicPath.describe('Source file, e.g. a Dynamo Python node (.py).'),
+    language: z.enum(['python', 'javascript', 'typescript', 'json']).default('python'),
   }),
 ])
 

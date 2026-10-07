@@ -48,6 +48,14 @@
       "alt": "Dynamo node graph passing facade panels to a Python node"
     },
     {
+      "id": "panel-numbering-code",
+      "type": "code",
+      "src": "/files/dynamo/facade-panel-numbering.py",
+      "language": "python",
+      "caption": "Python node from the panel numbering graph.",
+      "alt": "Python source that sorts facade panels and writes their marks"
+    },
+    {
       "id": "level-slab-sync",
       "type": "dynamo",
       "scriptId": "level-slab-sync",

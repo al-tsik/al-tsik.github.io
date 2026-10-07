@@ -24,6 +24,7 @@ function figureFiles(figure: Figure): (string | undefined)[] {
     case 'drawing':
     case 'image':
     case 'animation':
+    case 'code':
       return [figure.src]
     case 'gallery':
       return figure.images.map((image) => image.src)

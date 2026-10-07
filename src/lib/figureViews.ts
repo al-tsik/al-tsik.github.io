@@ -11,6 +11,7 @@ export const viewFieldsByType: Record<FigureType, readonly ViewField[]> = {
   drawing: ['region'],
   image: ['region'],
   dynamo: ['region', 'lines'],
+  code: ['lines'],
 }
 
 /** View fields that are set but don't apply to the figure's type. */

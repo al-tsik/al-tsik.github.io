@@ -173,7 +173,7 @@
                               "maxItems": 4
                             },
                             "lines": {
-                              "description": "Dynamo: highlight Python lines [from, to].",
+                              "description": "Code: highlight lines [from, to].",
                               "type": "array",
                               "prefixItems": [
                                 {
