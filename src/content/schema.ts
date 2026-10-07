@@ -1,4 +1,7 @@
 import { z } from 'zod'
+// Explicit .ts extension: this file is also imported by Node scripts
+// (scripts/generate-json-schemas.ts), which need full specifiers.
+import { publicUrl } from '../lib/publicUrl.ts'
 
 /*
  * Content schemas: the single source of truth for the shape of everything in
@@ -15,8 +18,15 @@ const YearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Use YYYY-MM, e.g.
 /** A point in model space: [x, y, z] in metres, Y up. */
 const Vec3 = z.tuple([z.number(), z.number(), z.number()])
 
-/** Path to a file served from public/, e.g. "/images/roof.jpg". */
-const PublicPath = z.string().startsWith('/', 'Paths are relative to public/ and start with "/"')
+/**
+ * Path to a file served from public/, e.g. "/images/roof.jpg". Parsed values
+ * are resolved against the site base, so the site also works under a
+ * sub-path (GitHub Pages project site); the JSON always uses "/...".
+ */
+const PublicPath = z
+  .string()
+  .startsWith('/', 'Paths are relative to public/ and start with "/"')
+  .transform(publicUrl)
 
 // ─── Profile ────────────────────────────────────────────────────────────────
 

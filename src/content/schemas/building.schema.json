@@ -36,10 +36,10 @@
       "type": "object",
       "properties": {
         "src": {
+          "description": "The .glb file in public/models/.",
           "type": "string",
           "format": "starts_with",
-          "pattern": "^\\/.*",
-          "description": "The .glb file in public/models/."
+          "pattern": "^\\/.*"
         }
       },
       "required": [
@@ -95,7 +95,6 @@
             "maxItems": 3
           },
           "dynamoScripts": {
-            "default": [],
             "type": "array",
             "items": {
               "type": "object",
@@ -148,7 +147,6 @@
             }
           },
           "drawings": {
-            "default": [],
             "type": "array",
             "items": {
               "type": "object",
@@ -171,10 +169,10 @@
                   ]
                 },
                 "src": {
+                  "description": "SVG or PNG. Give SVGs width/height attributes so they rasterise sharply.",
                   "type": "string",
                   "format": "starts_with",
-                  "pattern": "^\\/.*",
-                  "description": "SVG or PNG. Give SVGs width/height attributes so they rasterise sharply."
+                  "pattern": "^\\/.*"
                 },
                 "placement": {
                   "type": "object",

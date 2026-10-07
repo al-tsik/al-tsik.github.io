@@ -54,10 +54,10 @@
                 "const": "drawing"
               },
               "src": {
+                "description": "Vector drawing (SVG).",
                 "type": "string",
                 "format": "starts_with",
-                "pattern": "^\\/.*",
-                "description": "Vector drawing (SVG)."
+                "pattern": "^\\/.*"
               },
               "callouts": {
                 "default": [],
@@ -308,10 +308,10 @@
                 "const": "animation"
               },
               "src": {
+                "description": "Animated SVG, or a Lottie .json/.lottie file.",
                 "type": "string",
                 "format": "starts_with",
-                "pattern": "^\\/.*",
-                "description": "Animated SVG, or a Lottie .json/.lottie file."
+                "pattern": "^\\/.*"
               }
             },
             "required": [
