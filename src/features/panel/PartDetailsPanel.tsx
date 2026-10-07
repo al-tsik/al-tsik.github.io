@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react'
 import type { BuildingPart } from '../../content/schema'
 import { useSelectionStore } from '../../state/selectionStore'
+import { ImageGallery } from './ImageGallery'
 
 /**
  * Screen space the panel covers on the right of the viewer: its width (w-80)
@@ -57,7 +59,24 @@ export function PartDetailsPanel({ parts }: PartDetailsPanelProps) {
 
       <div className="flex-1 space-y-6 overflow-y-auto p-4">
         <p className="text-sm leading-relaxed">{part.summary}</p>
+
+        {part.images.length > 0 && (
+          <PanelSection title="Details">
+            <ImageGallery images={part.images} />
+          </PanelSection>
+        )}
       </div>
     </aside>
+  )
+}
+
+function PanelSection({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h3 className="mb-2 font-mono text-[10px] tracking-widest text-ink-muted uppercase">
+        {title}
+      </h3>
+      {children}
+    </section>
   )
 }

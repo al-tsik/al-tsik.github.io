@@ -17,7 +17,14 @@
       "name": "Foundation",
       "summary": "Reinforced concrete raft with a perimeter thickening below the facade line.",
       "meshNames": ["foundation"],
-      "labelPosition": [9.5, -0.4, 6.5]
+      "labelPosition": [9.5, -0.4, 6.5],
+      "images": [
+        {
+          "src": "/images/details/foundation-edge.svg",
+          "alt": "Section detail of the raft foundation edge with perimeter thickening",
+          "caption": "Detail 04 — Foundation edge"
+        }
+      ]
     },
     {
       "id": "floors",
@@ -25,7 +32,14 @@
       "name": "Floor Slabs",
       "summary": "Post-tensioned flat slabs on a 7.5 m grid, with edge details coordinated with the facade.",
       "meshNames": ["level-01", "level-02", "level-03"],
-      "labelPosition": [-9, 7, 6]
+      "labelPosition": [-9, 7, 6],
+      "images": [
+        {
+          "src": "/images/details/slab-edge.svg",
+          "alt": "Section detail of the post-tensioned slab edge and firestop",
+          "caption": "Detail 03 — Slab edge"
+        }
+      ]
     },
     {
       "id": "core",
@@ -41,7 +55,14 @@
       "name": "Facade",
       "summary": "Rainscreen facade of fibre-cement panels, set out and numbered with Dynamo.",
       "meshNames": ["facade-n", "facade-s", "facade-e", "facade-w"],
-      "labelPosition": [4.5, 11, 6.3]
+      "labelPosition": [4.5, 11, 6.3],
+      "images": [
+        {
+          "src": "/images/details/facade-panel-joint.svg",
+          "alt": "Plan detail of the rainscreen panel open joint",
+          "caption": "Detail 02 — Panel joint"
+        }
+      ]
     },
     {
       "id": "roof",
@@ -49,7 +70,14 @@
       "name": "Roof",
       "summary": "Inverted warm roof with a planted terrace and a perimeter parapet.",
       "meshNames": ["roof"],
-      "labelPosition": [-5, 14.5, 3]
+      "labelPosition": [-5, 14.5, 3],
+      "images": [
+        {
+          "src": "/images/details/roof-parapet.svg",
+          "alt": "Section detail of the roof parapet and insulation build-up",
+          "caption": "Detail 01 — Roof parapet"
+        }
+      ]
     }
   ]
 }

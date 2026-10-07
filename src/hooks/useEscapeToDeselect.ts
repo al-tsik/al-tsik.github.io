@@ -7,7 +7,10 @@ export function useEscapeToDeselect() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') select(null)
+      if (event.key !== 'Escape') return
+      // Let an open modal (e.g. the lightbox) handle Escape on its own.
+      if (document.querySelector('dialog:modal')) return
+      select(null)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
