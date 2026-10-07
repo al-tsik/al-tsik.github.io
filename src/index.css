@@ -4,6 +4,36 @@
 @import '@fontsource-variable/eb-garamond';
 @import '@fontsource-variable/eb-garamond/wght-italic.css';
 
+/* Libron (OFL), a reading face tuned for screens: src/assets/fonts/libron. */
+@font-face {
+  font-family: 'Libron';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/libron/Libron-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Libron';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/libron/Libron-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Libron';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/libron/Libron-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Libron';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/libron/Libron-BoldItalic.woff2') format('woff2');
+}
+
 /*
  * Design tokens. Tailwind v4 turns each variable into utilities,
  * e.g. --color-ink → text-ink / bg-ink / border-ink, --font-mono → font-mono.
@@ -16,7 +46,7 @@
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-  --font-serif: 'EB Garamond Variable', Garamond, Georgia, serif;
+  --font-serif: 'Libron', Georgia, serif;
 
   /* Garamond has a small x-height, so paper text is set larger than UI text. */
   --text-body: 1.1875rem;
