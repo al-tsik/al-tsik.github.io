@@ -46,9 +46,9 @@
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
   --font-serif: 'Libron', Georgia, serif;
 
-  /* Garamond has a small x-height, so paper text is set larger than UI text. */
-  --text-body: 1.1875rem;
-  --text-body--line-height: 1.65;
+  /* Paper reading size: compact, like a printed CV. */
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.6;
 
   --color-paper: #fafaf8;
   --color-surface: #ffffff;
