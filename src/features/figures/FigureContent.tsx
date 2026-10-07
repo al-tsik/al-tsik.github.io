@@ -3,6 +3,7 @@ import type { ResolvedView } from '../../lib/figureVisibility'
 import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
 import { DrawingFigure } from './DrawingFigure'
+import { DynamoFigure } from './DynamoFigure'
 import { ImageFigure } from './ImageFigure'
 
 type FigureContentProps = {
@@ -38,6 +39,15 @@ export function FigureContent({ figure, view, building, onCalloutClick }: Figure
           onCalloutClick={onCalloutClick}
         />
       )
+    case 'dynamo': {
+      const script = building.parts
+        .flatMap((part) => part.dynamoScripts)
+        .find((candidate) => candidate.id === figure.scriptId)
+      // Content tests guarantee the script exists; render nothing if it doesn't.
+      return script ? (
+        <DynamoFigure script={script} region={view?.region} lines={view?.lines} />
+      ) : null
+    }
     default:
       // Placeholder until each figure type gets its renderer.
       return (

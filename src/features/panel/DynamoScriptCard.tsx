@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Lightbox } from '../../components/Lightbox'
 import type { DynamoScript } from '../../content/schema'
-import { PythonPreview } from './PythonPreview'
+import { PythonPreview } from '../figures/PythonPreview'
 
 type DynamoScriptCardProps = {
   script: DynamoScript
