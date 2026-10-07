@@ -1,14 +1,15 @@
 import { useGLTF } from '@react-three/drei'
-import { useMemo } from 'react'
+import { Suspense, useMemo } from 'react'
 import { Mesh, type BufferGeometry, type Matrix4, type Object3D, type Plane } from 'three'
 import type { BuildingPart } from '../../content/schema'
 import { createMeshPartIndex, resolvePartId, type MeshPartIndex } from '../../lib/partLookup'
-import { useSelectionStore } from '../../state/selectionStore'
 import { computeModelBounds } from './bounds'
+import { DrawingPlane } from './DrawingPlane'
 import { sectionClipPlane } from './drawingPlacement'
+import { findDrawing } from './modelView'
+import { useModelView } from './ModelViewContext'
 import { PartLabels } from './PartLabels'
 import { PartMesh } from './PartMesh'
-import { useActiveDrawing } from './useActiveDrawing'
 import { useCameraFraming } from './useCameraFraming'
 
 type ModelMesh = {
@@ -57,7 +58,7 @@ const NO_CLIPPING: Plane[] = []
 type BuildingModelProps = {
   src: string
   parts: BuildingPart[]
-  /** Pixels covered on the right while a part is selected (details panel). */
+  /** Pixels covered on the right while parts are highlighted (e.g. by a panel). */
   selectionInsetPx?: number
 }
 
@@ -69,11 +70,11 @@ export function BuildingModel({ src, parts, selectionInsetPx = 0 }: BuildingMode
   const index = useMemo(() => createMeshPartIndex(parts), [parts])
   const meshes = useModelMeshes(src, index)
   const bounds = useMemo(() => computeModelBounds(meshes), [meshes])
-  const selectedPartId = useSelectionStore((state) => state.selectedPartId)
-  useCameraFraming(bounds, selectedPartId, selectionInsetPx)
+  const view = useModelView((state) => state.view)
+  const drawing = useMemo(() => findDrawing(parts, view.drawingId), [parts, view.drawingId])
+  useCameraFraming(bounds, view, drawing, selectionInsetPx)
 
   // Drawings with `clip: true` cut away the model in front of them.
-  const drawing = useActiveDrawing(parts)
   const clippingPlanes = useMemo(
     () => (drawing?.clip ? [sectionClipPlane(drawing.placement)] : NO_CLIPPING),
     [drawing],
@@ -92,6 +93,10 @@ export function BuildingModel({ src, parts, selectionInsetPx = 0 }: BuildingMode
         />
       ))}
       <PartLabels parts={parts} bounds={bounds} />
+      {/* Own Suspense boundary so loading a drawing never hides the model. */}
+      <Suspense fallback={null}>
+        {drawing && <DrawingPlane key={drawing.id} drawing={drawing} />}
+      </Suspense>
     </group>
   )
 }

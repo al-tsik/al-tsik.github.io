@@ -1,7 +1,7 @@
 import { Edges, useCursor } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Mesh, type BufferGeometry, type Matrix4, type Plane } from 'three'
-import { useSelectionStore } from '../../state/selectionStore'
+import { useModelView } from './ModelViewContext'
 import { viewerColors } from './viewerColors'
 
 /** Pointer travel (px) above which a press counts as a drag, not a click. */
@@ -23,31 +23,30 @@ type PartMeshProps = {
 }
 
 export function PartMesh({ name, geometry, matrix, partId, clippingPlanes }: PartMeshProps) {
-  const hover = useSelectionStore((state) => state.hover)
-  const toggle = useSelectionStore((state) => state.toggle)
-  const isHovered = useSelectionStore((state) => partId !== null && state.hoveredPartId === partId)
-  const isSelected = useSelectionStore(
-    (state) => partId !== null && state.selectedPartId === partId,
+  const setHoveredPartId = useModelView((state) => state.setHoveredPartId)
+  const onPartClick = useModelView((state) => state.onPartClick)
+  const isHovered = useModelView((state) => partId !== null && state.hoveredPartId === partId)
+  const isSelected = useModelView((state) => partId !== null && state.view.parts.includes(partId))
+  // Everything except the highlighted parts fades back.
+  const isGhosted = useModelView(
+    (state) =>
+      state.view.parts.length > 0 && (partId === null || !state.view.parts.includes(partId)),
   )
-  // Everything except the selection fades back while a part is selected.
-  const isGhosted = useSelectionStore(
-    (state) => state.selectedPartId !== null && state.selectedPartId !== partId,
-  )
-  useCursor(isHovered && !isGhosted)
 
-  // Ghosted meshes ignore the pointer so they never block the selected part.
-  const interactive = partId !== null && !isGhosted
-  const isActive = isSelected || (isHovered && !isGhosted)
+  // Ghosted meshes ignore the pointer so they never block the highlighted parts.
+  const interactive = partId !== null && onPartClick !== undefined && !isGhosted
+  const isActive = isSelected || (isHovered && interactive)
+  useCursor(isHovered && interactive)
 
   const onPointerOver = (event: ThreeEvent<PointerEvent>) => {
     event.stopPropagation() // only the nearest mesh under the pointer reacts
-    hover(partId)
+    setHoveredPartId(partId)
   }
-  const onPointerOut = () => hover(null)
+  const onPointerOut = () => setHoveredPartId(null)
   const onClick = (event: ThreeEvent<MouseEvent>) => {
     event.stopPropagation()
     // Ignore the click that ends an orbit drag.
-    if (partId && event.delta <= CLICK_TOLERANCE) toggle(partId)
+    if (partId && event.delta <= CLICK_TOLERANCE) onPartClick?.(partId)
   }
 
   return (
@@ -59,7 +58,7 @@ export function PartMesh({ name, geometry, matrix, partId, clippingPlanes }: Par
       onPointerOver={interactive ? onPointerOver : undefined}
       onPointerOut={interactive ? onPointerOut : undefined}
       onClick={interactive ? onClick : undefined}
-      raycast={isGhosted ? ignoreRaycast : Mesh.prototype.raycast}
+      raycast={interactive ? Mesh.prototype.raycast : ignoreRaycast}
     >
       <meshStandardMaterial
         color={isActive ? viewerColors.accentSoft : viewerColors.surface}

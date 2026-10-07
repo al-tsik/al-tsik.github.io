@@ -1,13 +1,12 @@
 import { CameraControls, OrthographicCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import type { BuildingPart } from '../../content/schema'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
-import { useSelectionStore } from '../../state/selectionStore'
-import { ActiveDrawing } from './ActiveDrawing'
 import { BuildingModel } from './BuildingModel'
 import { ModelLoader } from './ModelLoader'
-import { PartsLegend } from './PartsLegend'
+import { OVERVIEW, isOverview, type ModelView } from './modelView'
+import { ModelViewContext, createModelViewStore } from './ModelViewContext'
 import { useAutoOrbit } from './useAutoOrbit'
 import { viewerConfig } from './viewerConfig'
 
@@ -15,7 +14,15 @@ type BuildingViewerProps = {
   /** Path to the .glb model in public/. */
   modelSrc: string
   parts: BuildingPart[]
-  /** Pixels covered on the right while a part is selected (details panel). */
+  /** What to show: highlighted parts, a drawing, camera angles. Defaults to the overview. */
+  view?: ModelView
+  /** Makes parts and labels clickable. */
+  onPartClick?: (partId: string) => void
+  /** Called on a click on empty space (not a drag). */
+  onBackgroundClick?: () => void
+  /** Show the numbered part labels (default true). */
+  showLabels?: boolean
+  /** Pixels covered on the right while parts are highlighted (e.g. by a panel). */
   selectionInsetPx?: number
 }
 
@@ -25,24 +32,39 @@ function AutoOrbit({ enabled }: { enabled: boolean }) {
   return null
 }
 
-/** Interactive 3D view of the building, shown in the left pane. */
-export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingViewerProps) {
+/**
+ * The 3D building as a controlled component: everything it shows comes from
+ * the `view` prop, so several viewers (a thumbnail and a pop-out) can show
+ * different views side by side. Idle-orbits in the overview.
+ */
+export function BuildingViewer({
+  modelSrc,
+  parts,
+  view = OVERVIEW,
+  onPartClick,
+  onBackgroundClick,
+  showLabels = true,
+  selectionInsetPx,
+}: BuildingViewerProps) {
   const reducedMotion = usePrefersReducedMotion()
-  const select = useSelectionStore((state) => state.select)
-  const hasSelection = useSelectionStore((state) => state.selectedPartId !== null)
+  // Created once with the initial props, so the first framing already uses the view.
+  const [store] = useState(() => createModelViewStore({ view, onPartClick, showLabels }))
+
+  useEffect(() => {
+    store.setState({ view, onPartClick, showLabels })
+  }, [store, view, onPartClick, showLabels])
 
   return (
-    <div className="relative h-full">
-      {/* `flat` disables tone mapping so white stays white, like paper.
-          Clicking empty space (not a drag) returns to the overview. */}
-      <Canvas
-        flat
-        dpr={[1, 2]}
-        // Needed for per-material clipping planes (section cuts).
-        gl={{ localClippingEnabled: true }}
-        aria-label="3D model of the building"
-        onPointerMissed={() => select(null)}
-      >
+    // `flat` disables tone mapping so white stays white, like paper.
+    <Canvas
+      flat
+      dpr={[1, 2]}
+      // Needed for per-material clipping planes (section cuts).
+      gl={{ localClippingEnabled: true }}
+      aria-label="3D model of the building"
+      onPointerMissed={onBackgroundClick}
+    >
+      <ModelViewContext value={store}>
         {/* Wide near/far range so large or off-origin models never clip. */}
         <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
         <CameraControls
@@ -52,7 +74,7 @@ export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingVi
           minZoom={viewerConfig.minZoom}
           maxZoom={viewerConfig.maxZoom}
         />
-        <AutoOrbit enabled={!reducedMotion && !hasSelection} />
+        <AutoOrbit enabled={!reducedMotion && isOverview(view)} />
 
         {/* Key light from above-left so each face reads as a different tone. */}
         <ambientLight intensity={1.5} />
@@ -61,10 +83,8 @@ export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingVi
 
         <Suspense fallback={<ModelLoader />}>
           <BuildingModel src={modelSrc} parts={parts} selectionInsetPx={selectionInsetPx} />
-          <ActiveDrawing parts={parts} />
         </Suspense>
-      </Canvas>
-      <PartsLegend parts={parts} />
-    </div>
+      </ModelViewContext>
+    </Canvas>
   )
 }
