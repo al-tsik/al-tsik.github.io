@@ -1,16 +1,26 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/eb-garamond';
+@import '@fontsource-variable/eb-garamond/wght-italic.css';
 
 /*
  * Design tokens. Tailwind v4 turns each variable into utilities,
  * e.g. --color-ink → text-ink / bg-ink / border-ink, --font-mono → font-mono.
  * Monochrome "paper and linework" palette with a single accent used
  * for hover/selection in both the 3D viewer and the CV.
+ *
+ * Type roles: serif for the paper's reading text, sans for UI (outline,
+ * figure controls), mono for dates, numbers and labels.
  */
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-serif: 'EB Garamond Variable', Garamond, Georgia, serif;
+
+  /* Garamond has a small x-height, so paper text is set larger than UI text. */
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.65;
 
   --color-paper: #fafaf8;
   --color-surface: #ffffff;
