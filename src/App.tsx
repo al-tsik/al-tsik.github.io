@@ -9,6 +9,7 @@ import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
 import { BuildingViewer } from './features/viewer/BuildingViewer'
+import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
 import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
 import { useSelectionStore } from './state/selectionStore'
 
@@ -18,6 +19,7 @@ const partIds = building.parts.map((part) => part.id)
 function App() {
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
   useSelectionUrlSync(partIds)
+  useEscapeToDeselect()
 
   return (
     <div id="top">

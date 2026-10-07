@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { useSelectionStore } from '../../state/selectionStore'
 import { BuildingModel } from './BuildingModel'
 import { ModelLoader } from './ModelLoader'
+import { PartsLegend } from './PartsLegend'
 import { useAutoOrbit } from './useAutoOrbit'
 import { viewerConfig } from './viewerConfig'
 
@@ -28,33 +29,36 @@ export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
   const hasSelection = useSelectionStore((state) => state.selectedPartId !== null)
 
   return (
-    // `flat` disables tone mapping so white stays white, like paper.
-    // Clicking empty space (not a drag) returns to the overview.
-    <Canvas
-      flat
-      dpr={[1, 2]}
-      aria-label="3D model of the building"
-      onPointerMissed={() => select(null)}
-    >
-      {/* Wide near/far range so large or off-origin models never clip. */}
-      <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
-      <CameraControls
-        makeDefault
-        minPolarAngle={viewerConfig.minPolarAngle}
-        maxPolarAngle={viewerConfig.maxPolarAngle}
-        minZoom={viewerConfig.minZoom}
-        maxZoom={viewerConfig.maxZoom}
-      />
-      <AutoOrbit enabled={!reducedMotion && !hasSelection} />
+    <div className="relative h-full">
+      {/* `flat` disables tone mapping so white stays white, like paper.
+          Clicking empty space (not a drag) returns to the overview. */}
+      <Canvas
+        flat
+        dpr={[1, 2]}
+        aria-label="3D model of the building"
+        onPointerMissed={() => select(null)}
+      >
+        {/* Wide near/far range so large or off-origin models never clip. */}
+        <OrthographicCamera makeDefault position={[20, 20, 20]} near={-1000} far={2000} />
+        <CameraControls
+          makeDefault
+          minPolarAngle={viewerConfig.minPolarAngle}
+          maxPolarAngle={viewerConfig.maxPolarAngle}
+          minZoom={viewerConfig.minZoom}
+          maxZoom={viewerConfig.maxZoom}
+        />
+        <AutoOrbit enabled={!reducedMotion && !hasSelection} />
 
-      {/* Key light from above-left so each face reads as a different tone. */}
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[-6, 20, 10]} intensity={1.6} />
-      <directionalLight position={[12, 4, -6]} intensity={0.3} />
+        {/* Key light from above-left so each face reads as a different tone. */}
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[-6, 20, 10]} intensity={1.6} />
+        <directionalLight position={[12, 4, -6]} intensity={0.3} />
 
-      <Suspense fallback={<ModelLoader />}>
-        <BuildingModel src={modelSrc} parts={parts} />
-      </Suspense>
-    </Canvas>
+        <Suspense fallback={<ModelLoader />}>
+          <BuildingModel src={modelSrc} parts={parts} />
+        </Suspense>
+      </Canvas>
+      <PartsLegend parts={parts} />
+    </div>
   )
 }
