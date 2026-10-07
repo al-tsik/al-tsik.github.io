@@ -9,7 +9,7 @@ const linkClass = 'underline decoration-line underline-offset-4 hover:text-accen
 /** The paper's title block: name as title, role as affiliation, summary as abstract. */
 export function ProfileHero({ profile }: ProfileHeroProps) {
   return (
-    <header className="pb-10 font-serif">
+    <header className="pb-10">
       <div className="text-center">
         <h1 className="text-3xl leading-tight font-bold tracking-tight">{profile.name}</h1>
         <p className="mt-3 text-body text-ink-muted italic">

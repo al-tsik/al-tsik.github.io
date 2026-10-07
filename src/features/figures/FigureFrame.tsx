@@ -29,7 +29,7 @@ export function FigureFrame({ number, caption, onOpen, children }: FigureFramePr
       </div>
       <figcaption className="mt-2 text-sm leading-snug">
         <span className="text-xs text-ink-muted">Fig. {number} — </span>
-        <span className="font-serif text-ink-muted italic">{caption}</span>
+        <span className="text-ink-muted italic">{caption}</span>
       </figcaption>
     </figure>
   )

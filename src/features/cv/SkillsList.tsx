@@ -8,7 +8,7 @@ type SkillsListProps = {
 export function SkillsList({ skills }: SkillsListProps) {
   return (
     <CvSection id="skills">
-      <dl className="space-y-3 font-serif text-body">
+      <dl className="space-y-3 text-body">
         {skills.map((group) => (
           <div key={group.group} className="grid gap-x-6 sm:grid-cols-[11rem_1fr]">
             <dt className="text-ink-muted italic">{group.group}</dt>

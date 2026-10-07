@@ -17,7 +17,7 @@ export function EducationList({ education }: EducationListProps) {
             start={entry.start}
             end={entry.end}
             heading={
-              <h3 className="font-serif text-base leading-snug">
+              <h3 className="text-base leading-snug">
                 <span className="font-bold">{entry.degree}</span>
                 <span className="text-ink-muted">
                   {' | '}
@@ -26,7 +26,7 @@ export function EducationList({ education }: EducationListProps) {
               </h3>
             }
           >
-            {entry.notes && <p className="mt-2 font-serif text-body">{entry.notes}</p>}
+            {entry.notes && <p className="mt-2 text-body">{entry.notes}</p>}
           </DatedEntry>
         ))}
       </ol>

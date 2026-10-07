@@ -37,13 +37,12 @@
  * Monochrome "paper and linework" palette with a single accent used
  * for hover/selection in both the 3D viewer and the CV.
  *
- * Type roles: serif for the paper's reading text, sans for UI (outline,
- * figure controls), mono for dates, numbers and labels.
+ * Type: Libron everywhere (the default `font-sans`); JetBrains Mono only
+ * for code blocks (`font-mono`).
  */
 @theme {
   --font-sans: 'Libron', Georgia, serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-  --font-serif: 'Libron', Georgia, serif;
 
   /* Paper reading size: compact, like a printed CV. */
   --text-body: 0.9375rem;

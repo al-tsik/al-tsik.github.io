@@ -8,7 +8,7 @@ type CertificationsListProps = {
 export function CertificationsList({ certifications }: CertificationsListProps) {
   return (
     <CvSection id="certifications">
-      <ul className="space-y-2 font-serif text-body">
+      <ul className="space-y-2 text-body">
         {certifications.map((cert) => (
           <li key={cert.name} className="flex items-baseline justify-between gap-4">
             <span>

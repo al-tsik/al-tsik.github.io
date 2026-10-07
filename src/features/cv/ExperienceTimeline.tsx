@@ -47,7 +47,7 @@ export function ExperienceTimeline({
               end={job.end}
               showDuration
               heading={
-                <h3 className="font-serif text-base leading-snug">
+                <h3 className="text-base leading-snug">
                   <span className="font-bold">{job.role}</span>
                   <span className="text-ink-muted">
                     {' | '}
@@ -56,7 +56,7 @@ export function ExperienceTimeline({
                 </h3>
               }
             >
-              <p className="mt-2 font-serif text-body">
+              <p className="mt-2 text-body">
                 <FigureRefText
                   text={job.descriptor}
                   numbers={figureNumbers}
@@ -64,7 +64,7 @@ export function ExperienceTimeline({
                 />
               </p>
 
-              <ul className="mt-3 space-y-2 font-serif text-body text-ink-muted">
+              <ul className="mt-3 space-y-2 text-body text-ink-muted">
                 {job.bullets.map((bullet, i) => (
                   <BulletItem
                     key={keys[i]}
