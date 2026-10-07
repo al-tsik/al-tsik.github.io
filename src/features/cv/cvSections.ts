@@ -5,6 +5,7 @@
 export const cvSections = [
   { id: 'experience', title: 'Experience' },
   { id: 'skills', title: 'Software & Skills' },
+  { id: 'projects', title: 'Personal Projects' },
   { id: 'education', title: 'Education' },
   { id: 'certifications', title: 'Certifications' },
   { id: 'languages', title: 'Languages' },

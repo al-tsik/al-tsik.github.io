@@ -143,11 +143,18 @@ export const LanguageSchema = z.object({
   level: z.string().describe('E.g. "Native", "Fluent", "B2".'),
 })
 
+export const ProjectSchema = z.object({
+  id: Id.optional(),
+  title: z.string().describe('Bold lead-in, e.g. "Home lab".'),
+  text: z.string(),
+})
+
 export const CvSchema = z.object({
   experience: z.array(ExperienceSchema),
+  projects: z.array(ProjectSchema).default([]).describe('Personal projects.'),
   education: z.array(EducationSchema),
   skills: z.array(SkillGroupSchema),
-  certifications: z.array(CertificationSchema),
+  certifications: z.array(CertificationSchema).default([]),
   languages: z.array(LanguageSchema),
 })
 
@@ -294,6 +301,7 @@ export type Education = z.infer<typeof EducationSchema>
 export type SkillGroup = z.infer<typeof SkillGroupSchema>
 export type Certification = z.infer<typeof CertificationSchema>
 export type Language = z.infer<typeof LanguageSchema>
+export type Project = z.infer<typeof ProjectSchema>
 export type Building = z.infer<typeof BuildingSchema>
 export type BuildingPart = z.infer<typeof BuildingPartSchema>
 export type DynamoScript = z.infer<typeof DynamoScriptSchema>

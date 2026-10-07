@@ -311,6 +311,31 @@
         ]
       }
     },
+    "projects": {
+      "default": [],
+      "description": "Personal projects.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "title": {
+            "type": "string",
+            "description": "Bold lead-in, e.g. \"Home lab\"."
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "text"
+        ]
+      }
+    },
     "education": {
       "type": "array",
       "items": {
@@ -385,6 +410,7 @@
       }
     },
     "certifications": {
+      "default": [],
       "type": "array",
       "items": {
         "type": "object",
@@ -436,7 +462,6 @@
     "experience",
     "education",
     "skills",
-    "certifications",
     "languages"
   ]
 }

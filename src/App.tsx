@@ -13,6 +13,7 @@ import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
+import { ProjectsList } from './features/cv/ProjectsList'
 import { SkillsList } from './features/cv/SkillsList'
 import { FigureColumn } from './features/figures/FigureColumn'
 import { FigureOverlay } from './features/figures/FigureOverlay'
@@ -113,6 +114,7 @@ function App() {
             inlineFigures={inlineFigures}
           />
           <SkillsList skills={cv.skills} />
+          <ProjectsList projects={cv.projects} />
           <EducationList education={cv.education} />
           <CertificationsList certifications={cv.certifications} />
           <LanguagesList languages={cv.languages} />
