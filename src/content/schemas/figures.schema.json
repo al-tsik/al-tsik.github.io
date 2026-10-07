@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "figures": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "model",
+                "description": "The 3D building from building.json."
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "drawing"
+              },
+              "src": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*",
+                "description": "Vector drawing (SVG)."
+              },
+              "callouts": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "number": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "The number printed in the marker."
+                    },
+                    "x": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100,
+                      "description": "Horizontal position, % from the left edge."
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100,
+                      "description": "Vertical position, % from the top edge."
+                    },
+                    "target": {
+                      "type": "object",
+                      "properties": {
+                        "bullet": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                        },
+                        "figure": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                        },
+                        "part": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                        }
+                      },
+                      "description": "What the marker links to: a CV bullet, another figure, or a building part."
+                    }
+                  },
+                  "required": [
+                    "number",
+                    "x",
+                    "y",
+                    "target"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "src"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "dynamo"
+              },
+              "scriptId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                "description": "Id of a Dynamo script listed under a part in building.json."
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "scriptId"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "image"
+              },
+              "src": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*"
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "src"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "gallery"
+              },
+              "images": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "src": {
+                      "type": "string",
+                      "format": "starts_with",
+                      "pattern": "^\\/.*"
+                    },
+                    "alt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "src",
+                    "alt"
+                  ]
+                }
+              },
+              "intervalMs": {
+                "default": 4000,
+                "description": "Time per image when cycling.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "images"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "video"
+              },
+              "src": {
+                "description": "Short MP4/WebM clip in public/, played muted on loop.",
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*"
+              },
+              "poster": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*"
+              },
+              "embed": {
+                "description": "YouTube or Vimeo URL for longer videos (loads on click).",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "caption": {
+                "type": "string",
+                "description": "Shown under the figure after \"Fig. N —\"."
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "animation"
+              },
+              "src": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^\\/.*",
+                "description": "Animated SVG, or a Lottie .json/.lottie file."
+              }
+            },
+            "required": [
+              "id",
+              "caption",
+              "alt",
+              "type",
+              "src"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "figures"
+  ]
+}

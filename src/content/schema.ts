@@ -171,6 +171,68 @@ export const BuildingSchema = z.object({
   parts: z.array(BuildingPartSchema),
 })
 
+// ─── Figures ────────────────────────────────────────────────────────────────
+
+/** A percentage (0–100) of a figure's width or height. */
+const Percent = z.number().min(0).max(100)
+
+export const CalloutSchema = z
+  .object({
+    number: z.number().int().positive().describe('The number printed in the marker.'),
+    x: Percent.describe('Horizontal position, % from the left edge.'),
+    y: Percent.describe('Vertical position, % from the top edge.'),
+    target: z
+      .object({ bullet: Id.optional(), figure: Id.optional(), part: Id.optional() })
+      .describe('What the marker links to: a CV bullet, another figure, or a building part.'),
+  })
+  .refine(({ target }) => target.bullet ?? target.figure ?? target.part, {
+    message: 'A callout needs a bullet, figure or part target',
+  })
+
+const FigureBase = z.object({
+  id: Id,
+  caption: z.string().describe('Shown under the figure after "Fig. N —".'),
+  alt: z.string().min(1, 'Describe the figure for screen readers'),
+})
+
+export const FigureSchema = z.discriminatedUnion('type', [
+  FigureBase.extend({
+    type: z.literal('model').describe('The 3D building from building.json.'),
+  }),
+  FigureBase.extend({
+    type: z.literal('drawing'),
+    src: PublicPath.describe('Vector drawing (SVG).'),
+    callouts: z.array(CalloutSchema).default([]),
+  }),
+  FigureBase.extend({
+    type: z.literal('dynamo'),
+    scriptId: Id.describe('Id of a Dynamo script listed under a part in building.json.'),
+  }),
+  FigureBase.extend({
+    type: z.literal('image'),
+    src: PublicPath,
+  }),
+  FigureBase.extend({
+    type: z.literal('gallery'),
+    images: z.array(ImageSchema).min(1),
+    intervalMs: z.number().int().positive().default(4000).describe('Time per image when cycling.'),
+  }),
+  FigureBase.extend({
+    type: z.literal('video'),
+    src: PublicPath.optional().describe('Short MP4/WebM clip in public/, played muted on loop.'),
+    poster: PublicPath.optional(),
+    embed: z.url().optional().describe('YouTube or Vimeo URL for longer videos (loads on click).'),
+  }),
+  FigureBase.extend({
+    type: z.literal('animation'),
+    src: PublicPath.describe('Animated SVG, or a Lottie .json/.lottie file.'),
+  }),
+])
+
+export const FiguresSchema = z.object({
+  figures: z.array(FigureSchema),
+})
+
 // ─── Inferred types ─────────────────────────────────────────────────────────
 
 export type Profile = z.infer<typeof ProfileSchema>
@@ -187,3 +249,6 @@ export type DynamoScript = z.infer<typeof DynamoScriptSchema>
 export type Image = z.infer<typeof ImageSchema>
 export type Drawing = z.infer<typeof DrawingSchema>
 export type DrawingPlacement = z.infer<typeof DrawingPlacementSchema>
+export type Figure = z.infer<typeof FigureSchema>
+export type FigureType = Figure['type']
+export type Callout = z.infer<typeof CalloutSchema>

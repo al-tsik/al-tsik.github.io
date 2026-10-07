@@ -1,8 +1,9 @@
 import { z } from 'zod'
 import buildingJson from './building.json'
 import cvJson from './cv.json'
+import figuresJson from './figures.json'
 import profileJson from './profile.json'
-import { BuildingSchema, CvSchema, ProfileSchema } from './schema'
+import { BuildingSchema, CvSchema, FiguresSchema, ProfileSchema } from './schema'
 
 /**
  * Validates a content file and throws a readable error naming the file and
@@ -19,3 +20,4 @@ function parseContent<T extends z.ZodType>(file: string, schema: T, data: unknow
 export const profile = parseContent('profile.json', ProfileSchema, profileJson)
 export const cv = parseContent('cv.json', CvSchema, cvJson)
 export const building = parseContent('building.json', BuildingSchema, buildingJson)
+export const { figures } = parseContent('figures.json', FiguresSchema, figuresJson)

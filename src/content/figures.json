@@ -1,0 +1,93 @@
+{
+  "$schema": "./schemas/figures.schema.json",
+  "figures": [
+    {
+      "id": "building-model",
+      "type": "model",
+      "caption": "Axonometric model of the mixed-use building. Numbers mark the building parts.",
+      "alt": "Interactive 3D model of a four-storey building with finned facades"
+    },
+    {
+      "id": "section-a-a",
+      "type": "drawing",
+      "src": "/drawings/section-a-a.svg",
+      "caption": "Section A-A through the core and floor slabs.",
+      "alt": "Building section showing foundation, three floor slabs, roof and core",
+      "callouts": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 20,
+          "target": {
+            "part": "core"
+          }
+        },
+        {
+          "number": 2,
+          "x": 30,
+          "y": 52,
+          "target": {
+            "bullet": "structure-model"
+          }
+        }
+      ]
+    },
+    {
+      "id": "plan-level-02",
+      "type": "drawing",
+      "src": "/drawings/plan-level-02.svg",
+      "caption": "Plan of Level 02 with the circulation core.",
+      "alt": "Floor plan with perimeter facade fins and a central core",
+      "callouts": []
+    },
+    {
+      "id": "facade-panel-numbering",
+      "type": "dynamo",
+      "scriptId": "facade-panel-numbering",
+      "caption": "Dynamo graph numbering the facade panels.",
+      "alt": "Dynamo node graph passing facade panels to a Python node"
+    },
+    {
+      "id": "level-slab-sync",
+      "type": "dynamo",
+      "scriptId": "level-slab-sync",
+      "caption": "Dynamo graph syncing slab offsets with levels.",
+      "alt": "Dynamo node graph linking level elevations to slab parameters"
+    },
+    {
+      "id": "roof-parapet-detail",
+      "type": "image",
+      "src": "/images/details/roof-parapet.svg",
+      "caption": "Roof parapet detail, 1:10.",
+      "alt": "Section detail of the roof parapet and insulation build-up"
+    },
+    {
+      "id": "construction-details",
+      "type": "gallery",
+      "caption": "Selected construction details.",
+      "alt": "A sequence of construction details",
+      "images": [
+        {
+          "src": "/images/details/roof-parapet.svg",
+          "alt": "Roof parapet detail",
+          "caption": "Roof parapet"
+        },
+        {
+          "src": "/images/details/facade-panel-joint.svg",
+          "alt": "Facade panel joint detail",
+          "caption": "Panel joint"
+        },
+        {
+          "src": "/images/details/slab-edge.svg",
+          "alt": "Slab edge detail",
+          "caption": "Slab edge"
+        },
+        {
+          "src": "/images/details/foundation-edge.svg",
+          "alt": "Foundation edge detail",
+          "caption": "Foundation edge"
+        }
+      ]
+    }
+  ]
+}

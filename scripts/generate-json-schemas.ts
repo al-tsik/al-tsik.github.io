@@ -6,7 +6,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { z } from 'zod'
-import { BuildingSchema, CvSchema, ProfileSchema } from '../src/content/schema.ts'
+import { BuildingSchema, CvSchema, FiguresSchema, ProfileSchema } from '../src/content/schema.ts'
 
 const outDir = new URL('../src/content/schemas/', import.meta.url)
 
@@ -14,6 +14,7 @@ const schemas = {
   profile: ProfileSchema,
   cv: CvSchema,
   building: BuildingSchema,
+  figures: FiguresSchema,
 }
 
 mkdirSync(outDir, { recursive: true })
