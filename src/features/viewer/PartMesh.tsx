@@ -1,6 +1,6 @@
 import { Edges, useCursor } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
-import { Mesh, type BufferGeometry, type Matrix4 } from 'three'
+import { Mesh, type BufferGeometry, type Matrix4, type Plane } from 'three'
 import { useSelectionStore } from '../../state/selectionStore'
 import { viewerColors } from './viewerColors'
 
@@ -18,9 +18,11 @@ type PartMeshProps = {
   matrix: Matrix4
   /** The building part this mesh belongs to; null makes it non-interactive. */
   partId: string | null
+  /** Section cut applied to this mesh, e.g. while a section drawing is shown. */
+  clippingPlanes: Plane[]
 }
 
-export function PartMesh({ name, geometry, matrix, partId }: PartMeshProps) {
+export function PartMesh({ name, geometry, matrix, partId, clippingPlanes }: PartMeshProps) {
   const hover = useSelectionStore((state) => state.hover)
   const toggle = useSelectionStore((state) => state.toggle)
   const isHovered = useSelectionStore((state) => partId !== null && state.hoveredPartId === partId)
@@ -65,6 +67,7 @@ export function PartMesh({ name, geometry, matrix, partId }: PartMeshProps) {
         transparent
         opacity={isGhosted ? GHOST_OPACITY : 1}
         depthWrite={!isGhosted}
+        clippingPlanes={clippingPlanes}
       />
       <Edges
         color={isActive ? viewerColors.accent : viewerColors.edge}
@@ -72,6 +75,7 @@ export function PartMesh({ name, geometry, matrix, partId }: PartMeshProps) {
         transparent
         opacity={isGhosted ? GHOST_EDGE_OPACITY : 1}
         raycast={ignoreRaycast}
+        clippingPlanes={clippingPlanes}
       />
     </mesh>
   )

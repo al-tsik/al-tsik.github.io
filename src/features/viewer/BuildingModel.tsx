@@ -1,12 +1,14 @@
 import { useGLTF } from '@react-three/drei'
 import { useMemo } from 'react'
-import { Mesh, type BufferGeometry, type Matrix4, type Object3D } from 'three'
+import { Mesh, type BufferGeometry, type Matrix4, type Object3D, type Plane } from 'three'
 import type { BuildingPart } from '../../content/schema'
 import { createMeshPartIndex, resolvePartId, type MeshPartIndex } from '../../lib/partLookup'
 import { useSelectionStore } from '../../state/selectionStore'
 import { computeModelBounds } from './bounds'
+import { sectionClipPlane } from './drawingPlacement'
 import { PartLabels } from './PartLabels'
 import { PartMesh } from './PartMesh'
+import { useActiveDrawing } from './useActiveDrawing'
 import { useCameraFraming } from './useCameraFraming'
 
 type ModelMesh = {
@@ -49,6 +51,9 @@ function useModelMeshes(src: string, index: MeshPartIndex): ModelMesh[] {
   }, [scene, index])
 }
 
+/** Shared empty list so unclipped meshes keep a stable prop. */
+const NO_CLIPPING: Plane[] = []
+
 type BuildingModelProps = {
   src: string
   parts: BuildingPart[]
@@ -67,6 +72,13 @@ export function BuildingModel({ src, parts, selectionInsetPx = 0 }: BuildingMode
   const selectedPartId = useSelectionStore((state) => state.selectedPartId)
   useCameraFraming(bounds, selectedPartId, selectionInsetPx)
 
+  // Drawings with `clip: true` cut away the model in front of them.
+  const drawing = useActiveDrawing(parts)
+  const clippingPlanes = useMemo(
+    () => (drawing?.clip ? [sectionClipPlane(drawing.placement)] : NO_CLIPPING),
+    [drawing],
+  )
+
   return (
     <group>
       {meshes.map((mesh) => (
@@ -76,6 +88,7 @@ export function BuildingModel({ src, parts, selectionInsetPx = 0 }: BuildingMode
           geometry={mesh.geometry}
           matrix={mesh.matrix}
           partId={mesh.partId}
+          clippingPlanes={clippingPlanes}
         />
       ))}
       <PartLabels parts={parts} bounds={bounds} />

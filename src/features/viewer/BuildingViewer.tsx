@@ -38,6 +38,8 @@ export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingVi
       <Canvas
         flat
         dpr={[1, 2]}
+        // Needed for per-material clipping planes (section cuts).
+        gl={{ localClippingEnabled: true }}
         aria-label="3D model of the building"
         onPointerMissed={() => select(null)}
       >
