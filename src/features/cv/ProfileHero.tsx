@@ -11,7 +11,7 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
   return (
     <header className="pb-10 font-serif">
       <div className="text-center">
-        <h1 className="text-5xl leading-tight font-medium tracking-tight">{profile.name}</h1>
+        <h1 className="text-3xl leading-tight font-bold tracking-tight">{profile.name}</h1>
         <p className="mt-3 text-body text-ink-muted italic">
           {profile.role} — {profile.location}
         </p>
