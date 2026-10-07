@@ -3,14 +3,18 @@ import { useEffect, useRef } from 'react'
 import { useTextFile } from '../../hooks/useTextFile'
 import { codeTheme } from './codeTheme'
 
-type PythonPreviewProps = {
+/** Languages prism-react-renderer highlights out of the box. */
+export type CodeLanguage = 'python' | 'javascript' | 'typescript' | 'json'
+
+type CodePreviewProps = {
   src: string
+  language?: CodeLanguage
   /** Lines to highlight, [from, to] (1-based, inclusive). */
   highlight?: readonly [number, number]
 }
 
-/** Syntax-highlighted Python source loaded from public/. */
-export function PythonPreview({ src, highlight }: PythonPreviewProps) {
+/** Syntax-highlighted source code loaded from public/. */
+export function CodePreview({ src, language = 'python', highlight }: CodePreviewProps) {
   const file = useTextFile(src)
   const preRef = useRef<HTMLPreElement>(null)
   const [from, to] = highlight ?? [0, -1]
@@ -35,7 +39,7 @@ export function PythonPreview({ src, highlight }: PythonPreviewProps) {
   }
 
   return (
-    <Highlight code={file.text.trimEnd()} language="python" theme={codeTheme}>
+    <Highlight code={file.text.trimEnd()} language={language} theme={codeTheme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           ref={preRef}
