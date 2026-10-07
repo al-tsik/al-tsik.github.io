@@ -25,6 +25,7 @@ function AutoOrbit({ enabled }: { enabled: boolean }) {
 export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
   const reducedMotion = usePrefersReducedMotion()
   const select = useSelectionStore((state) => state.select)
+  const hasSelection = useSelectionStore((state) => state.selectedPartId !== null)
 
   return (
     // `flat` disables tone mapping so white stays white, like paper.
@@ -44,7 +45,7 @@ export function BuildingViewer({ modelSrc, parts }: BuildingViewerProps) {
         minZoom={viewerConfig.minZoom}
         maxZoom={viewerConfig.maxZoom}
       />
-      <AutoOrbit enabled={!reducedMotion} />
+      <AutoOrbit enabled={!reducedMotion && !hasSelection} />
 
       {/* Key light from above-left so each face reads as a different tone. */}
       <ambientLight intensity={1.5} />

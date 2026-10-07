@@ -1,10 +1,12 @@
 import { useGLTF } from '@react-three/drei'
-import { useMemo, useRef } from 'react'
-import { Mesh, type BufferGeometry, type Group, type Matrix4, type Object3D } from 'three'
+import { useMemo } from 'react'
+import { Mesh, type BufferGeometry, type Matrix4, type Object3D } from 'three'
 import type { BuildingPart } from '../../content/schema'
 import { createMeshPartIndex, resolvePartId, type MeshPartIndex } from '../../lib/partLookup'
+import { useSelectionStore } from '../../state/selectionStore'
+import { computeModelBounds } from './bounds'
 import { PartMesh } from './PartMesh'
-import { useFitCameraToObject } from './useFitCameraToObject'
+import { useCameraFraming } from './useCameraFraming'
 
 type ModelMesh = {
   /** Unique per mesh; names can repeat in real exports. */
@@ -58,11 +60,12 @@ type BuildingModelProps = {
 export function BuildingModel({ src, parts }: BuildingModelProps) {
   const index = useMemo(() => createMeshPartIndex(parts), [parts])
   const meshes = useModelMeshes(src, index)
-  const groupRef = useRef<Group>(null)
-  useFitCameraToObject(groupRef)
+  const bounds = useMemo(() => computeModelBounds(meshes), [meshes])
+  const selectedPartId = useSelectionStore((state) => state.selectedPartId)
+  useCameraFraming(bounds, selectedPartId)
 
   return (
-    <group ref={groupRef}>
+    <group>
       {meshes.map((mesh) => (
         <PartMesh
           key={mesh.id}
