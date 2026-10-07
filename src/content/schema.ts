@@ -60,6 +60,7 @@ const Percent = z.number().min(0).max(100)
 export const FigureViewSchema = z.object({
   figure: Id.describe('Id of the figure in figures.json.'),
   part: Id.optional().describe('Model: building part to highlight.'),
+  parts: z.array(Id).optional().describe('Model: building parts to highlight.'),
   drawing: Id.optional().describe('Model: drawing (from building.json) to show on the model.'),
   azimuth: z.number().optional().describe('Model: camera angle around the building, in degrees.'),
   elevation: z
@@ -86,6 +87,7 @@ export const FigureViewSchema = z.object({
 export const SubBulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this sub-bullet.'),
   text: z.string(),
+  figure: FigureViewSchema.optional().describe('The figure shown beside this line, and how.'),
   views: z
     .array(FigureViewSchema)
     .default([])
@@ -95,6 +97,7 @@ export const SubBulletSchema = z.object({
 export const BulletSchema = z.object({
   id: Id.optional().describe('Needed only when something links to this bullet.'),
   text: z.string(),
+  figure: FigureViewSchema.optional().describe('The figure shown beside this line, and how.'),
   partIds: z
     .array(Id)
     .default([])

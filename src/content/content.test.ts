@@ -116,6 +116,51 @@ describe('figures', () => {
   })
 })
 
+describe('line figures', () => {
+  const figureById = new Map(figures.map((figure) => [figure.id, figure]))
+  const bullets = cv.experience.flatMap((job) => job.bullets)
+  const lineFigures = bullets
+    .flatMap((bullet) => [bullet.figure, ...bullet.children.map((child) => child.figure)])
+    .filter((view) => view !== undefined)
+  const drawingIds = building.parts.flatMap((part) => part.drawings.map((d) => d.id))
+  const partIds = building.parts.map((part) => part.id)
+
+  it('point at figures that exist', () => {
+    const unknown = lineFigures.map((view) => view.figure).filter((id) => !figureById.has(id))
+    expect(unknown).toEqual([])
+  })
+
+  it('only use view fields that suit the figure type', () => {
+    const misplaced = lineFigures.flatMap((view) => {
+      const figure = figureById.get(view.figure)
+      return figure
+        ? unsupportedViewFields(view, figure.type).map((field) => `${view.figure}.${field}`)
+        : []
+    })
+    expect(misplaced).toEqual([])
+  })
+
+  it('reference model parts and drawings that exist', () => {
+    const broken = lineFigures.flatMap((view) => [
+      ...(view.parts ?? []).filter((id) => !partIds.includes(id)),
+      ...(view.drawing && !drawingIds.includes(view.drawing) ? [view.drawing] : []),
+    ])
+    expect(broken).toEqual([])
+  })
+
+  it('leave no figure unreachable (from a line or a {fig:} reference)', () => {
+    const texts = cv.experience.flatMap((job) => [
+      job.descriptor,
+      ...job.bullets.flatMap((b) => [b.text, ...b.children.map((child) => child.text)]),
+    ])
+    const reachable = new Set([
+      ...lineFigures.map((view) => view.figure),
+      ...texts.flatMap(figureRefIds),
+    ])
+    expect(figures.map((figure) => figure.id).filter((id) => !reachable.has(id))).toEqual([])
+  })
+})
+
 describe('bullet figure links', () => {
   const figureById = new Map(figures.map((figure) => [figure.id, figure]))
   const bullets = cv.experience.flatMap((job) => job.bullets)

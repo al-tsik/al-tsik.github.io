@@ -4,7 +4,7 @@ type ViewField = Exclude<keyof FigureView, 'figure'>
 
 /** Which view fields apply to each figure type. */
 export const viewFieldsByType: Record<FigureType, readonly ViewField[]> = {
-  model: ['part', 'drawing', 'azimuth', 'elevation', 'zoom'],
+  model: ['part', 'parts', 'drawing', 'azimuth', 'elevation', 'zoom'],
   gallery: ['image'],
   video: ['time', 'until'],
   animation: ['marker'],

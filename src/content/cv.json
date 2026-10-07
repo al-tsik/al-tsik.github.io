@@ -13,12 +13,19 @@
         {
           "id": "roof-facade-details",
           "text": "Developed the roof and facade details, coordinating drainage and parapet build-ups with consultants.",
+          "figure": {
+            "figure": "building-model",
+            "parts": ["roof", "facade"]
+          },
           "partIds": ["roof", "facade"],
           "figures": ["roof-parapet-detail", "construction-details"],
           "children": [
             {
               "id": "roof-parapet",
               "text": "Roof parapet and drainage build-up.",
+              "figure": {
+                "figure": "roof-parapet-detail"
+              },
               "views": [
                 {
                   "figure": "building-model",
@@ -35,6 +42,10 @@
             {
               "id": "panel-joints",
               "text": "Rainscreen panel joints and fixings.",
+              "figure": {
+                "figure": "construction-details",
+                "image": 1
+              },
               "views": [
                 {
                   "figure": "building-model",
@@ -52,12 +63,19 @@
         {
           "id": "facade-scripts",
           "text": "Wrote Dynamo scripts that place and number facade panels, cutting a week of manual work per issue.",
+          "figure": {
+            "figure": "facade-panel-numbering"
+          },
           "partIds": ["facade"],
           "figures": ["facade-panel-numbering", "facade-sequence", "panel-morph"],
           "children": [
             {
               "id": "panel-numbering",
               "text": "Panel numbering by elevation, written back to the model.",
+              "figure": {
+                "figure": "panel-numbering-code",
+                "lines": [43, 46]
+              },
               "views": [
                 {
                   "figure": "panel-numbering-code",
@@ -77,6 +95,10 @@
             {
               "id": "schedule-export",
               "text": "Automatic panel schedule export for the fabricator.",
+              "figure": {
+                "figure": "panel-morph",
+                "marker": "schedule"
+              },
               "views": [
                 {
                   "figure": "facade-panel-numbering",
@@ -91,18 +113,37 @@
                   "marker": "schedule"
                 }
               ]
+            },
+            {
+              "id": "bay-preview",
+              "text": "Bay-by-bay placement preview.",
+              "figure": {
+                "figure": "facade-sequence",
+                "time": 1.5,
+                "until": 4.75
+              },
+              "views": []
             }
           ]
         },
         {
           "id": "structure-model",
           "text": "Modelled the structural grid and slab edges, keeping the Revit model in sync with the engineer's analysis model.",
+          "figure": {
+            "figure": "building-model",
+            "parts": ["floors", "core"]
+          },
           "partIds": ["floors", "core"],
           "figures": ["section-a-a", "level-slab-sync"],
           "children": [
             {
               "id": "core-section",
               "text": "Section through the core and slabs.",
+              "figure": {
+                "figure": "building-model",
+                "parts": ["floors"],
+                "drawing": "section-a-a"
+              },
               "views": [
                 {
                   "figure": "building-model",
@@ -118,6 +159,9 @@
             {
               "id": "level-02-plan",
               "text": "Level 02 plan coordination.",
+              "figure": {
+                "figure": "plan-level-02"
+              },
               "views": [
                 {
                   "figure": "building-model",
@@ -132,7 +176,10 @@
           ]
         },
         {
-          "text": "Led weekly BIM coordination meetings and clash detection reviews."
+          "text": "Led weekly BIM coordination meetings and clash detection reviews.",
+          "figure": {
+            "figure": "massing-diagram"
+          }
         }
       ]
     },
@@ -147,10 +194,17 @@
       "bullets": [
         {
           "text": "Produced foundation and ground-floor setting-out drawings for planning and tender packages, including the core section ({fig:section-a-a}).",
+          "figure": {
+            "figure": "building-model",
+            "parts": ["foundation"]
+          },
           "partIds": ["foundation"]
         },
         {
-          "text": "Built a Dynamo graph that generates room data sheets from the model."
+          "text": "Built a Dynamo graph that generates room data sheets from the model.",
+          "figure": {
+            "figure": "level-slab-sync"
+          }
         }
       ]
     }
