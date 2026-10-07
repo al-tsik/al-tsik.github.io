@@ -5,20 +5,18 @@ type SkillsListProps = {
   skills: SkillGroup[]
 }
 
+/** One line per group, set like the printed CV: "Label: a, b, c (note)". */
 export function SkillsList({ skills }: SkillsListProps) {
   return (
     <CvSection id="skills">
-      <dl className="space-y-3 text-body">
+      <ul className="space-y-1.5 text-body">
         {skills.map((group) => (
-          <div key={group.group} className="grid gap-x-6 sm:grid-cols-[11rem_1fr]">
-            <dt className="text-ink-muted italic">{group.group}</dt>
-            <dd>
-              {group.items.join(' · ')}
-              {group.note && <span className="text-ink-muted"> ({group.note})</span>}
-            </dd>
-          </div>
+          <li key={group.group}>
+            <span className="font-bold">{group.group}:</span> {group.items.join(', ')}
+            {group.note && <span className="text-ink-muted"> ({group.note})</span>}
+          </li>
         ))}
-      </dl>
+      </ul>
     </CvSection>
   )
 }
