@@ -43,9 +43,9 @@ export function BulletItem({
   return (
     // Ids let figure markers scroll to a bullet (see followLink in App).
     <li id={`bullet-${bulletKey}`} className="scroll-mt-32">
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <span aria-hidden="true" className={isActive ? 'text-accent' : 'text-ink-faint'}>
-          —
+          •
         </span>
         {interactive ? (
           <button
@@ -67,8 +67,7 @@ export function BulletItem({
       </div>
 
       {bullet.children.length > 0 && (
-        // Tree connectors: a vertical rule with a short tick into each child.
-        <ul className="mt-1 ml-1.5 border-l border-line">
+        <ul className="mt-0.5 ml-4">
           {bullet.children.map((child, j) => {
             const key = subKeys[j]
             const isSubFocused = focusedKey === key
@@ -77,10 +76,14 @@ export function BulletItem({
               <li
                 key={key}
                 id={`bullet-${key}`}
-                className={`relative scroll-mt-32 py-0.5 pl-6 text-[0.95em] before:absolute before:top-[0.85em] before:left-0 before:w-4 before:border-t ${
-                  isSubFocused ? 'before:border-accent' : 'before:border-line'
-                }`}
+                className="flex scroll-mt-32 gap-2 py-0.5 text-[0.95em]"
               >
+                <span
+                  aria-hidden="true"
+                  className={isSubFocused ? 'text-accent' : 'text-ink-faint'}
+                >
+                  ◦
+                </span>
                 {interactive || child.views.length > 0 ? (
                   <button
                     type="button"
