@@ -1,7 +1,7 @@
 function App() {
   return (
-    <main>
-      <h1>Aleks — Architecture Portfolio</h1>
+    <main className="p-8">
+      <h1 className="text-3xl font-semibold tracking-tight">Aleks — Architecture Portfolio</h1>
     </main>
   )
 }
