@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import type { Experience } from '../../content/schema'
 import { isBulletLinked, isExperienceLinked } from '../../lib/cvLinks'
-import { formatDateRange, formatDuration } from '../../lib/dates'
 import { CvSection } from './CvSection'
+import { DatedEntry } from './DatedEntry'
 
 /** Matches the `lg` breakpoint where the viewer and CV sit side by side. */
 const SPLIT_LAYOUT_QUERY = '(min-width: 1024px)'
@@ -34,43 +34,34 @@ export function ExperienceTimeline({
 
   return (
     <CvSection id="experience">
-      <ol ref={listRef} className="space-y-8 border-l border-line">
+      <ol ref={listRef}>
         {experience.map((job) => {
           const jobLinked = isExperienceLinked(job, highlightPartId)
 
           return (
-            <li
+            <DatedEntry
               key={job.id}
               id={`experience-${job.id}`}
-              className={`relative pl-6 transition-opacity duration-300 ${
-                hasHighlight && !jobLinked ? 'opacity-40' : ''
-              }`}
+              start={job.start}
+              end={job.end}
+              showDuration
+              isActive={jobLinked}
+              isDimmed={hasHighlight && !jobLinked}
             >
-              {/* Timeline node */}
-              <span
-                aria-hidden="true"
-                className={`absolute top-1.5 -left-[5px] size-[9px] border ${
-                  jobLinked ? 'border-accent bg-accent' : 'border-ink bg-paper'
-                }`}
-              />
-
-              <p className="font-mono text-xs text-ink-muted">
-                {formatDateRange(job.start, job.end)}
-                <span className="text-ink-faint"> · {formatDuration(job.start, job.end)}</span>
-              </p>
-              <h3 className="mt-1 text-lg font-semibold tracking-tight">{job.role}</h3>
-              <p className="text-sm text-ink-muted">
-                {job.company} · {job.location}
-              </p>
+              <h3 className="font-serif text-xl leading-snug">
+                <span className="font-medium">{job.role}</span>
+                <span className="text-ink-muted">, {job.company}</span>
+              </h3>
+              <p className="font-serif text-ink-muted italic">{job.location}</p>
               <p
-                className={`mt-3 border-l-2 pl-3 text-sm leading-relaxed transition-colors ${
+                className={`mt-3 border-l-2 pl-3 font-serif text-body transition-colors ${
                   jobLinked ? 'border-accent' : 'border-transparent'
                 }`}
               >
                 {job.descriptor}
               </p>
 
-              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-ink-muted">
+              <ul className="mt-3 space-y-2 font-serif text-body text-ink-muted">
                 {job.bullets.map((bullet) => {
                   const linked = isBulletLinked(bullet, highlightPartId)
 
@@ -91,7 +82,7 @@ export function ExperienceTimeline({
                   )
                 })}
               </ul>
-            </li>
+            </DatedEntry>
           )
         })}
       </ol>

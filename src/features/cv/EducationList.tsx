@@ -1,6 +1,6 @@
 import type { Education } from '../../content/schema'
-import { formatDateRange } from '../../lib/dates'
 import { CvSection } from './CvSection'
+import { DatedEntry } from './DatedEntry'
 
 type EducationListProps = {
   education: Education[]
@@ -9,20 +9,22 @@ type EducationListProps = {
 export function EducationList({ education }: EducationListProps) {
   return (
     <CvSection id="education">
-      <ul className="space-y-6">
+      <ol>
         {education.map((entry) => (
-          <li key={entry.id}>
-            <p className="font-mono text-xs text-ink-muted">
-              {formatDateRange(entry.start, entry.end)}
+          <DatedEntry
+            key={entry.id}
+            id={`education-${entry.id}`}
+            start={entry.start}
+            end={entry.end}
+          >
+            <h3 className="font-serif text-xl leading-snug font-medium">{entry.degree}</h3>
+            <p className="font-serif text-ink-muted italic">
+              {entry.school}, {entry.location}
             </p>
-            <h3 className="mt-1 font-semibold tracking-tight">{entry.degree}</h3>
-            <p className="text-sm text-ink-muted">
-              {entry.school} · {entry.location}
-            </p>
-            {entry.notes && <p className="mt-2 text-sm leading-relaxed">{entry.notes}</p>}
-          </li>
+            {entry.notes && <p className="mt-2 font-serif text-body">{entry.notes}</p>}
+          </DatedEntry>
         ))}
-      </ul>
+      </ol>
     </CvSection>
   )
 }
