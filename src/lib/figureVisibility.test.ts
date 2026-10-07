@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import type { Experience, Figure } from '../content/schema'
-import { focusForBullet, indexBullets, numberFigures, pickInitialFigures } from './figureVisibility'
+import {
+  focusForBullet,
+  indexBullets,
+  nextFocus,
+  numberFigures,
+  pickInitialFigures,
+} from './figureVisibility'
 
 const figure = (id: string, type: 'model' | 'image' = 'image'): Figure =>
   type === 'model'
@@ -51,6 +57,23 @@ describe('indexBullets', () => {
   it('links sub-bullets to their parent', () => {
     expect(index.get('parapet')).toMatchObject({ parentKey: 'roof', sub: { text: 'Parapet' } })
     expect(index.get('roof')?.parentKey).toBeNull()
+  })
+})
+
+describe('nextFocus', () => {
+  const index = indexBullets(experience)
+
+  it('focuses a newly clicked bullet', () => {
+    expect(nextFocus(null, 'roof', index)).toBe('roof')
+    expect(nextFocus('roof', 'parapet', index)).toBe('parapet')
+  })
+
+  it('steps a re-clicked sub-bullet back to its parent', () => {
+    expect(nextFocus('parapet', 'parapet', index)).toBe('roof')
+  })
+
+  it('unfocuses a re-clicked main bullet', () => {
+    expect(nextFocus('roof', 'roof', index)).toBeNull()
   })
 })
 

@@ -9,8 +9,6 @@ type DatedEntryProps = {
   showDuration?: boolean
   /** Accent the timeline node (e.g. when related to the current selection). */
   isActive?: boolean
-  /** Fade the entry back (e.g. when unrelated to the current selection). */
-  isDimmed?: boolean
   children: ReactNode
 }
 
@@ -25,16 +23,10 @@ export function DatedEntry({
   end,
   showDuration = false,
   isActive = false,
-  isDimmed = false,
   children,
 }: DatedEntryProps) {
   return (
-    <li
-      id={id}
-      className={`grid scroll-mt-20 grid-cols-[5.5rem_1fr] gap-x-6 transition-opacity duration-300 ${
-        isDimmed ? 'opacity-40' : ''
-      }`}
-    >
+    <li id={id} className="grid scroll-mt-20 grid-cols-[5.5rem_1fr] gap-x-6">
       <p className="pt-1.5 text-right font-mono text-[11px] leading-snug text-ink-muted">
         {formatYearMonth(start)} —
         <br />

@@ -14,22 +14,46 @@ export type BulletEntry = {
   parentKey: string | null
 }
 
-/** Every bullet and sub-bullet keyed by its id, or by its position if it has none. */
+/** A bullet's key: its id, or `<jobId>-<n>` (1-based) when it has none. */
+export function bulletKey(jobId: string, bullet: Bullet, index: number): string {
+  return bullet.id ?? `${jobId}-${index + 1}`
+}
+
+/** A sub-bullet's key: its id, or `<parentKey>-<n>` (1-based) when it has none. */
+export function subBulletKey(parentKey: string, sub: SubBullet, index: number): string {
+  return sub.id ?? `${parentKey}-${index + 1}`
+}
+
+/** Every bullet and sub-bullet keyed by bulletKey/subBulletKey. */
 export function indexBullets(experience: readonly Experience[]): Map<string, BulletEntry> {
   const index = new Map<string, BulletEntry>()
 
   for (const job of experience) {
     job.bullets.forEach((bullet, i) => {
-      const key = bullet.id ?? `${job.id}-${i + 1}`
+      const key = bulletKey(job.id, bullet, i)
       index.set(key, { key, bullet, sub: null, parentKey: null })
 
       bullet.children.forEach((sub, j) => {
-        const subKey = sub.id ?? `${key}-${j + 1}`
+        const subKey = subBulletKey(key, sub, j)
         index.set(subKey, { key: subKey, bullet, sub, parentKey: key })
       })
     })
   }
   return index
+}
+
+/**
+ * The focus after clicking a bullet: clicking a new bullet focuses it;
+ * clicking the focused one steps back (a sub-bullet to its parent, a main
+ * bullet to nothing, i.e. the random figures).
+ */
+export function nextFocus(
+  currentKey: string | null,
+  clickedKey: string,
+  index: ReadonlyMap<string, BulletEntry>,
+): string | null {
+  if (currentKey !== clickedKey) return clickedKey
+  return index.get(clickedKey)?.parentKey ?? null
 }
 
 // ─── Initial figures ────────────────────────────────────────────────────────

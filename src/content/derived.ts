@@ -1,4 +1,4 @@
-import { indexBullets, numberFigures } from '../lib/figureVisibility'
+import { focusForBullet, indexBullets, numberFigures } from '../lib/figureVisibility'
 import { cv, figures } from './index'
 
 /*
@@ -16,3 +16,13 @@ export const figureById = new Map(figures.map((figure) => [figure.id, figure]))
 
 /** The model figure, which bullets with `partIds` show automatically. */
 export const modelFigureId = figures.find((figure) => figure.type === 'model')?.id ?? null
+
+/** Fig. numbers each main bullet shows when clicked (for the "Fig. 1, 2" hint). */
+export const bulletFigureNumbers = new Map(
+  [...bulletIndex.values()]
+    .filter((entry) => entry.parentKey === null)
+    .map((entry) => [
+      entry.key,
+      focusForBullet(entry, modelFigureId).figureIds.flatMap((id) => figureNumbers.get(id) ?? []),
+    ]),
+)
