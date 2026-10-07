@@ -56,35 +56,64 @@ export function nextFocus(
   return index.get(clickedKey)?.parentKey ?? null
 }
 
-// ─── Initial figures ────────────────────────────────────────────────────────
+// ─── Line figures ───────────────────────────────────────────────────────────
+
+/** A figure view resolved for display: models may highlight several parts. */
+export type ResolvedView = Omit<FigureView, 'part'> & { parts?: string[] }
+
+/** The one figure a line shows, anchored to that line. */
+export type LineFigure = {
+  /** Key of the line the figure sits beside. */
+  key: string
+  figureId: string
+  view: ResolvedView
+}
+
+function resolveView({ part, parts, ...rest }: FigureView): ResolvedView {
+  return { ...rest, parts: parts ?? (part ? [part] : undefined) }
+}
 
 /**
- * Figures shown before the visitor clicks anything: the model (if any)
- * plus random others, `count` in total. `rng` returns [0, 1) like
- * Math.random and is a parameter so tests are deterministic.
+ * The figure a line shows. A sub-bullet without its own figure falls back to
+ * its parent's, still anchored to the sub-bullet.
  */
-export function pickInitialFigures(
-  figures: readonly Figure[],
+export function figureForLine(entry: BulletEntry): LineFigure | null {
+  const view = entry.sub ? (entry.sub.figure ?? entry.bullet.figure) : entry.bullet.figure
+  return view ? { key: entry.key, figureId: view.figure, view: resolveView(view) } : null
+}
+
+/**
+ * Lines shown before the visitor interacts: `count` random lines that have
+ * figures, each with a different figure, starting with a model line when
+ * there is one. `rng` returns [0, 1) like Math.random and is a parameter so
+ * tests are deterministic.
+ */
+export function pickRandomLines(
+  index: ReadonlyMap<string, BulletEntry>,
+  figureTypes: ReadonlyMap<string, string>,
   rng: () => number,
   count = 3,
 ): string[] {
-  const model = figures.find((figure) => figure.type === 'model')
-  const others = figures.filter((figure) => figure !== model).map((figure) => figure.id)
+  const lines = [...index.values()].flatMap((entry) => {
+    const line = entry.sub && !entry.sub.figure ? null : figureForLine(entry)
+    return line ? [line] : []
+  })
 
-  // Partial Fisher–Yates shuffle: only as many swaps as picks needed.
-  const picks = count - (model ? 1 : 0)
-  for (let i = 0; i < Math.min(picks, others.length); i++) {
-    const j = i + Math.floor(rng() * (others.length - i))
-    ;[others[i], others[j]] = [others[j], others[i]]
+  // Shuffle (Fisher–Yates), then keep the first line per figure.
+  for (let i = lines.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1))
+    ;[lines[i], lines[j]] = [lines[j], lines[i]]
   }
-
-  return [...(model ? [model.id] : []), ...others.slice(0, Math.max(picks, 0))]
+  const model = lines.find((line) => figureTypes.get(line.figureId) === 'model')
+  const picked: LineFigure[] = model ? [model] : []
+  for (const line of lines) {
+    if (picked.length >= count) break
+    if (!picked.some((other) => other.figureId === line.figureId)) picked.push(line)
+  }
+  return picked.map((line) => line.key)
 }
 
 // ─── Focus ──────────────────────────────────────────────────────────────────
-
-/** A figure view after resolving bullet context: models may highlight several parts. */
-export type ResolvedView = Omit<FigureView, 'part'> & { parts?: string[] }
 
 export type FigureFocus = {
   /** Figures to show, in display order. */
@@ -93,47 +122,25 @@ export type FigureFocus = {
   views: Record<string, ResolvedView>
 }
 
-/** What the figure column shows while a bullet or sub-bullet is focused. */
-export function focusForBullet(entry: BulletEntry, modelFigureId: string | null): FigureFocus {
-  const { bullet, sub } = entry
-  const showModel = modelFigureId !== null && bullet.partIds.length > 0
-  const views: Record<string, ResolvedView> = {}
-
-  if (showModel) {
-    views[modelFigureId] = { figure: modelFigureId, parts: bullet.partIds }
+/** Combines line figures into what the figure column shows. */
+export function focusForLines(lines: readonly LineFigure[]): FigureFocus {
+  return {
+    figureIds: lines.map((line) => line.figureId),
+    views: Object.fromEntries(lines.map((line) => [line.figureId, line.view])),
   }
-
-  // Listed figures, then figures the text cross-references ({fig:id}).
-  const figureIds = [
-    ...(showModel ? [modelFigureId] : []),
-    ...bullet.figures,
-    ...figureRefIds(bullet.text),
-    ...(sub ? figureRefIds(sub.text) : []),
-  ]
-
-  for (const view of sub?.views ?? []) {
-    const { part, ...rest } = view
-    const parentParts = views[view.figure]?.parts
-    views[view.figure] = { ...rest, parts: part ? [part] : parentParts }
-    if (!figureIds.includes(view.figure)) figureIds.push(view.figure)
-  }
-
-  return { figureIds: [...new Set(figureIds)], views }
 }
 
 // ─── Numbering ──────────────────────────────────────────────────────────────
 
 /**
  * Figure numbers by first mention in the CV, like a paper: walks the CV in
- * reading order collecting text references, bullet figures, the model (for
- * bullets with parts) and sub-bullet views. Unmentioned figures follow in
- * figures.json order.
+ * reading order collecting text references and each line's figure.
+ * Unmentioned figures follow in figures.json order.
  */
 export function numberFigures(
   figures: readonly Figure[],
   experience: readonly Experience[],
 ): Map<string, number> {
-  const modelId = figures.find((figure) => figure.type === 'model')?.id
   const known = new Set(figures.map((figure) => figure.id))
   const order: string[] = []
   const mention = (id: string | undefined) => {
@@ -144,11 +151,10 @@ export function numberFigures(
     figureRefIds(job.descriptor).forEach(mention)
     for (const bullet of job.bullets) {
       figureRefIds(bullet.text).forEach(mention)
-      if (bullet.partIds.length > 0) mention(modelId)
-      bullet.figures.forEach(mention)
+      mention(bullet.figure?.figure)
       for (const sub of bullet.children) {
         figureRefIds(sub.text).forEach(mention)
-        sub.views.forEach((view) => mention(view.figure))
+        mention(sub.figure?.figure)
       }
     }
   }
@@ -164,7 +170,7 @@ export type ResolvedLink = { kind: 'bullet'; key: string } | { kind: 'figure'; i
 
 /**
  * Where a numbered marker (drawing callout or model label) leads: a bullet
- * (directly, or the first bullet in the CV that mentions a part) or another
+ * (directly, or the first line whose figure highlights a part) or another
  * figure. Null when nothing matches.
  */
 export function resolveLink(
@@ -174,9 +180,8 @@ export function resolveLink(
   if (target.bullet && index.has(target.bullet)) return { kind: 'bullet', key: target.bullet }
   if (target.part) {
     for (const entry of index.values()) {
-      if (entry.parentKey === null && entry.bullet.partIds.includes(target.part)) {
-        return { kind: 'bullet', key: entry.key }
-      }
+      const line = figureForLine(entry)
+      if (line?.view.parts?.includes(target.part)) return { kind: 'bullet', key: entry.key }
     }
   }
   if (target.figure) return { kind: 'figure', id: target.figure }

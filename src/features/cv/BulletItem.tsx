@@ -8,8 +8,8 @@ type BulletItemProps = {
   bulletKey: string
   /** The focused bullet or sub-bullet key, if any. */
   focusedKey: string | null
-  /** Fig. numbers this bullet shows; empty = nothing to show, not clickable. */
-  figureNumbers: number[]
+  /** Fig. number of each line's own figure, by line key. */
+  lineNumbers: ReadonlyMap<string, number>
   /** Fig. numbers by figure id, for cross-references in the text. */
   numbers: ReadonlyMap<string, number>
   onFocus: (key: string) => void
@@ -29,7 +29,7 @@ export function BulletItem({
   bullet,
   bulletKey,
   focusedKey,
-  figureNumbers,
+  lineNumbers,
   numbers,
   onFocus,
   inlineFigures,
@@ -38,7 +38,8 @@ export function BulletItem({
   const subKeys = bullet.children.map((child, j) => subBulletKey(bulletKey, child, j))
   const isParentOfFocus = focusedKey !== null && subKeys.includes(focusedKey)
   const isActive = isFocused || isParentOfFocus
-  const interactive = figureNumbers.length > 0
+  const ownNumber = lineNumbers.get(bulletKey)
+  const interactive = ownNumber !== undefined
 
   return (
     // Ids let figure markers scroll to a bullet (see followLink in App).
@@ -56,7 +57,7 @@ export function BulletItem({
           >
             <FigureRefText text={bullet.text} numbers={numbers} />
             <span className="ml-2 font-mono text-[10px] whitespace-nowrap text-ink-faint">
-              Fig. {figureNumbers.join(', ')}
+              Fig. {ownNumber}
             </span>
           </button>
         ) : (
@@ -84,7 +85,7 @@ export function BulletItem({
                 >
                   ◦
                 </span>
-                {interactive || child.views.length > 0 ? (
+                {interactive || lineNumbers.has(key) ? (
                   <button
                     type="button"
                     aria-pressed={isSubFocused}

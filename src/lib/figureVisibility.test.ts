@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import type { Experience, Figure } from '../content/schema'
 import {
-  focusForBullet,
+  figureForLine,
+  focusForLines,
   indexBullets,
   nextFocus,
   numberFigures,
-  pickInitialFigures,
+  pickRandomLines,
   resolveLink,
 } from './figureVisibility'
 
@@ -15,6 +16,7 @@ const figure = (id: string, type: 'model' | 'image' = 'image'): Figure =>
     : { id, type, src: `/${id}.svg`, caption: '', alt: id }
 
 const figures = [figure('img-a'), figure('model', 'model'), figure('img-b'), figure('img-c')]
+const figureTypes = new Map(figures.map((f) => [f.id, f.type]))
 
 const experience: Experience[] = [
   {
@@ -29,30 +31,37 @@ const experience: Experience[] = [
       {
         id: 'roof',
         text: 'Roof details',
-        partIds: ['roof', 'facade'],
-        figures: ['img-b'],
+        figure: { figure: 'model', parts: ['roof', 'facade'] },
+        partIds: [],
+        figures: [],
         children: [
           {
             id: 'parapet',
             text: 'Parapet',
-            views: [
-              { figure: 'model', part: 'roof', azimuth: 30 },
-              { figure: 'img-a', region: [0, 0, 50, 50] },
-            ],
+            figure: { figure: 'model', parts: ['roof'], azimuth: 30 },
+            views: [],
           },
-          { text: 'Drainage, see {fig:img-c}', views: [{ figure: 'model', azimuth: 90 }] },
+          { text: 'Drainage', views: [] },
         ],
+      },
+      {
+        id: 'detail',
+        text: 'Details',
+        figure: { figure: 'img-b' },
+        partIds: [],
+        figures: [],
+        children: [],
       },
       { text: 'Meetings', partIds: [], figures: [], children: [] },
     ],
   },
 ]
 
-describe('indexBullets', () => {
-  const index = indexBullets(experience)
+const index = indexBullets(experience)
 
+describe('indexBullets', () => {
   it('keys bullets by id, or by position when they have none', () => {
-    expect([...index.keys()]).toEqual(['roof', 'parapet', 'roof-2', 'studio-2'])
+    expect([...index.keys()]).toEqual(['roof', 'parapet', 'roof-2', 'detail', 'studio-3'])
   })
 
   it('links sub-bullets to their parent', () => {
@@ -62,8 +71,6 @@ describe('indexBullets', () => {
 })
 
 describe('nextFocus', () => {
-  const index = indexBullets(experience)
-
   it('focuses a newly clicked bullet', () => {
     expect(nextFocus(null, 'roof', index)).toBe('roof')
     expect(nextFocus('roof', 'parapet', index)).toBe('parapet')
@@ -78,56 +85,52 @@ describe('nextFocus', () => {
   })
 })
 
-describe('pickInitialFigures', () => {
-  it('always includes the model first, then random others', () => {
-    const picked = pickInitialFigures(figures, () => 0)
-    expect(picked).toHaveLength(3)
-    expect(picked[0]).toBe('model')
-    expect(new Set(picked).size).toBe(3)
+describe('figureForLine', () => {
+  it("returns the line's figure and view, anchored to the line", () => {
+    expect(figureForLine(index.get('parapet')!)).toEqual({
+      key: 'parapet',
+      figureId: 'model',
+      view: { figure: 'model', parts: ['roof'], azimuth: 30 },
+    })
   })
 
-  it('varies with the random source', () => {
-    expect(pickInitialFigures(figures, () => 0)).not.toEqual(
-      pickInitialFigures(figures, () => 0.99),
-    )
+  it("falls back to the parent's figure for sub-bullets without one", () => {
+    expect(figureForLine(index.get('roof-2')!)).toMatchObject({
+      key: 'roof-2',
+      figureId: 'model',
+      view: { parts: ['roof', 'facade'] },
+    })
   })
 
-  it('copes with fewer figures than requested', () => {
-    expect(pickInitialFigures([figure('only')], Math.random)).toEqual(['only'])
+  it('is null for lines without a figure', () => {
+    expect(figureForLine(index.get('studio-3')!)).toBeNull()
   })
 })
 
-describe('focusForBullet', () => {
-  const index = indexBullets(experience)
+describe('focusForLines', () => {
+  it('shows one figure per line with its view', () => {
+    const focus = focusForLines([figureForLine(index.get('detail')!)!])
+    expect(focus).toEqual({ figureIds: ['img-b'], views: { 'img-b': { figure: 'img-b' } } })
+  })
+})
 
-  it('shows the model (highlighting all parts) and the bullet figures', () => {
-    const focus = focusForBullet(index.get('roof')!, 'model')
-    expect(focus.figureIds).toEqual(['model', 'img-b'])
-    expect(focus.views.model).toEqual({ figure: 'model', parts: ['roof', 'facade'] })
+describe('pickRandomLines', () => {
+  it('starts with a model line and never repeats a figure', () => {
+    const keys = pickRandomLines(index, figureTypes, () => 0.5)
+    const figuresShown = keys.map((key) => figureForLine(index.get(key)!)!.figureId)
+    expect(figuresShown[0]).toBe('model')
+    expect(new Set(figuresShown).size).toBe(figuresShown.length)
   })
 
-  it('applies sub-bullet views and adds figures they target', () => {
-    const focus = focusForBullet(index.get('parapet')!, 'model')
-    expect(focus.figureIds).toEqual(['model', 'img-b', 'img-a'])
-    expect(focus.views.model).toEqual({ figure: 'model', parts: ['roof'], azimuth: 30 })
-    expect(focus.views['img-a']).toEqual({ figure: 'img-a', region: [0, 0, 50, 50] })
+  it('only picks lines with their own figure', () => {
+    expect(pickRandomLines(index, figureTypes, () => 0.1)).not.toContain('roof-2')
   })
 
-  it('includes figures referenced in the text', () => {
-    expect(focusForBullet(index.get('roof-2')!, 'model').figureIds).toEqual([
-      'model',
-      'img-b',
-      'img-c',
-    ])
-  })
-
-  it("keeps the parent's parts when a sub-bullet view sets none", () => {
-    const focus = focusForBullet(index.get('roof-2')!, 'model')
-    expect(focus.views.model).toEqual({ figure: 'model', parts: ['roof', 'facade'], azimuth: 90 })
-  })
-
-  it('shows nothing for a bullet without figures or parts', () => {
-    expect(focusForBullet(index.get('studio-2')!, 'model')).toEqual({ figureIds: [], views: {} })
+  it('varies with the random source', () => {
+    const picks = new Set(
+      [0, 0.3, 0.6, 0.9].map((r) => pickRandomLines(index, figureTypes, () => r)[0]),
+    )
+    expect(picks.size).toBeGreaterThan(1)
   })
 })
 
@@ -139,13 +142,11 @@ describe('numberFigures', () => {
 })
 
 describe('resolveLink', () => {
-  const index = indexBullets(experience)
-
   it('links to a bullet or sub-bullet by id', () => {
     expect(resolveLink({ bullet: 'parapet' }, index)).toEqual({ kind: 'bullet', key: 'parapet' })
   })
 
-  it('links a part to the first main bullet that mentions it', () => {
+  it('links a part to the first line whose figure highlights it', () => {
     expect(resolveLink({ part: 'facade' }, index)).toEqual({ kind: 'bullet', key: 'roof' })
   })
 

@@ -1,4 +1,4 @@
-import { focusForBullet, indexBullets, numberFigures } from '../lib/figureVisibility'
+import { figureForLine, indexBullets, numberFigures } from '../lib/figureVisibility'
 import { cv, figures } from './index'
 
 /*
@@ -14,15 +14,18 @@ export const figureNumbers = numberFigures(figures, cv.experience)
 
 export const figureById = new Map(figures.map((figure) => [figure.id, figure]))
 
-/** The model figure, which bullets with `partIds` show automatically. */
-export const modelFigureId = figures.find((figure) => figure.type === 'model')?.id ?? null
+/** Figure type by id (e.g. to find model lines). */
+export const figureTypes = new Map(figures.map((figure) => [figure.id, figure.type]))
 
-/** Fig. numbers each main bullet shows when clicked (for the "Fig. 1, 2" hint). */
-export const bulletFigureNumbers = new Map(
-  [...bulletIndex.values()]
-    .filter((entry) => entry.parentKey === null)
-    .map((entry) => [
-      entry.key,
-      focusForBullet(entry, modelFigureId).figureIds.flatMap((id) => figureNumbers.get(id) ?? []),
-    ]),
+/**
+ * Fig. number of each line's own figure, for the "Fig. N" hint. Sub-bullets
+ * without their own figure are left out (they show their parent's).
+ */
+export const lineFigureNumbers = new Map(
+  [...bulletIndex.values()].flatMap((entry) => {
+    const ownView = entry.sub ? entry.sub.figure : entry.bullet.figure
+    const line = ownView ? figureForLine(entry) : null
+    const number = line && figureNumbers.get(line.figureId)
+    return number ? [[entry.key, number] as const] : []
+  }),
 )

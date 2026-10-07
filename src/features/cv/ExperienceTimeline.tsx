@@ -9,7 +9,7 @@ import { FigureRefText } from './FigureRefText'
 type ExperienceTimelineProps = {
   experience: Experience[]
   /** Fig. numbers each main bullet shows, by bullet key. */
-  bulletFigureNumbers: ReadonlyMap<string, number[]>
+  lineFigureNumbers: ReadonlyMap<string, number>
   /** Fig. numbers by figure id, for cross-references in the text. */
   figureNumbers: ReadonlyMap<string, number>
   /** Opens a figure from a cross-reference in a role descriptor. */
@@ -25,7 +25,7 @@ type ExperienceTimelineProps = {
 
 export function ExperienceTimeline({
   experience,
-  bulletFigureNumbers,
+  lineFigureNumbers,
   figureNumbers,
   onFigureOpen,
   focusedKey,
@@ -71,7 +71,7 @@ export function ExperienceTimeline({
                     bullet={bullet}
                     bulletKey={keys[i]}
                     focusedKey={focusedKey}
-                    figureNumbers={bulletFigureNumbers.get(keys[i]) ?? []}
+                    lineNumbers={lineFigureNumbers}
                     numbers={figureNumbers}
                     onFocus={onBulletFocus}
                     inlineFigures={keys[i] === focusedMainKey ? inlineFigures : undefined}

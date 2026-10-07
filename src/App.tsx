@@ -1,13 +1,13 @@
 import { SiteFooter } from './components/layout/SiteFooter'
 import { PaperLayout } from './components/layout/PaperLayout'
 import { SiteHeader } from './components/layout/SiteHeader'
-import { building, cv, figures, profile } from './content'
+import { building, cv, profile } from './content'
 import {
-  bulletFigureNumbers,
   bulletIndex,
   figureById,
   figureNumbers,
-  modelFigureId,
+  figureTypes,
+  lineFigureNumbers,
 } from './content/derived'
 import { CertificationsList } from './features/cv/CertificationsList'
 import { EducationList } from './features/cv/EducationList'
@@ -35,7 +35,7 @@ function App() {
   const focusBullet = useSelectionStore((state) => state.focusBullet)
   const openFigure = useSelectionStore((state) => state.openFigure)
   const openFigureId = useSelectionStore((state) => state.openFigureId)
-  const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
+  const figureFocus = useFigureFocus(bulletIndex, figureTypes)
   useUrlStateSync(isBullet, isFigure)
   useEscapeToOverview()
   // Matches Tailwind's `lg`, where the figure column sits beside the paper.
@@ -90,7 +90,7 @@ function App() {
           <ProfileHero profile={profile} />
           <ExperienceTimeline
             experience={cv.experience}
-            bulletFigureNumbers={bulletFigureNumbers}
+            lineFigureNumbers={lineFigureNumbers}
             figureNumbers={figureNumbers}
             onFigureOpen={openFigure}
             focusedKey={focusedKey}
