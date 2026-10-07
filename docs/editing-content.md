@@ -3,12 +3,12 @@
 All content lives in four JSON files in `src/content/` and the media in `public/`.
 You never need to touch component code to update the site.
 
-| File            | What it holds                                                      |
-| --------------- | ------------------------------------------------------------------ |
-| `profile.json`  | Name, role, location, abstract (summary), links, PDF               |
-| `cv.json`       | Experience (bullets, sub-bullets), education, skills, certificates |
-| `figures.json`  | Every figure in the left column (model, drawings, videos…)         |
-| `building.json` | The 3D model, its parts, Dynamo scripts and on-model drawings      |
+| File            | What it holds                                                    |
+| --------------- | ---------------------------------------------------------------- |
+| `profile.json`  | Name, role, contact line, profile paragraph (summary), PDF       |
+| `cv.json`       | Skills, experience, projects, education, certificates, languages |
+| `figures.json`  | Every figure in the left column (model, drawings, videos…)       |
+| `building.json` | The 3D model, its parts, Dynamo scripts and on-model drawings    |
 
 Open them in VS Code: the `"$schema"` line at the top of each file gives you
 autocomplete, hover docs and red underlines for mistakes.
@@ -19,6 +19,36 @@ mesh names that aren't in the model, gallery indexes out of range, and so on.
 Each failure names the exact value to fix.
 
 ---
+
+## Profile and sections
+
+The contact line under the name is a list of items, separated by `•`. An
+item with an `href` is a link; one without is plain text (a city, or a
+placeholder until you fill it in):
+
+```jsonc
+"contact": [
+  { "label": "name@example.com", "href": "mailto:name@example.com" },
+  { "label": "+44 0000 000000", "href": "tel:+440000000000" },
+  { "label": "Liverpool, UK" },
+  { "label": "LinkedIn", "href": "https://www.linkedin.com/in/your-handle" },
+]
+```
+
+`href` must start with `mailto:`, `tel:`, `http://` or `https://`.
+
+In `cv.json`:
+
+- **Dates** are `"YYYY-MM"` (shown as "Mar 2023") or just `"YYYY"`, and an
+  end date can be `"present"`.
+- A role's `location` and `descriptor`, and a degree's `school` and
+  `location`, are optional.
+- **Skills**: each group is one line, "Label: a, b, c". An optional `note`
+  is added in brackets, e.g. `"note": "also C++, Lua"`.
+- **Projects**: `{ "title": "Home lab", "text": "…" }`, shown as
+  "• **Home lab:** …".
+- A section with no entries (e.g. `"certifications": []`) is left out, and
+  the others are renumbered.
 
 ## CV lines and figures
 
