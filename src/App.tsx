@@ -21,12 +21,13 @@ import { useFigureFocus } from './features/figures/useFigureFocus'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
 import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
-import { useSelectionUrlSync } from './hooks/useSelectionUrlSync'
+import { useUrlStateSync } from './hooks/useUrlStateSync'
 import { nextFocus, resolveLink, type LinkTarget } from './lib/figureVisibility'
 import { useSelectionStore } from './state/selectionStore'
 
-// Module-level so the array identity is stable across renders.
-const partIds = building.parts.map((part) => part.id)
+// Module-level so the functions are stable across renders.
+const isBullet = (key: string) => bulletIndex.has(key)
+const isFigure = (id: string) => figureById.has(id)
 
 function App() {
   const focusedKey = useSelectionStore((state) => state.focusedBulletKey)
@@ -34,7 +35,7 @@ function App() {
   const openFigure = useSelectionStore((state) => state.openFigure)
   const openFigureId = useSelectionStore((state) => state.openFigureId)
   const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
-  useSelectionUrlSync(partIds)
+  useUrlStateSync(isBullet, isFigure)
   useEscapeToDeselect()
 
   const focusedMainKey = focusedKey ? (bulletIndex.get(focusedKey)?.parentKey ?? focusedKey) : null

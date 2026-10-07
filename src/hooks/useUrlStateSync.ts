@@ -1,0 +1,40 @@
+import { useEffect } from 'react'
+import { readUrlState, writeUrlState } from '../lib/urlState'
+import { useSelectionStore } from '../state/selectionStore'
+
+/**
+ * Keeps `?b=<bullet>&fig=<figure>` in the address bar in sync with the
+ * focused bullet and the open figure, so any state can be shared as a link.
+ * Uses replaceState so exploring doesn't fill the browser's back history.
+ */
+export function useUrlStateSync(
+  isBullet: (key: string) => boolean,
+  isFigure: (id: string) => boolean,
+) {
+  const focusedKey = useSelectionStore((state) => state.focusedBulletKey)
+  const openFigureId = useSelectionStore((state) => state.openFigureId)
+  const focusBullet = useSelectionStore((state) => state.focusBullet)
+  const openFigure = useSelectionStore((state) => state.openFigure)
+
+  // Restore the state from the URL on first load, bringing the bullet into view.
+  useEffect(() => {
+    const { bullet, figure } = readUrlState(window.location.search, isBullet, isFigure)
+    if (bullet) {
+      focusBullet(bullet)
+      requestAnimationFrame(() =>
+        document.getElementById(`bullet-${bullet}`)?.scrollIntoView({ block: 'center' }),
+      )
+    }
+    if (figure) openFigure(figure)
+  }, [isBullet, isFigure, focusBullet, openFigure])
+
+  // Reflect later changes in the URL.
+  useEffect(() => {
+    const search = writeUrlState(window.location.search, {
+      bullet: focusedKey,
+      figure: openFigureId,
+    })
+    const url = `${window.location.pathname}${search}${window.location.hash}`
+    window.history.replaceState(window.history.state, '', url)
+  }, [focusedKey, openFigureId])
+}
