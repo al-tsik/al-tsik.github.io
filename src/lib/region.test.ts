@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { regionTransform } from './region'
+import { regionScale, regionTransform } from './region'
 
 describe('regionTransform', () => {
   it('is the identity without a region', () => {
@@ -20,5 +20,12 @@ describe('regionTransform', () => {
     expect(regionTransform([35, 0, 30, 100])).toBe('scale(1) translate(0%, 0%)')
     // A wide strip at the bottom: width 50 → scale 2.
     expect(regionTransform([50, 70, 50, 20])).toBe('scale(2) translate(-25%, -30%)')
+  })
+})
+
+describe('regionScale', () => {
+  it('is 1 without a region and grows as the region shrinks', () => {
+    expect(regionScale(undefined)).toBe(1)
+    expect(regionScale([0, 0, 25, 40])).toBe(2.5)
   })
 })

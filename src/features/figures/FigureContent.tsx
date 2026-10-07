@@ -1,17 +1,20 @@
-import type { Building, Figure } from '../../content/schema'
+import type { Building, Callout, Figure } from '../../content/schema'
 import type { ResolvedView } from '../../lib/figureVisibility'
 import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
+import { DrawingFigure } from './DrawingFigure'
 import { ImageFigure } from './ImageFigure'
 
 type FigureContentProps = {
   figure: Figure
   view: ResolvedView | undefined
   building: Building
+  /** Makes drawing callouts clickable. */
+  onCalloutClick?: (target: Callout['target']) => void
 }
 
 /** Renders a figure's media according to its type and current view. */
-export function FigureContent({ figure, view, building }: FigureContentProps) {
+export function FigureContent({ figure, view, building, onCalloutClick }: FigureContentProps) {
   switch (figure.type) {
     case 'model':
       return (
@@ -25,6 +28,16 @@ export function FigureContent({ figure, view, building }: FigureContentProps) {
       )
     case 'image':
       return <ImageFigure src={figure.src} alt={figure.alt} region={view?.region} />
+    case 'drawing':
+      return (
+        <DrawingFigure
+          src={figure.src}
+          alt={figure.alt}
+          callouts={figure.callouts}
+          region={view?.region}
+          onCalloutClick={onCalloutClick}
+        />
+      )
     default:
       // Placeholder until each figure type gets its renderer.
       return (

@@ -1,6 +1,13 @@
 /** A rectangle in percent of a figure: [x, y, width, height]. */
 export type Region = readonly [number, number, number, number]
 
+/** How much a region is magnified when zoomed to fill its figure. */
+export function regionScale(region: Region | undefined): number {
+  if (!region) return 1
+  const [, , width, height] = region
+  return Math.min(100 / Math.max(width, 1), 100 / Math.max(height, 1))
+}
+
 /**
  * CSS transform that zooms an element (with transform-origin at its centre)
  * so `region` fills it: translate the region's centre to the middle, then
@@ -10,7 +17,7 @@ export function regionTransform(region: Region | undefined): string {
   if (!region) return 'none'
 
   const [x, y, width, height] = region
-  const scale = Math.min(100 / Math.max(width, 1), 100 / Math.max(height, 1))
+  const scale = regionScale(region)
   const dx = 50 - (x + width / 2)
   const dy = 50 - (y + height / 2)
 
