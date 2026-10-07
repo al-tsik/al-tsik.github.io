@@ -7,7 +7,7 @@ import { ProfileHero } from './features/cv/ProfileHero'
 function App() {
   return (
     <div id="top">
-      <SiteHeader />
+      <SiteHeader name={profile.name} role={profile.role} />
       <SplitLayout
         aside={
           <div className="grid h-full place-items-center font-mono text-xs text-ink-faint uppercase">
@@ -18,7 +18,7 @@ function App() {
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
         </main>
-        <SiteFooter />
+        <SiteFooter name={profile.name} />
       </SplitLayout>
     </div>
   )
