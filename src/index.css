@@ -31,23 +31,13 @@
   --color-accent: #ff5a1f;
   --color-accent-soft: #fff1ea;
 
-  /* Details panel entrance; use with `motion-safe:` to respect reduced motion. */
-  --animate-panel-in: panel-in 250ms ease-out;
-
-  /* Figures appearing in the figure column. */
+  /* Figures appearing; use with `motion-safe:` to respect reduced motion. */
   --animate-fade-in: fade-in 300ms ease-out;
 
   @keyframes fade-in {
     from {
       opacity: 0;
       transform: translateY(0.5rem);
-    }
-  }
-
-  @keyframes panel-in {
-    from {
-      opacity: 0;
-      transform: translateX(1rem);
     }
   }
 }

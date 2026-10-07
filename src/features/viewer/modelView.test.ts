@@ -50,7 +50,6 @@ describe('findDrawing', () => {
       summary: '',
       meshNames: ['f'],
       dynamoScripts: [],
-      images: [],
       drawings: [sheet],
     },
   ]

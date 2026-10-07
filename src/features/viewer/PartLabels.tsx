@@ -28,7 +28,7 @@ function PartLabel({ part, position }: PartLabelProps) {
           type="button"
           aria-label={`${part.number}. ${part.name}`}
           aria-pressed={isSelected}
-          title={part.name}
+          title={`${part.name} — ${part.summary}`}
           // Stop the event reaching the canvas, which would treat it as a
           // click on empty space or on the mesh behind the label.
           onPointerDown={(event) => event.stopPropagation()}

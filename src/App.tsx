@@ -20,7 +20,7 @@ import { FigureOverlay } from './features/figures/FigureOverlay'
 import { useFigureFocus } from './features/figures/useFigureFocus'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
-import { useEscapeToDeselect } from './hooks/useEscapeToDeselect'
+import { useEscapeToOverview } from './hooks/useEscapeToOverview'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import { useUrlStateSync } from './hooks/useUrlStateSync'
 import { nextFocus, resolveLink, type FigureFocus, type LinkTarget } from './lib/figureVisibility'
@@ -37,7 +37,7 @@ function App() {
   const openFigureId = useSelectionStore((state) => state.openFigureId)
   const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
   useUrlStateSync(isBullet, isFigure)
-  useEscapeToDeselect()
+  useEscapeToOverview()
   // Matches Tailwind's `lg`, where the figure column sits beside the paper.
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 

@@ -23,11 +23,6 @@ export function formatYearMonth(value: DateValue): string {
   return `${MONTHS[month - 1]} ${year}`
 }
 
-/** "2023-03", "present" → "Mar 2023 — Present". */
-export function formatDateRange(start: DateValue, end: DateValue): string {
-  return `${formatYearMonth(start)} — ${formatYearMonth(end)}`
-}
-
 /**
  * Human-readable length of a range, counting both the start and end month
  * (the convention CVs and LinkedIn use): Jun 2021 → Feb 2023 is "1 yr 9 mo".

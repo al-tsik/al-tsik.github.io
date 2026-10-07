@@ -188,7 +188,7 @@ export const BuildingPartSchema = z.object({
   id: Id,
   number: z.number().int().positive().describe('Label number shown on the model, like ① ② ③.'),
   name: z.string(),
-  summary: z.string(),
+  summary: z.string().describe('Shown as the tooltip of the part label on the model.'),
   meshNames: z
     .array(z.string())
     .min(1)
@@ -197,7 +197,6 @@ export const BuildingPartSchema = z.object({
     'Where the number label sits, in model coordinates (metres, Y up). Defaults to the centre of the part.',
   ),
   dynamoScripts: z.array(DynamoScriptSchema).default([]),
-  images: z.array(ImageSchema).default([]),
   drawings: z.array(DrawingSchema).default([]),
 })
 

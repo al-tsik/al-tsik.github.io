@@ -10,7 +10,6 @@ function part(id: string, meshNames: string[]): BuildingPart {
     summary: '',
     meshNames,
     dynamoScripts: [],
-    images: [],
     drawings: [],
   }
 }

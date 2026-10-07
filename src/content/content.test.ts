@@ -175,7 +175,6 @@ describe('referenced files', () => {
       profile.cvPdf,
       building.model.src,
       ...building.parts.flatMap((part) => [
-        ...part.images.map((image) => image.src),
         ...part.drawings.map((drawing) => drawing.src),
         ...part.dynamoScripts.flatMap((script) => [script.graphImage.src, script.pythonFile]),
       ]),

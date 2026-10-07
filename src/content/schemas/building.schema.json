@@ -65,7 +65,8 @@
             "type": "string"
           },
           "summary": {
-            "type": "string"
+            "type": "string",
+            "description": "Shown as the tooltip of the part label on the model."
           },
           "meshNames": {
             "minItems": 1,
@@ -143,31 +144,6 @@
                 "title",
                 "description",
                 "graphImage"
-              ]
-            }
-          },
-          "images": {
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "src": {
-                  "type": "string",
-                  "format": "starts_with",
-                  "pattern": "^\\/.*"
-                },
-                "alt": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "caption": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "src",
-                "alt"
               ]
             }
           },

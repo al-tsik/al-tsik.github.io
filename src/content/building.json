@@ -17,14 +17,7 @@
       "name": "Foundation",
       "summary": "Reinforced concrete raft with a perimeter thickening below the facade line.",
       "meshNames": ["foundation"],
-      "labelPosition": [9.5, -0.4, 6.5],
-      "images": [
-        {
-          "src": "/images/details/foundation-edge.svg",
-          "alt": "Section detail of the raft foundation edge with perimeter thickening",
-          "caption": "Detail 04 — Foundation edge"
-        }
-      ]
+      "labelPosition": [9.5, -0.4, 6.5]
     },
     {
       "id": "floors",
@@ -42,13 +35,6 @@
             "src": "/images/dynamo/level-slab-sync.svg",
             "alt": "Dynamo graph: level elevations drive the height offset parameter of selected slabs"
           }
-        }
-      ],
-      "images": [
-        {
-          "src": "/images/details/slab-edge.svg",
-          "alt": "Section detail of the post-tensioned slab edge and firestop",
-          "caption": "Detail 03 — Slab edge"
         }
       ],
       "drawings": [
@@ -107,13 +93,6 @@
           "pythonFile": "/files/dynamo/facade-panel-numbering.py"
         }
       ],
-      "images": [
-        {
-          "src": "/images/details/facade-panel-joint.svg",
-          "alt": "Plan detail of the rainscreen panel open joint",
-          "caption": "Detail 02 — Panel joint"
-        }
-      ],
       "drawings": [
         {
           "id": "elevation-south",
@@ -136,14 +115,7 @@
       "name": "Roof",
       "summary": "Inverted warm roof with a planted terrace and a perimeter parapet.",
       "meshNames": ["roof"],
-      "labelPosition": [-5, 14.5, 3],
-      "images": [
-        {
-          "src": "/images/details/roof-parapet.svg",
-          "alt": "Section detail of the roof parapet and insulation build-up",
-          "caption": "Detail 01 — Roof parapet"
-        }
-      ]
+      "labelPosition": [-5, 14.5, 3]
     }
   ]
 }

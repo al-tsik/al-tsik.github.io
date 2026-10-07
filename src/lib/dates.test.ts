@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatDateRange, formatDuration, formatYearMonth } from './dates'
+import { formatDuration, formatYearMonth } from './dates'
 
 describe('formatYearMonth', () => {
   it('formats YYYY-MM as short month and year', () => {
@@ -9,13 +9,6 @@ describe('formatYearMonth', () => {
 
   it('formats "present"', () => {
     expect(formatYearMonth('present')).toBe('Present')
-  })
-})
-
-describe('formatDateRange', () => {
-  it('joins start and end with an em dash', () => {
-    expect(formatDateRange('2021-06', '2023-02')).toBe('Jun 2021 — Feb 2023')
-    expect(formatDateRange('2023-03', 'present')).toBe('Mar 2023 — Present')
   })
 })
 
