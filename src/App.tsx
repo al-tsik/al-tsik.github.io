@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { SiteFooter } from './components/layout/SiteFooter'
 import { PaperLayout } from './components/layout/PaperLayout'
 import { building, cv, profile } from './content'
@@ -7,8 +8,11 @@ import {
   figureNumbers,
   figureTypes,
   lineFigureNumbers,
+  sections,
 } from './content/derived'
 import { CertificationsList } from './features/cv/CertificationsList'
+import { CvSection } from './features/cv/CvSection'
+import type { CvSectionId } from './features/cv/cvSections'
 import { EducationList } from './features/cv/EducationList'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { LanguagesList } from './features/cv/LanguagesList'
@@ -97,27 +101,41 @@ function App() {
   const pinnedLine = focusedEntry ? figureForLine(focusedEntry) : null
   const inlineFigures = isDesktop || !pinnedLine ? undefined : renderFigures([pinnedLine], true)
 
+  // Each section's entries; App wraps them in their numbered heading.
+  const sectionBodies: Record<CvSectionId, ReactNode> = {
+    experience: (
+      <ExperienceTimeline
+        experience={cv.experience}
+        lineFigureNumbers={lineFigureNumbers}
+        figureNumbers={figureNumbers}
+        onFigureOpen={openFigure}
+        focusedKey={focusedKey}
+        focusedMainKey={focusedMainKey}
+        onBulletFocus={onBulletFocus}
+        inlineFigures={inlineFigures}
+      />
+    ),
+    skills: <SkillsList skills={cv.skills} />,
+    projects: <ProjectsList projects={cv.projects} />,
+    education: <EducationList education={cv.education} />,
+    certifications: <CertificationsList certifications={cv.certifications} />,
+    languages: <LanguagesList languages={cv.languages} />,
+  }
+
   return (
     <div id="top">
-      <PaperLayout figures={columnFigures} outline={<Outline experience={cv.experience} />}>
-        <OutlineMenu experience={cv.experience} />
+      <PaperLayout
+        figures={columnFigures}
+        outline={<Outline sections={sections} experience={cv.experience} />}
+      >
+        <OutlineMenu sections={sections} experience={cv.experience} />
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
-          <ExperienceTimeline
-            experience={cv.experience}
-            lineFigureNumbers={lineFigureNumbers}
-            figureNumbers={figureNumbers}
-            onFigureOpen={openFigure}
-            focusedKey={focusedKey}
-            focusedMainKey={focusedMainKey}
-            onBulletFocus={onBulletFocus}
-            inlineFigures={inlineFigures}
-          />
-          <SkillsList skills={cv.skills} />
-          <ProjectsList projects={cv.projects} />
-          <EducationList education={cv.education} />
-          <CertificationsList certifications={cv.certifications} />
-          <LanguagesList languages={cv.languages} />
+          {sections.map((section) => (
+            <CvSection key={section.id} section={section}>
+              {sectionBodies[section.id]}
+            </CvSection>
+          ))}
         </main>
         <SiteFooter name={profile.name} />
       </PaperLayout>

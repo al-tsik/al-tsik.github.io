@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import type { Experience } from '../../content/schema'
 import { bulletKey } from '../../lib/figureVisibility'
 import { BulletItem } from './BulletItem'
-import { CvSection } from './CvSection'
 import { DatedEntry } from './DatedEntry'
 import { FigureRefText } from './FigureRefText'
 
@@ -34,56 +33,54 @@ export function ExperienceTimeline({
   inlineFigures,
 }: ExperienceTimelineProps) {
   return (
-    <CvSection id="experience">
-      <ol>
-        {experience.map((job) => {
-          const keys = job.bullets.map((bullet, i) => bulletKey(job.id, bullet, i))
+    <ol>
+      {experience.map((job) => {
+        const keys = job.bullets.map((bullet, i) => bulletKey(job.id, bullet, i))
 
-          return (
-            <DatedEntry
-              key={job.id}
-              id={`experience-${job.id}`}
-              start={job.start}
-              end={job.end}
-              showDuration
-              heading={
-                <h3 className="text-base leading-snug">
-                  <span className="font-bold">{job.role}</span>
-                  <span className="text-ink-muted">
-                    {' | '}
-                    {[job.company, job.location].filter(Boolean).join(', ')}
-                  </span>
-                </h3>
-              }
-            >
-              {job.descriptor && (
-                <p className="mt-2 text-body">
-                  <FigureRefText
-                    text={job.descriptor}
-                    numbers={figureNumbers}
-                    onFigureClick={onFigureOpen}
-                  />
-                </p>
-              )}
+        return (
+          <DatedEntry
+            key={job.id}
+            id={`experience-${job.id}`}
+            start={job.start}
+            end={job.end}
+            showDuration
+            heading={
+              <h3 className="text-base leading-snug">
+                <span className="font-bold">{job.role}</span>
+                <span className="text-ink-muted">
+                  {' | '}
+                  {[job.company, job.location].filter(Boolean).join(', ')}
+                </span>
+              </h3>
+            }
+          >
+            {job.descriptor && (
+              <p className="mt-2 text-body">
+                <FigureRefText
+                  text={job.descriptor}
+                  numbers={figureNumbers}
+                  onFigureClick={onFigureOpen}
+                />
+              </p>
+            )}
 
-              <ul className="mt-3 space-y-2 text-body text-ink-muted">
-                {job.bullets.map((bullet, i) => (
-                  <BulletItem
-                    key={keys[i]}
-                    bullet={bullet}
-                    bulletKey={keys[i]}
-                    focusedKey={focusedKey}
-                    lineNumbers={lineFigureNumbers}
-                    numbers={figureNumbers}
-                    onFocus={onBulletFocus}
-                    inlineFigures={keys[i] === focusedMainKey ? inlineFigures : undefined}
-                  />
-                ))}
-              </ul>
-            </DatedEntry>
-          )
-        })}
-      </ol>
-    </CvSection>
+            <ul className="mt-3 space-y-2 text-body text-ink-muted">
+              {job.bullets.map((bullet, i) => (
+                <BulletItem
+                  key={keys[i]}
+                  bullet={bullet}
+                  bulletKey={keys[i]}
+                  focusedKey={focusedKey}
+                  lineNumbers={lineFigureNumbers}
+                  numbers={figureNumbers}
+                  onFocus={onBulletFocus}
+                  inlineFigures={keys[i] === focusedMainKey ? inlineFigures : undefined}
+                />
+              ))}
+            </ul>
+          </DatedEntry>
+        )
+      })}
+    </ol>
   )
 }

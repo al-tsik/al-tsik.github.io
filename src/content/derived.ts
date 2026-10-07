@@ -1,3 +1,4 @@
+import { cvSections } from '../features/cv/cvSections'
 import { figureForLine, indexBullets, numberFigures } from '../lib/figureVisibility'
 import { cv, figures } from './index'
 
@@ -5,6 +6,9 @@ import { cv, figures } from './index'
  * Lookups derived from content, computed once at startup. Kept separate from
  * index.ts so the raw content stays a plain, validated copy of the JSON.
  */
+
+/** The CV sections that have content, numbered in reading order. */
+export const sections = cvSections(cv)
 
 /** Every bullet and sub-bullet by key (id, or position when it has none). */
 export const bulletIndex = indexBullets(cv.experience)

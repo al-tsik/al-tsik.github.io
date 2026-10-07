@@ -1,14 +1,31 @@
 import { describe, expect, it } from 'vitest'
-import { cvSections, sectionNumber } from './cvSections'
+import type { Cv } from '../../content/schema'
+import { cvSections } from './cvSections'
 
-describe('sectionNumber', () => {
-  it('numbers sections from 1 in reading order', () => {
-    expect(sectionNumber('experience')).toBe(1)
-    expect(sectionNumber('languages')).toBe(cvSections.length)
+const emptyCv: Cv = {
+  experience: [],
+  projects: [],
+  education: [],
+  skills: [],
+  certifications: [],
+  languages: [],
+}
+
+describe('cvSections', () => {
+  it('leaves out sections without entries and numbers the rest from 1', () => {
+    const cv: Cv = {
+      ...emptyCv,
+      skills: [{ group: 'Languages', items: ['C#'] }],
+      languages: [{ name: 'English', level: 'Fluent' }],
+    }
+
+    expect(cvSections(cv).map(({ id, number }) => [id, number])).toEqual([
+      ['skills', 1],
+      ['languages', 2],
+    ])
   })
 
-  it('has unique section ids', () => {
-    const ids = cvSections.map((section) => section.id)
-    expect(new Set(ids).size).toBe(ids.length)
+  it('returns nothing for an empty CV', () => {
+    expect(cvSections(emptyCv)).toEqual([])
   })
 })

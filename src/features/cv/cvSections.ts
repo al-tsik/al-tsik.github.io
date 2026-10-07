@@ -1,19 +1,33 @@
+import type { Cv } from '../../content/schema'
+
 /**
- * The CV's sections in reading order. Single source of truth for section
- * numbers ("1 Experience") and the outline / table of contents.
+ * Every CV section in reading order. Each id is also the key of its entries
+ * in cv.json, so a section with no entries can be left out.
  */
-export const cvSections = [
+const allSections = [
   { id: 'experience', title: 'Experience' },
   { id: 'skills', title: 'Software & Skills' },
   { id: 'projects', title: 'Personal Projects' },
   { id: 'education', title: 'Education' },
   { id: 'certifications', title: 'Certifications' },
   { id: 'languages', title: 'Languages' },
-] as const
+] as const satisfies readonly { id: keyof Cv; title: string }[]
 
-export type CvSectionId = (typeof cvSections)[number]['id']
+export type CvSectionId = (typeof allSections)[number]['id']
 
-/** 1-based section number, as printed in headings and the outline. */
-export function sectionNumber(id: CvSectionId): number {
-  return cvSections.findIndex((section) => section.id === id) + 1
+export type CvSectionInfo = {
+  id: CvSectionId
+  title: string
+  /** 1-based, as printed in headings and the outline. */
+  number: number
+}
+
+/**
+ * The sections that have content, numbered in reading order. Single source of
+ * truth for section numbers ("1 Experience") and the outline.
+ */
+export function cvSections(cv: Cv): CvSectionInfo[] {
+  return allSections
+    .filter((section) => cv[section.id].length > 0)
+    .map((section, index) => ({ ...section, number: index + 1 }))
 }

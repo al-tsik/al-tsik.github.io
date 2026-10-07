@@ -1,24 +1,25 @@
+import { useMemo } from 'react'
 import type { Experience } from '../../content/schema'
 import { useActiveSection } from '../../hooks/useActiveSection'
-import { cvSections } from '../cv/cvSections'
-
-// Module-level so the array identity is stable for the scroll-spy effect.
-const sectionIds = cvSections.map((section) => section.id)
+import type { CvSectionInfo } from '../cv/cvSections'
 
 type OutlineProps = {
+  sections: CvSectionInfo[]
   /** Roles listed under "Experience" as second-level entries. */
   experience: Experience[]
 }
 
 /** Table of contents with the section being read highlighted (scroll-spy). */
-export function Outline({ experience }: OutlineProps) {
+export function Outline({ sections, experience }: OutlineProps) {
+  // Memoised so the array identity is stable for the scroll-spy effect.
+  const sectionIds = useMemo(() => sections.map((section) => section.id), [sections])
   const activeId = useActiveSection(sectionIds)
 
   return (
     <nav aria-label="Contents" className="font-sans text-sm">
       <p className="mb-3 text-[10px] tracking-widest text-ink-muted uppercase">Contents</p>
       <ol className="space-y-1.5">
-        {cvSections.map((section, index) => {
+        {sections.map((section) => {
           const isActive = section.id === activeId
 
           return (
@@ -33,7 +34,7 @@ export function Outline({ experience }: OutlineProps) {
                 <span aria-hidden="true" className={isActive ? 'text-accent' : ''}>
                   {isActive ? '▸' : ' '}
                 </span>
-                <span className="text-xs">{index + 1}</span>
+                <span className="text-xs">{section.number}</span>
                 {section.title}
               </a>
 
@@ -45,7 +46,8 @@ export function Outline({ experience }: OutlineProps) {
                         href={`#experience-${job.id}`}
                         className="text-ink-faint transition-colors hover:text-accent"
                       >
-                        {job.company}
+                        {/* The start year tells apart two roles at the same company. */}
+                        {job.company} · {job.start.slice(0, 4)}
                       </a>
                     </li>
                   ))}
