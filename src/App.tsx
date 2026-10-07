@@ -4,6 +4,7 @@ import { SplitLayout } from './components/layout/SplitLayout'
 import { cv, profile } from './content'
 import { ExperienceTimeline } from './features/cv/ExperienceTimeline'
 import { ProfileHero } from './features/cv/ProfileHero'
+import { SkillsList } from './features/cv/SkillsList'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <main id="cv" className="py-10">
           <ProfileHero profile={profile} />
           <ExperienceTimeline experience={cv.experience} />
+          <SkillsList skills={cv.skills} />
         </main>
         <SiteFooter name={profile.name} />
       </SplitLayout>
