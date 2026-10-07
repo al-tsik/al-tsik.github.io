@@ -23,7 +23,7 @@ export function useUrlStateSync(
   // Restore the state from the URL on first load, bringing the bullet into view.
   useEffect(() => {
     const { view, bullet, figure } = readUrlState(window.location.search, isBullet, isFigure)
-    setCvView(view)
+    if (view !== 'both') setCvView(view)
     if (bullet) {
       focusBullet(bullet)
       requestAnimationFrame(() => scrollToLine(bullet))
