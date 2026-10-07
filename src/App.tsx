@@ -16,6 +16,7 @@ import { LanguagesList } from './features/cv/LanguagesList'
 import { ProfileHero } from './features/cv/ProfileHero'
 import { SkillsList } from './features/cv/SkillsList'
 import { FigureColumn } from './features/figures/FigureColumn'
+import { FigureOverlay } from './features/figures/FigureOverlay'
 import { useFigureFocus } from './features/figures/useFigureFocus'
 import { Outline } from './features/outline/Outline'
 import { OutlineMenu } from './features/outline/OutlineMenu'
@@ -31,6 +32,7 @@ function App() {
   const focusedKey = useSelectionStore((state) => state.focusedBulletKey)
   const focusBullet = useSelectionStore((state) => state.focusBullet)
   const openFigure = useSelectionStore((state) => state.openFigure)
+  const openFigureId = useSelectionStore((state) => state.openFigureId)
   const figureFocus = useFigureFocus(figures, bulletIndex, modelFigureId)
   useSelectionUrlSync(partIds)
   useEscapeToDeselect()
@@ -72,6 +74,13 @@ function App() {
         </main>
         <SiteFooter name={profile.name} />
       </PaperLayout>
+      <FigureOverlay
+        figure={(openFigureId && figureById.get(openFigureId)) || null}
+        number={(openFigureId && figureNumbers.get(openFigureId)) || 0}
+        focus={figureFocus}
+        building={building}
+        onClose={() => openFigure(null)}
+      />
     </div>
   )
 }
