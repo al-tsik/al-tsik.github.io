@@ -26,6 +26,16 @@ jobs:
       # Lint, typecheck, formatting and tests (content integrity included).
       - run: npm run check
 
+      # Pages serves <owner>.github.io at the domain root and any other
+      # repository under /<repo>/, so derive the base path from the name.
+      - name: Set base path
+        run: |
+          repo="${GITHUB_REPOSITORY#*/}"
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          if [ "${repo,,}" = "${owner}.github.io" ]; then base="/"; else base="/${repo}/"; fi
+          echo "BASE_PATH=$base" >> "$GITHUB_ENV"
+          echo "Base path: $base"
+
       - run: npm run build
 
       # Only builds from main are published, and only after every check passed.

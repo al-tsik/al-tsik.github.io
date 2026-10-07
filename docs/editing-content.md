@@ -144,7 +144,16 @@ a figure in the overlay.
 
 ## Publishing
 
-1. Create a repository named `<username>.github.io` on GitHub.
-2. In _Settings → Pages_, set **Source** to **GitHub Actions**.
-3. Push to `main`. CI runs every check, and only then deploys to
-   `https://<username>.github.io`.
+1. In the GitHub repository, open _Settings → Pages_ and set **Source** to
+   **GitHub Actions**.
+2. Push to `main`. CI runs every check, and only then deploys.
+
+Where the site appears depends on the repository name, and CI sets the
+base path to match:
+
+- `<username>.github.io` is served at `https://<username>.github.io/`.
+- Any other name, e.g. `altsik.github.io` under user `al-tsik`, is served at
+  `https://al-tsik.github.io/altsik.github.io/`.
+
+Content paths in the JSON always start with `/` and are resolved against the
+base automatically.
