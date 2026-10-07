@@ -5,8 +5,8 @@ import type { Cv } from '../../content/schema'
  * in cv.json, so a section with no entries can be left out.
  */
 const allSections = [
-  { id: 'experience', title: 'Experience' },
-  { id: 'skills', title: 'Software & Skills' },
+  { id: 'skills', title: 'Technical Skills' },
+  { id: 'experience', title: 'Professional Experience' },
   { id: 'projects', title: 'Personal Projects' },
   { id: 'education', title: 'Education' },
   { id: 'certifications', title: 'Certifications' },
