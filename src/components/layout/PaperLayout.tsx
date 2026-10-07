@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 type PaperLayoutProps = {
-  /** Left column: figures (model, drawings, scripts…). Sticky on desktop; omitted when empty. */
+  /** Left column: figures (model, drawings, scripts…), beside their lines; omitted when empty. */
   figures?: ReactNode
   /** Right column: outline / table of contents. Sticky on desktop. */
   outline?: ReactNode
@@ -22,7 +22,7 @@ export function PaperLayout({ figures, outline, children }: PaperLayoutProps) {
         <section
           id="figures"
           aria-label="Figures"
-          className="border-b border-line lg:sticky lg:top-14 lg:h-[calc(100dvh-3.5rem)] lg:overflow-y-auto lg:border-b-0 lg:py-8"
+          className="border-b border-line lg:border-b-0 lg:py-10"
         >
           {figures}
         </section>

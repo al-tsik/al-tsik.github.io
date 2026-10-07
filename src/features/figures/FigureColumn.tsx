@@ -28,7 +28,15 @@ export function FigureColumn({
   const visible = focus.figureIds.flatMap((id) => figureById.get(id) ?? [])
 
   return (
-    <div className={inline ? 'space-y-6 py-4' : 'space-y-8 p-4 lg:p-0'}>
+    // Fixed width at the inner (right) edge of the column, leaving white space
+    // to the left; inline (mobile) figures take the full width.
+    <div
+      className={
+        inline
+          ? 'space-y-6 py-4'
+          : 'flex flex-col items-end gap-8 p-4 lg:p-0 [&>*]:w-full [&>*]:max-w-[24rem]'
+      }
+    >
       {visible.map((figure) => (
         // Keyed by id, so a figure that stays visible keeps its state (e.g. the
         // model's camera) while its view changes.
