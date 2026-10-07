@@ -1,0 +1,50 @@
+{
+  "$schema": "./schemas/building.schema.json",
+  "project": {
+    "name": "Placeholder Mixed-Use Building",
+    "location": "City, Country",
+    "year": 2025,
+    "role": "Architectural Designer — design development to construction documents",
+    "description": "A four-storey mixed-use building with ground-floor workshops and residential units above, arranged around a central circulation core."
+  },
+  "model": {
+    "src": "/models/sample-building.glb"
+  },
+  "parts": [
+    {
+      "id": "foundation",
+      "number": 1,
+      "name": "Foundation",
+      "summary": "Reinforced concrete raft with a perimeter thickening below the facade line.",
+      "meshNames": ["foundation"]
+    },
+    {
+      "id": "floors",
+      "number": 2,
+      "name": "Floor Slabs",
+      "summary": "Post-tensioned flat slabs on a 7.5 m grid, with edge details coordinated with the facade.",
+      "meshNames": ["level-01", "level-02", "level-03"]
+    },
+    {
+      "id": "core",
+      "number": 3,
+      "name": "Circulation Core",
+      "summary": "Stair and lift core providing lateral stability.",
+      "meshNames": ["core"]
+    },
+    {
+      "id": "facade",
+      "number": 4,
+      "name": "Facade",
+      "summary": "Rainscreen facade of fibre-cement panels, set out and numbered with Dynamo.",
+      "meshNames": ["facade-n", "facade-s", "facade-e", "facade-w"]
+    },
+    {
+      "id": "roof",
+      "number": 5,
+      "name": "Roof",
+      "summary": "Inverted warm roof with a planted terrace and a perimeter parapet.",
+      "meshNames": ["roof"]
+    }
+  ]
+}

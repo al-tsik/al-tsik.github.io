@@ -1,0 +1,102 @@
+{
+  "$schema": "./schemas/cv.schema.json",
+  "experience": [
+    {
+      "id": "studio-b",
+      "role": "Architectural Designer",
+      "company": "Studio B Architects",
+      "location": "City, Country",
+      "start": "2023-03",
+      "end": "present",
+      "descriptor": "Design and delivery of a 4-storey mixed-use building from concept to construction documents.",
+      "bullets": [
+        {
+          "text": "Developed the roof and facade details, coordinating drainage and parapet build-ups with consultants.",
+          "partIds": ["roof", "facade"]
+        },
+        {
+          "text": "Wrote Dynamo scripts that place and number facade panels, cutting a week of manual work per issue.",
+          "partIds": ["facade"]
+        },
+        {
+          "text": "Modelled the structural grid and slab edges, keeping the Revit model in sync with the engineer's analysis model.",
+          "partIds": ["floors", "core"]
+        },
+        {
+          "text": "Led weekly BIM coordination meetings and clash detection reviews."
+        }
+      ]
+    },
+    {
+      "id": "office-a",
+      "role": "Architectural Assistant",
+      "company": "Office A",
+      "location": "City, Country",
+      "start": "2021-06",
+      "end": "2023-02",
+      "descriptor": "Residential and small commercial projects, with a focus on technical documentation.",
+      "bullets": [
+        {
+          "text": "Produced foundation and ground-floor setting-out drawings for planning and tender packages.",
+          "partIds": ["foundation"]
+        },
+        {
+          "text": "Built a Dynamo graph that generates room data sheets from the model."
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "march",
+      "degree": "Master of Architecture",
+      "school": "University Placeholder",
+      "location": "City, Country",
+      "start": "2019-09",
+      "end": "2021-06",
+      "notes": "Thesis on rule-based facade generation."
+    },
+    {
+      "id": "ba",
+      "degree": "BA (Hons) Architecture",
+      "school": "University Placeholder",
+      "location": "City, Country",
+      "start": "2016-09",
+      "end": "2019-06"
+    }
+  ],
+  "skills": [
+    {
+      "group": "BIM",
+      "items": [
+        { "name": "Revit", "level": 5 },
+        { "name": "Navisworks", "level": 3 },
+        { "name": "IFC workflows", "level": 3 }
+      ]
+    },
+    {
+      "group": "Computational",
+      "items": [
+        { "name": "Dynamo", "level": 5 },
+        { "name": "Python", "level": 4 },
+        { "name": "Grasshopper", "level": 3 }
+      ]
+    },
+    {
+      "group": "Design & Visualisation",
+      "items": [
+        { "name": "AutoCAD", "level": 4 },
+        { "name": "Rhino", "level": 3 },
+        { "name": "Enscape", "level": 4 },
+        { "name": "Adobe Creative Suite", "level": 4 }
+      ]
+    }
+  ],
+  "certifications": [
+    { "name": "Autodesk Certified Professional: Revit", "issuer": "Autodesk", "year": 2024 }
+  ],
+  "languages": [
+    { "name": "English", "level": "Fluent" },
+    { "name": "Second Language", "level": "Native" }
+  ]
+}
