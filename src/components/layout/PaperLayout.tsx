@@ -10,14 +10,14 @@ type PaperLayoutProps = {
 }
 
 /**
- * Research-paper layout: figures | centred paper | outline.
- * The paper keeps a comfortable reading measure (~40rem) with generous
- * margins; the side columns stay in view while the page scrolls.
+ * Research-paper layout: figures | paper | outline. The paper is a fixed
+ * 640px (40rem) column; the two side tracks are equal, so it sits exactly in
+ * the middle of the page with the same gap on both sides.
  * Below `lg` the columns stack (figures first, outline hidden).
  */
 export function PaperLayout({ figures, outline, children }: PaperLayoutProps) {
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(18rem,1fr)_minmax(0,40rem)_minmax(10rem,0.6fr)] lg:gap-12 lg:px-8 xl:gap-16">
+    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_40rem_minmax(0,1fr)] lg:gap-x-12 lg:px-8 xl:gap-x-16">
       {figures && (
         <section
           id="figures"
