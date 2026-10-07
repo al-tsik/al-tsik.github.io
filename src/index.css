@@ -42,7 +42,7 @@
  * figure controls), mono for dates, numbers and labels.
  */
 @theme {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Libron', Georgia, serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
   --font-serif: 'Libron', Georgia, serif;
 
