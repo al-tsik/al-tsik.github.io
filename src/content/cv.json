@@ -142,23 +142,38 @@
       ]
     }
   ],
+  "projects": [
+    {
+      "title": "Home lab",
+      "text": "Self-hosted service stack in Docker on TrueNAS (previously Proxmox), including a Gitea server with Gitea Actions CI and VPN access for remote use."
+    },
+    {
+      "title": "AI photo tagging",
+      "text": "Used the CLIP model (PyTorch, Hugging Face) to generate image embeddings and identify tags, organising a large personal photo library."
+    }
+  ],
   "education": [
     {
       "id": "march",
-      "degree": "Master of Architecture",
-      "school": "University Placeholder",
-      "location": "City, Country",
-      "start": "2019-09",
-      "end": "2021-06",
-      "notes": "Thesis on rule-based facade generation."
+      "degree": "Master of Architecture (M.Arch), 2:1",
+      "school": "Manchester School of Architecture",
+      "start": "2019",
+      "end": "2021",
+      "notes": "Computational Architecture atelier: programming and algorithmic design"
     },
     {
       "id": "ba",
-      "degree": "BA (Hons) Architecture",
-      "school": "University Placeholder",
-      "location": "City, Country",
-      "start": "2016-09",
-      "end": "2019-06"
+      "degree": "BA (Hons) Architecture, 2:1",
+      "school": "Liverpool John Moores University",
+      "start": "2014",
+      "end": "2017"
+    },
+    {
+      "id": "a-levels",
+      "degree": "A-levels",
+      "start": "2010",
+      "end": "2014",
+      "notes": "Computing, Fine Arts & Mathematics"
     }
   ],
   "skills": [
@@ -237,21 +252,19 @@
       ]
     }
   ],
-  "certifications": [
-    {
-      "name": "Autodesk Certified Professional: Revit",
-      "issuer": "Autodesk",
-      "year": 2024
-    }
-  ],
+  "certifications": [],
   "languages": [
     {
       "name": "English",
       "level": "Fluent"
     },
     {
-      "name": "Second Language",
-      "level": "Native"
+      "name": "Russian",
+      "level": "Fluent"
+    },
+    {
+      "name": "Polish",
+      "level": "Conversational"
     }
   ]
 }
