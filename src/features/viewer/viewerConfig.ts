@@ -19,6 +19,9 @@ export const viewerConfig = {
   minZoom: 4,
   maxZoom: 120,
 
+  /** Margin around a framed part or model, as a multiple of its size. */
+  framingPadding: 1.15,
+
   /** Idle rotation: one full turn per this many seconds. */
   autoOrbitSecondsPerTurn: 60,
   /** How long after the user lets go before idle rotation resumes. */

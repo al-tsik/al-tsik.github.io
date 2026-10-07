@@ -22,7 +22,8 @@ function fitSphereBesideInset(
   const width = camera.right - camera.left
   const height = camera.top - camera.bottom
   const availableWidth = Math.max(width - rightInsetPx, width / 3)
-  const zoom = Math.min(availableWidth, height) / (2 * sphere.radius)
+  const diameter = 2 * sphere.radius * viewerConfig.framingPadding
+  const zoom = Math.min(availableWidth, height) / diameter
 
   const { x, y, z } = sphere.center
   void controls.moveTo(x, y, z, animate)
