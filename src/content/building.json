@@ -33,6 +33,17 @@
       "summary": "Post-tensioned flat slabs on a 7.5 m grid, with edge details coordinated with the facade.",
       "meshNames": ["level-01", "level-02", "level-03"],
       "labelPosition": [-9, 7, 6],
+      "dynamoScripts": [
+        {
+          "id": "level-slab-sync",
+          "title": "Level and slab sync",
+          "description": "Reads level elevations and updates slab height offsets so the model follows the engineer's revised levels.",
+          "graphImage": {
+            "src": "/images/dynamo/level-slab-sync.svg",
+            "alt": "Dynamo graph: level elevations drive the height offset parameter of selected slabs"
+          }
+        }
+      ],
       "images": [
         {
           "src": "/images/details/slab-edge.svg",
@@ -56,6 +67,18 @@
       "summary": "Rainscreen facade of fibre-cement panels, set out and numbered with Dynamo.",
       "meshNames": ["facade-n", "facade-s", "facade-e", "facade-w"],
       "labelPosition": [4.5, 11, 6.3],
+      "dynamoScripts": [
+        {
+          "id": "facade-panel-numbering",
+          "title": "Facade panel numbering",
+          "description": "Numbers rainscreen panels per elevation (bottom-left to top-right) and writes the mark to each panel, keeping schedules and setting-out drawings in sync.",
+          "graphImage": {
+            "src": "/images/dynamo/facade-panel-numbering.svg",
+            "alt": "Dynamo graph: panels are collected by category and passed to a Python node that assigns marks"
+          },
+          "pythonFile": "/files/dynamo/facade-panel-numbering.py"
+        }
+      ],
       "images": [
         {
           "src": "/images/details/facade-panel-joint.svg",
