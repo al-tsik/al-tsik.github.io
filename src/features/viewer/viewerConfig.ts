@@ -22,6 +22,9 @@ export const viewerConfig = {
   /** Margin around a framed part or model, as a multiple of its size. */
   framingPadding: 1.15,
 
+  /** Shown drawings are viewed this far off-axis, so they read as part of the model. */
+  drawingViewAngle: MathUtils.degToRad(35),
+
   /** Idle rotation: one full turn per this many seconds. */
   autoOrbitSecondsPerTurn: 60,
   /** How long after the user lets go before idle rotation resumes. */

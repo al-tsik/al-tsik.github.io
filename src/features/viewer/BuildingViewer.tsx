@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import type { BuildingPart } from '../../content/schema'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { useSelectionStore } from '../../state/selectionStore'
+import { ActiveDrawing } from './ActiveDrawing'
 import { BuildingModel } from './BuildingModel'
 import { ModelLoader } from './ModelLoader'
 import { PartsLegend } from './PartsLegend'
@@ -58,6 +59,7 @@ export function BuildingViewer({ modelSrc, parts, selectionInsetPx }: BuildingVi
 
         <Suspense fallback={<ModelLoader />}>
           <BuildingModel src={modelSrc} parts={parts} selectionInsetPx={selectionInsetPx} />
+          <ActiveDrawing parts={parts} />
         </Suspense>
       </Canvas>
       <PartsLegend parts={parts} />

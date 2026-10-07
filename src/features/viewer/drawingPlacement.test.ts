@@ -1,7 +1,12 @@
 import { Vector3 } from 'three'
 import { describe, expect, it } from 'vitest'
 import type { DrawingPlacement } from '../../content/schema'
-import { frontAzimuth, placementNormal, sectionClipPlane } from './drawingPlacement'
+import {
+  frontAzimuth,
+  nearestEquivalentAngle,
+  placementNormal,
+  sectionClipPlane,
+} from './drawingPlacement'
 
 function placement(rotation: [number, number, number]): DrawingPlacement {
   return { position: [0, 5, 0], rotation, width: 10, height: 10 }
@@ -57,5 +62,19 @@ describe('sectionClipPlane', () => {
     const planCut = sectionClipPlane(placement([-90, 0, 0]))
     expect(planCut.distanceToPoint(new Vector3(0, 9, 0))).toBeLessThan(0)
     expect(planCut.distanceToPoint(new Vector3(0, 1, 0))).toBeGreaterThan(0)
+  })
+})
+
+describe('nearestEquivalentAngle', () => {
+  it('keeps targets that are already close', () => {
+    expect(nearestEquivalentAngle(0, 0.5)).toBeCloseTo(0.5)
+  })
+
+  it('unwinds accumulated full turns', () => {
+    expect(nearestEquivalentAngle(10 * Math.PI + 0.1, 0.3)).toBeCloseTo(10 * Math.PI + 0.3)
+  })
+
+  it('takes the short way across ±π', () => {
+    expect(nearestEquivalentAngle(Math.PI - 0.1, -Math.PI + 0.1)).toBeCloseTo(Math.PI + 0.1)
   })
 })

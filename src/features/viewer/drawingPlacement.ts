@@ -33,3 +33,13 @@ export function sectionClipPlane(placement: DrawingPlacement, offset = 0.02): Pl
   const point = new Vector3(...placement.position).addScaledVector(normal, offset)
   return new Plane().setFromNormalAndCoplanarPoint(normal.negate(), point)
 }
+
+/**
+ * The angle equivalent to `target` (mod 2π) closest to `current`, so an
+ * animated rotation takes the short way round even after many idle orbits.
+ */
+export function nearestEquivalentAngle(current: number, target: number): number {
+  const fullTurn = 2 * Math.PI
+  const delta = ((((target - current) % fullTurn) + fullTurn * 1.5) % fullTurn) - Math.PI
+  return current + delta
+}
