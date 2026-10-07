@@ -2,6 +2,7 @@ import type { Building, Figure } from '../../content/schema'
 import type { ResolvedView } from '../../lib/figureVisibility'
 import { BuildingViewer } from '../viewer/BuildingViewer'
 import { toModelView } from '../viewer/modelView'
+import { ImageFigure } from './ImageFigure'
 
 type FigureContentProps = {
   figure: Figure
@@ -22,6 +23,8 @@ export function FigureContent({ figure, view, building }: FigureContentProps) {
           />
         </div>
       )
+    case 'image':
+      return <ImageFigure src={figure.src} alt={figure.alt} region={view?.region} />
     default:
       // Placeholder until each figure type gets its renderer.
       return (
