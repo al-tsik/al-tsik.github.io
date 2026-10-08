@@ -27,9 +27,9 @@ export function FigureFrame({ number, caption, onOpen, children }: FigureFramePr
           </button>
         )}
       </div>
-      <figcaption className="mt-2 text-sm leading-snug">
-        <span className="text-xs text-ink-muted">Fig. {number} — </span>
-        <span className="text-ink-muted italic">{caption}</span>
+      {/* One style for the whole line: "Fig. 4 — Caption." */}
+      <figcaption className="mt-2 text-xs leading-snug text-ink-muted">
+        Fig. {number} — {caption}
       </figcaption>
     </figure>
   )

@@ -39,9 +39,8 @@ export function FigureOverlay({
             />
           </div>
           <figcaption className="flex items-baseline justify-between gap-4 border-t border-line px-4 py-3">
-            <span>
-              <span className="text-xs text-ink-muted">Fig. {number} — </span>
-              <span className="text-ink-muted italic">{figure.caption}</span>
+            <span className="text-xs leading-snug text-ink-muted">
+              Fig. {number} — {figure.caption}
             </span>
             <button
               type="button"
