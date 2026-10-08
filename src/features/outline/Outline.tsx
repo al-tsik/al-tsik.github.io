@@ -31,15 +31,16 @@ export function Outline({ sections, experience }: OutlineProps) {
                   isActive ? 'text-ink' : 'text-ink-faint'
                 }`}
               >
-                <span aria-hidden="true" className={isActive ? 'text-accent' : ''}>
-                  {isActive ? '▸' : ' '}
+                {/* Fixed-width columns, so the numbers line up whether or not the marker shows. */}
+                <span aria-hidden="true" className="w-3 shrink-0 text-center text-accent">
+                  {isActive ? '▸' : ''}
                 </span>
-                <span className="text-xs">{section.number}</span>
+                <span className="w-3 shrink-0 text-xs tabular-nums">{section.number}</span>
                 {section.title}
               </a>
 
               {section.id === 'experience' && (
-                <ol className="mt-1 ml-[2.1rem] space-y-1 text-xs">
+                <ol className="mt-1 ml-10 space-y-1 text-xs">
                   {experience.map((job) => (
                     <li key={job.id}>
                       <a
