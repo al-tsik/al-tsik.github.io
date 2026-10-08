@@ -62,8 +62,8 @@ function App() {
   const onBulletFocus = (key: string) => {
     const next = nextFocus(focusedKey, key, bulletIndex)
     focusBullet(next)
-    // Next frame: pinning can change the layout above the line (e.g. the
-    // mobile hero figure goes away), so measure after React has re-rendered.
+    // Next frame: pinning can change the layout above the line (e.g. on mobile
+    // the previous line's inline figure closes), so measure after React re-renders.
     if (next) requestAnimationFrame(() => scrollToLine(next))
   }
 
@@ -93,14 +93,10 @@ function App() {
     />
   )
 
-  // Desktop: figures in the margin beside their lines. Mobile: one figure as a
-  // hero until a line is pinned, then that line's figure inline under it. Only
-  // one copy is ever mounted (no hidden duplicate canvases or videos).
-  const columnFigures = isDesktop
-    ? renderFigures(displayedLines)
-    : focusedMainKey === null
-      ? renderFigures(displayedLines.slice(0, 1), true)
-      : undefined
+  // Desktop: figures in the margin beside their lines. Mobile: no figure column;
+  // a tapped line shows its figure inline under it. Only one copy is ever
+  // mounted (no hidden duplicate canvases or videos).
+  const columnFigures = isDesktop ? renderFigures(displayedLines) : undefined
   // Mobile has no hover: only the pinned line's figure, right under that line.
   const focusedEntry = focusedKey ? bulletIndex.get(focusedKey) : undefined
   const pinnedLine = focusedEntry ? figureForLine(focusedEntry) : null
