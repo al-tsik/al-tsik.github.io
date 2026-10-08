@@ -22,7 +22,7 @@ export function Outline({ sections, experience }: OutlineProps) {
       ),
     [sections, experience],
   )
-  const activeId = useActiveSection(anchorIds)
+  const { activeId, pin } = useActiveSection(anchorIds)
   const activeRole = experience.find((job) => roleAnchor(job) === activeId)
   const activeSectionId = activeRole ? 'experience' : activeId
 
@@ -37,6 +37,7 @@ export function Outline({ sections, experience }: OutlineProps) {
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
+                onClick={() => pin(section.id)}
                 // The role, when one is active, is the more precise "you are here".
                 aria-current={isActive && !activeRole ? 'location' : undefined}
                 className={`flex gap-2 transition-colors hover:text-accent ${
@@ -57,6 +58,7 @@ export function Outline({ sections, experience }: OutlineProps) {
                     <li key={job.id}>
                       <a
                         href={`#${roleAnchor(job)}`}
+                        onClick={() => pin(roleAnchor(job))}
                         aria-current={job === activeRole ? 'location' : undefined}
                         className={`transition-colors hover:text-accent ${
                           job === activeRole ? 'text-ink' : 'text-ink-faint'
