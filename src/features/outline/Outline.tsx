@@ -9,24 +9,36 @@ type OutlineProps = {
   experience: Experience[]
 }
 
-/** Table of contents with the section being read highlighted (scroll-spy). */
+const roleAnchor = (job: Experience) => `experience-${job.id}`
+
+/** Table of contents with the section and role being read highlighted (scroll-spy). */
 export function Outline({ sections, experience }: OutlineProps) {
-  // Memoised so the array identity is stable for the scroll-spy effect.
-  const sectionIds = useMemo(() => sections.map((section) => section.id), [sections])
-  const activeId = useActiveSection(sectionIds)
+  // Every anchor in document order: the roles sit inside the experience
+  // section. Memoised so the array identity is stable for the scroll-spy effect.
+  const anchorIds = useMemo(
+    () =>
+      sections.flatMap((section) =>
+        section.id === 'experience' ? [section.id, ...experience.map(roleAnchor)] : [section.id],
+      ),
+    [sections, experience],
+  )
+  const activeId = useActiveSection(anchorIds)
+  const activeRole = experience.find((job) => roleAnchor(job) === activeId)
+  const activeSectionId = activeRole ? 'experience' : activeId
 
   return (
     <nav aria-label="Contents" className="font-sans text-sm">
       <p className="mb-3 text-[10px] tracking-widest text-ink-muted uppercase">Contents</p>
       <ol className="space-y-1.5">
         {sections.map((section) => {
-          const isActive = section.id === activeId
+          const isActive = section.id === activeSectionId
 
           return (
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
-                aria-current={isActive ? 'location' : undefined}
+                // The role, when one is active, is the more precise "you are here".
+                aria-current={isActive && !activeRole ? 'location' : undefined}
                 className={`flex gap-2 transition-colors hover:text-accent ${
                   isActive ? 'text-ink' : 'text-ink-faint'
                 }`}
@@ -44,8 +56,11 @@ export function Outline({ sections, experience }: OutlineProps) {
                   {experience.map((job) => (
                     <li key={job.id}>
                       <a
-                        href={`#experience-${job.id}`}
-                        className="text-ink-faint transition-colors hover:text-accent"
+                        href={`#${roleAnchor(job)}`}
+                        aria-current={job === activeRole ? 'location' : undefined}
+                        className={`transition-colors hover:text-accent ${
+                          job === activeRole ? 'text-ink' : 'text-ink-faint'
+                        }`}
                       >
                         {/* The start year tells apart two roles at the same company. */}
                         {job.company} · {job.start.slice(0, 4)}
